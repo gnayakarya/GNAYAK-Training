@@ -1,0 +1,85 @@
+vagrant@ubuntu1804:~$ history
+    1  cat /etc/*release
+    2  sudo apt-get update
+    3  sudo apt-get install     ca-certificates     curl     gnupg     lsb-release
+    4  sudo mkdir -p /etc/apt/keyrings
+    5  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    6  echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    7  sudo apt-get update
+    8  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+    9  sudo docker run hello-world
+   10  docker ps
+   11  sudo docker ps
+   12  sudo docker ps -a
+   13  systemctl status docker
+   14  docker pull mysql:5.6
+   15  sudo docker pull mysql:5.6
+   16  docker run -d --name=test mysql:5.6
+   17  sudo docker run -d --name=test mysql:5.6
+   18  sudo docker ps -a
+   19* sudo docker logs
+   20  sudo docker ps
+   21  sudo docker ps -a
+   22  docker logs hellow-world
+   23  sudo docker logs hellow-world
+   24  sudo docker logs hello-world
+   25  sudo docker rm -f test
+   26  sudo docker rm
+   27  sudo docker ps -a
+   28  sudo docker rm fcfa198b43e6
+   29  sudo docker ps -a
+   30  docker run -d --name=test -e MYSQL_ROOT_PASSWORD=redhat mysql:5.6
+   31  sudo docker run -d --name=test -e MYSQL_ROOT_PASSWORD=redhat mysql:5.6
+   32  docker ps
+   33  sudo docker ps
+   34  docker exec -it test bash
+   35  sudo docker exec -it test bash
+   36  sudo docker pull nginx
+   37  docker run -it --name=web nginx bash
+   38  sudo docker run -it --name=web nginx bash
+   39  docker top web
+   40  sudo docker top web
+   41  sudo docker run -it --name=web nginx bash
+   42  sudo docker rm web
+   43  sudo docker ps -a
+   44  sudo docker rm ab251732199a
+   45  docker stop ab251732199a
+   46  sudo docker stop ab251732199a
+   47  sudo docker rm ab251732199a
+   48  sudo docker ps -a
+   49  clear
+   50  sudo docker rm -f $(docker ps -q -a)
+   51  sudo docker ps -a
+   52  docker rmi $(docker images -q)
+   53  sudo docker images
+   54  sudo docker rmi $(docker images -q)
+   55  sudo docker images
+   56  ls /var/lib/docker/overlay2
+   57  sudo /var/lib/docker/overlay2
+   58  sudo ls /var/lib/docker/overlay2
+   59  sudo docker pull ubuntu
+   60  sudo docker images
+   61  sudo ls /var/lib/docker/overlay2
+   62  sudo docker system df
+   63  docker image prune --all
+   64  sudo docker image prune --all
+   65  sudo ls /var/lib/docker/overlay2
+   66  sudo docker ps -a
+   67  sudo docker pull ubuntu
+   68  sudo docker images
+   69  sudo docker image inspect ubuntu
+   70  sudo docker run -it --name=ubuntu ubuntu bash
+   71  sudo docker ps
+   72  sudo docker ps -a
+   73  sudo ls /var/lib/docker/overlay2
+   74  sudo docker image prune --all
+   75  sudo ls /var/lib/docker/overlay2
+   76  sudo docker image prune --all
+   77  sudo ls /var/lib/docker/overlay2
+   78  sudo docker container inspect | grep -i diff
+   79  sudo docker container inspect ubuntu | grep -i diff
+   80  sudo docker stats
+   81  sudo docker info | grep -i root
+   82  history
+vagrant@ubuntu1804:~$
