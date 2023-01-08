@@ -1,0 +1,1952 @@
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ date
+Sun Jan  8 19:20:46 IST 2023
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant status
+Current machine states:
+
+default                   running (virtualbox)
+
+The VM is running. To stop this VM, you can run `vagrant halt` to
+shut it down forcefully, or you can run `vagrant suspend` to simply
+suspend the virtual machine. In either case, to restart it again,
+simply run `vagrant up`.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant ssh
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-197-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun Jan  8 13:51:05 UTC 2023
+
+  System load:  0.0               Processes:             95
+  Usage of /:   2.9% of 38.70GB   Users logged in:       0
+  Memory usage: 13%               IP address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+0 updates can be applied immediately.
+
+New release '20.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-197-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun Jan  8 13:51:05 UTC 2023
+
+  System load:  0.0               Processes:             95
+  Usage of /:   2.9% of 38.70GB   Users logged in:       0
+  Memory usage: 13%               IP address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+0 updates can be applied immediately.
+
+New release '20.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+vagrant@ubuntu-bionic:~$ sudo su -
+root@ubuntu-bionic:~# systemctl status docker
+Unit docker.service could not be found.
+root@ubuntu-bionic:~# curl -fsSL https://test.docker.com -o test-docker.sh
+root@ubuntu-bionic:~# sh test-docker.sh
+# Executing docker install script, commit: 4f282167c425347a931ccfd95cc91fab041d414f
++ sh -c apt-get update -qq >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq apt-transport-https ca-certificates curl >/dev/null
++ sh -c mkdir -p /etc/apt/keyrings && chmod -R 0755 /etc/apt/keyrings
++ sh -c curl -fsSL "https://download.docker.com/linux/ubuntu/gpg" | gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg
++ sh -c chmod a+r /etc/apt/keyrings/docker.gpg
++ sh -c echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu bionic test" > /etc/apt/sources.list.d/docker.list
++ sh -c apt-get update -qq >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-scan-plugin docker-buildx-plugin >/dev/null
++ version_gte 20.10
++ [ -z  ]
++ return 0
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker-ce-rootless-extras >/dev/null
++ sh -c docker version
+Client: Docker Engine - Community
+ Version:           23.0.0-rc.1
+ API version:       1.42
+ Go version:        go1.19.4
+ Git commit:        139e924
+ Built:             Thu Dec 22 23:36:50 2022
+ OS/Arch:           linux/amd64
+ Context:           default
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          23.0.0-rc.1
+  API version:      1.42 (minimum version 1.12)
+  Go version:       go1.19.4
+  Git commit:       cba986b
+  Built:            Thu Dec 22 23:36:50 2022
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.6.14
+  GitCommit:        9ba4b250366a5ddde94bb7c9d1def331423aa323
+ runc:
+  Version:          1.1.4
+  GitCommit:        v1.1.4-0-g5fd4c4d
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+================================================================================
+
+To run Docker as a non-privileged user, consider setting up the
+Docker daemon in rootless mode for your user:
+
+    dockerd-rootless-setuptool.sh install
+
+Visit https://docs.docker.com/go/rootless/ to learn about rootless mode.
+
+
+To run the Docker daemon as a fully privileged service, but granting non-root
+users access, refer to https://docs.docker.com/go/daemon-access/
+
+WARNING: Access to the remote API on a privileged Docker daemon is equivalent
+         to root access on the host. Refer to the 'Docker daemon attack surface'
+         documentation for details: https://docs.docker.com/go/attack-surface/
+
+================================================================================
+
+root@ubuntu-bionic:~# systemctl is-active docker
+active
+root@ubuntu-bionic:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2023-01-08 13:55:23 UTC; 45s ago
+     Docs: https://docs.docker.com
+ Main PID: 19905 (dockerd)
+    Tasks: 9
+   CGroup: /system.slice/docker.service
+           +-19905 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Jan 08 13:55:22 ubuntu-bionic dockerd[19905]: time="2023-01-08T13:55:22.767351262Z" level=info msg="[core] [Channel #4] Channel Connec
+Jan 08 13:55:22 ubuntu-bionic dockerd[19905]: time="2023-01-08T13:55:22.907972122Z" level=info msg="Loading containers: start."
+Jan 08 13:55:23 ubuntu-bionic dockerd[19905]: time="2023-01-08T13:55:23.384169867Z" level=info msg="Default bridge (docker0) is assign
+Jan 08 13:55:23 ubuntu-bionic dockerd[19905]: time="2023-01-08T13:55:23.740659430Z" level=info msg="Loading containers: done."
+Jan 08 13:55:23 ubuntu-bionic dockerd[19905]: time="2023-01-08T13:55:23.806311918Z" level=warning msg="WARNING: No swap limit support"
+Jan 08 13:55:23 ubuntu-bionic dockerd[19905]: time="2023-01-08T13:55:23.806965965Z" level=info msg="Docker daemon" commit=cba986b grap
+Jan 08 13:55:23 ubuntu-bionic dockerd[19905]: time="2023-01-08T13:55:23.807746565Z" level=info msg="Daemon has completed initializatio
+Jan 08 13:55:23 ubuntu-bionic dockerd[19905]: time="2023-01-08T13:55:23.897050972Z" level=info msg="[core] [Server #7] Server created"
+Jan 08 13:55:23 ubuntu-bionic systemd[1]: Started Docker Application Container Engine.
+Jan 08 13:55:23 ubuntu-bionic dockerd[19905]: time="2023-01-08T13:55:23.907118675Z" level=info msg="API listen on /run/docker.sock"
+lines 1-19/19 (END)
+root@ubuntu-bionic:~# docker info
+Client:
+ Context:    default
+ Debug Mode: false
+ Plugins:
+  buildx: Docker Buildx (Docker Inc.)
+    Version:  v0.10.0-rc2
+    Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+  compose: Docker Compose (Docker Inc.)
+    Version:  v2.14.2
+    Path:     /usr/libexec/docker/cli-plugins/docker-compose
+  scan: Docker Scan (Docker Inc.)
+    Version:  v0.23.0
+    Path:     /usr/libexec/docker/cli-plugins/docker-scan
+
+Server:
+ Containers: 0
+  Running: 0
+  Paused: 0
+  Stopped: 0
+ Images: 0
+ Server Version: 23.0.0-rc.1
+ Storage Driver: overlay2
+  Backing Filesystem: extfs
+  Supports d_type: true
+  Using metacopy: false
+  Native Overlay Diff: true
+  userxattr: false
+ Logging Driver: json-file
+ Cgroup Driver: cgroupfs
+ Cgroup Version: 1
+ Plugins:
+  Volume: local
+  Network: bridge host ipvlan macvlan null overlay
+  Log: awslogs fluentd gcplogs gelf journald json-file local logentries splunk syslog
+ Swarm: inactive
+ Runtimes: io.containerd.runc.v2 runc
+ Default Runtime: runc
+ Init Binary: docker-init
+ containerd version: 9ba4b250366a5ddde94bb7c9d1def331423aa323
+ runc version: v1.1.4-0-g5fd4c4d
+ init version: de40ad0
+ Security Options:
+  apparmor
+  seccomp
+   Profile: builtin
+ Kernel Version: 4.15.0-197-generic
+ Operating System: Ubuntu 18.04.6 LTS
+ OSType: linux
+ Architecture: x86_64
+ CPUs: 2
+ Total Memory: 984.9MiB
+ Name: ubuntu-bionic
+ ID: 7cba3078-2375-4da9-9dcc-8ee9dbe83ebe
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: false
+ Registry: https://index.docker.io/v1/
+ Experimental: false
+ Insecure Registries:
+  127.0.0.0/8
+ Live Restore Enabled: false
+
+WARNING: No swap limit support
+root@ubuntu-bionic:~# docker pull ubuntu:20.04
+20.04: Pulling from library/ubuntu
+846c0b181fff: Extracting [========================================>          ]   23.3MB/28.58MB
+846c0b181fff: Pull complete
+Digest: sha256:0e0402cd13f68137edb0266e1d2c682f217814420f2d43d300ed8f65479b14fb
+Status: Downloaded newer image for ubuntu:20.04
+docker.io/library/ubuntu:20.04
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       20.04     d5447fc01ae6   4 weeks ago   72.8MB
+root@ubuntu-bionic:~# docker rmi ubuntu
+Error response from daemon: No such image: ubuntu:latest
+root@ubuntu-bionic:~# docker rmi d5447fc01ae6
+Untagged: ubuntu:20.04
+Untagged: ubuntu@sha256:0e0402cd13f68137edb0266e1d2c682f217814420f2d43d300ed8f65479b14fb
+Deleted: sha256:d5447fc01ae62c20beffbfa50bc51b2797f9d7ebae031b8c2245b5be8ff1c75b
+Deleted: sha256:0002c93bdb3704dd9e36ce5153ef637f84de253015f3ee330468dccdeacad60b
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker pull ubuntu:20.04
+20.04: Pulling from library/ubuntu
+846c0b181fff: Pull complete
+Digest: sha256:0e0402cd13f68137edb0266e1d2c682f217814420f2d43d300ed8f65479b14fb
+Status: Downloaded newer image for ubuntu:20.04
+docker.io/library/ubuntu:20.04
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       20.04     d5447fc01ae6   4 weeks ago   72.8MB
+root@ubuntu-bionic:~# docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+3f4ca61aafcd: Pull complete
+50c68654b16f: Pull complete
+3ed295c083ec: Pull complete
+40b838968eea: Pull complete
+88d3ab68332d: Pull complete
+5f63362a3fa3: Pull complete
+Digest: sha256:0047b729188a15da49380d9506d65959cce6d40291ccfb4e039f5dc7efd33286
+Status: Downloaded newer image for nginx:latest
+docker.io/library/nginx:latest
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+nginx        latest    1403e55ab369   2 weeks ago   142MB
+ubuntu       20.04     d5447fc01ae6   4 weeks ago   72.8MB
+root@ubuntu-bionic:~# docker search alpine
+NAME                               DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+alpine                             A minimal Docker image based on Alpine Linux…   9568      [OK]
+alpinelinux/docker-cli             Simple and lightweight Alpine Linux image wi…   7
+alpinelinux/alpine-gitlab-ci       Build Alpine Linux packages with Gitlab CI      3
+alpinelinux/gitlab-runner-helper   Helper image container gitlab-runner-helper …   2
+alpinelinux/alpine-drone-ci        Build Alpine Linux packages with drone CI       0
+alpinelinux/apkbuild-lint-tools    Tools for linting APKBUILD files in a CI env…   0
+alpinelinux/unbound                                                                1
+alpinelinux/docker-alpine                                                          0
+alpinelinux/docker-compose         docker-compose image based on Alpine Linux      0
+alpinelinux/gitlab-runner          Alpine Linux gitlab-runner (supports more ar…   4
+alpinelinux/docker-abuild          Dockerised abuild                               0
+alpinelinux/darkhttpd                                                              1
+alpinelinux/rsyncd                                                                 0
+alpinelinux/build-base             Base image suitable for building packages wi…   0
+alpinelinux/golang                 Build container for golang based on Alpine L…   1
+rancher/alpine-git                                                                 1
+alpinelinux/mqtt-exec                                                              0
+alpinelinux/package-builder        Container to build packages for a repository    1
+alpinelinux/git-mirror-syncd                                                       0
+alpinelinux/mirror-status                                                          0
+alpinelinux/ansible                Ansible in docker                               0
+alpinelinux/alpine-docker-gitlab   Gitlab running on Alpine Linux                  0
+grafana/alpine                     Alpine Linux with ca-certificates package in…   2
+alpinelinux/aports-qa-bot          A Gitlab bot that gives feedback on aports m…   0
+alpinelinux/gitlab                 Alpine Linux based Gitlab image                 2
+root@ubuntu-bionic:~# docker pull alpine
+Using default tag: latest
+latest: Pulling from library/alpine
+c158987b0551: Pull complete
+Digest: sha256:8914eb54f968791faf6a8638949e480fef81e697984fba772b3976835194c6d4
+Status: Downloaded newer image for alpine:latest
+docker.io/library/alpine:latest
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+nginx        latest    1403e55ab369   2 weeks ago   142MB
+ubuntu       20.04     d5447fc01ae6   4 weeks ago   72.8MB
+alpine       latest    49176f190c7e   6 weeks ago   7.05MB
+root@ubuntu-bionic:~# docker pull httpd
+Using default tag: latest
+latest: Pulling from library/httpd
+3f4ca61aafcd: Already exists
+2e3d233b6299: Pull complete
+6d859023da80: Pull complete
+f856a04699cc: Pull complete
+ec3bbe99d2b1: Pull complete
+Digest: sha256:f8c7bdfa89fb4448c95856c6145359f67dd447134018247609e7a23e5c5ec03a
+Status: Downloaded newer image for httpd:latest
+docker.io/library/httpd:latest
+root@ubuntu-bionic:~# ls /var/lib/docker/
+buildkit  containers  engine-id  image  network  overlay2  plugins  runtimes  swarm  tmp  volumes
+root@ubuntu-bionic:~# df -hT /var
+Filesystem     Type  Size  Used Avail Use% Mounted on
+/dev/sda1      ext4   39G  2.1G   37G   6% /
+root@ubuntu-bionic:~# docker search registry.access.redhat.com/nginx
+NAME                                DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+ubi8/nginx-120                      Platform for running nginx 1.20 or building …   0
+rhscl/nginx-18-rhel7                Nginx 1.8 server and a reverse proxy server     0
+rhscl/nginx-112-rhel7               Nginx is a web server and a reverse proxy se…   0
+rhscl/nginx-114-rhel7               Nginx is a web server and a reverse proxy se…   0
+ubi8/nginx-118                      Platform for running nginx 1.18 or building …   0
+ubi9/nginx-120                      rhcc_registry.access.redhat.com_ubi9/nginx-1…   0
+rhscl/nginx-110-rhel7               Nginx container image that delivers an nginx…   0
+rhscl/nginx-16-rhel7                Nginx 1.6 server and a reverse proxy server     0
+ubi7/nginx-118                      Platform for running nginx 1.18 or building …   0
+ubi7/nginx-120                      Platform for running nginx 1.20 or building …   0
+3scale-amp23/apicast-gateway         3scale's API gateway (APIcast) is an OpenRe…   0
+3scale-amp20/apicast-gateway        3scale's API gateway (APIcast) is an OpenRes…   0
+rhamp10/apicast-gateway             3scale's API gateway (APIcast) is an OpenRes…   0
+3scale-amp20-beta/apicast-gateway   3scale's API gateway (APIcast) is an OpenRes…   0
+3scale-amp25/apicast-gateway        3scale's API gateway (APIcast) is an OpenRes…   0
+3scale-amp21/apicast-gateway        3scale AMP image used for API gateway           0
+3scale-amp24/apicast-gateway        No description                                  0
+rhmap45/wildcard-proxy              RHMAP image that provides mapping and proxy …   0
+rhmap47/wildcard-proxy              RHMAP image that provides mapping and proxy …   0
+rhmap46/wildcard-proxy              RHMAP image that provides mapping and proxy …   0
+rhmap44/wildcard-proxy              RHMAP Docker image that provides mapping and…   0
+rhmap43/wildcard-proxy              RHMAP Docker image that provides mapping and…   0
+3scale-amp22/apicast-gateway        APIcast API gateway needs connection to the …   0
+root@ubuntu-bionic:~# docker pull registry.access.redhat.com/ubi8/nginx-120
+Using default tag: latest
+latest: Pulling from ubi8/nginx-120
+2cf6011ee4f7: Pull complete
+417723e2b937: Pull complete
+b33f9f40b609: Pull complete
+Digest: sha256:5d67dca0e85c205bcc1a47cb2b51c72afb9de58ccdb6cc5621866ff1995d9c90
+Status: Downloaded newer image for registry.access.redhat.com/ubi8/nginx-120:latest
+registry.access.redhat.com/ubi8/nginx-120:latest
+root@ubuntu-bionic:~# docker images
+REPOSITORY                                  TAG       IMAGE ID       CREATED       SIZE
+nginx                                       latest    1403e55ab369   2 weeks ago   142MB
+httpd                                       latest    73c10eb9266e   2 weeks ago   145MB
+ubuntu                                      20.04     d5447fc01ae6   4 weeks ago   72.8MB
+registry.access.redhat.com/ubi8/nginx-120   latest    7b6141cc59e8   5 weeks ago   430MB
+alpine                                      latest    49176f190c7e   6 weeks ago   7.05MB
+root@ubuntu-bionic:~# docker pull redis
+Using default tag: latest
+latest: Pulling from library/redis
+3f4ca61aafcd: Already exists
+c3775af77098: Pull complete
+fa7c5c7e501c: Pull complete
+4059b4d2a3ce: Pull complete
+6bc523bfb16a: Pull complete
+20bf15ad3c24: Pull complete
+Digest: sha256:8184cfe57f205ab34c62bd0e9552dffeb885d2a7f82ce4295c0df344cb6f0007
+Status: Downloaded newer image for redis:latest
+docker.io/library/redis:latest
+root@ubuntu-bionic:~# docker images
+REPOSITORY                                  TAG       IMAGE ID       CREATED       SIZE
+redis                                       latest    0256c63af7db   2 weeks ago   117MB
+nginx                                       latest    1403e55ab369   2 weeks ago   142MB
+httpd                                       latest    73c10eb9266e   2 weeks ago   145MB
+ubuntu                                      20.04     d5447fc01ae6   4 weeks ago   72.8MB
+registry.access.redhat.com/ubi8/nginx-120   latest    7b6141cc59e8   5 weeks ago   430MB
+alpine                                      latest    49176f190c7e   6 weeks ago   7.05MB
+root@ubuntu-bionic:~# apt update
+Hit:1 https://download.docker.com/linux/ubuntu bionic InRelease
+Get:2 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
+Hit:3 http://archive.ubuntu.com/ubuntu bionic InRelease
+Get:4 http://archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]
+Get:5 http://archive.ubuntu.com/ubuntu bionic-backports InRelease [83.3 kB]
+Fetched 261 kB in 2s (106 kB/s)
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+33 packages can be upgraded. Run 'apt list --upgradable' to see them.
+root@ubuntu-bionic:~# apt install skopeo -y
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+E: Unable to locate package skopeo
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker system events
+^C
+root@ubuntu-bionic:~# docker pull debian:bullseye-slim
+bullseye-slim: Pulling from library/debian
+3f4ca61aafcd: Already exists
+Digest: sha256:171530d298096f0697da36b3324182e872db77c66452b85783ea893680cc1b62
+Status: Downloaded newer image for debian:bullseye-slim
+docker.io/library/debian:bullseye-slim
+root@ubuntu-bionic:~# docker images
+REPOSITORY                                  TAG             IMAGE ID       CREATED       SIZE
+redis                                       latest          0256c63af7db   2 weeks ago   117MB
+nginx                                       latest          1403e55ab369   2 weeks ago   142MB
+httpd                                       latest          73c10eb9266e   2 weeks ago   145MB
+debian                                      bullseye-slim   dd94cb611937   2 weeks ago   80.5MB
+ubuntu                                      20.04           d5447fc01ae6   4 weeks ago   72.8MB
+registry.access.redhat.com/ubi8/nginx-120   latest          7b6141cc59e8   5 weeks ago   430MB
+alpine                                      latest          49176f190c7e   6 weeks ago   7.05MB
+root@ubuntu-bionic:~# docker history alpine
+IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
+49176f190c7e   6 weeks ago   /bin/sh -c #(nop)  CMD ["/bin/sh"]              0B
+<missing>      6 weeks ago   /bin/sh -c #(nop) ADD file:587cae71969871d3c…   7.05MB
+root@ubuntu-bionic:~# docker history ubuntu
+Error response from daemon: No such image: ubuntu:latest
+root@ubuntu-bionic:~# docker history ubuntu
+Error response from daemon: No such image: ubuntu:latest
+root@ubuntu-bionic:~# docker history ubuntu:20.04
+IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
+d5447fc01ae6   4 weeks ago   /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      4 weeks ago   /bin/sh -c #(nop) ADD file:9d282119af0c42bc8…   72.8MB
+root@ubuntu-bionic:~# docker history debian
+Error response from daemon: No such image: debian:latest
+root@ubuntu-bionic:~# docker history debian:bullseye-slim
+IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
+dd94cb611937   2 weeks ago   /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      2 weeks ago   /bin/sh -c #(nop) ADD file:73e68ae6852c9afbb…   80.5MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker history httpd
+IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
+73c10eb9266e   2 weeks ago   /bin/sh -c #(nop)  CMD ["httpd-foreground"]     0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  EXPOSE 80                    0B
+<missing>      2 weeks ago   /bin/sh -c #(nop) COPY file:c432ff61c4993ecd…   138B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  STOPSIGNAL SIGWINCH          0B
+<missing>      2 weeks ago   /bin/sh -c set -eux;   savedAptMark="$(apt-m…   59.9MB
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENV HTTPD_PATCHES=           0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENV HTTPD_SHA256=eb397fee…   0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENV HTTPD_VERSION=2.4.54     0B
+<missing>      2 weeks ago   /bin/sh -c set -eux;  apt-get update;  apt-g…   4.76MB
+<missing>      2 weeks ago   /bin/sh -c #(nop) WORKDIR /usr/local/apache2    0B
+<missing>      2 weeks ago   /bin/sh -c mkdir -p "$HTTPD_PREFIX"  && chow…   0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENV PATH=/usr/local/apach…   0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENV HTTPD_PREFIX=/usr/loc…   0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      2 weeks ago   /bin/sh -c #(nop) ADD file:73e68ae6852c9afbb…   80.5MB
+root@ubuntu-bionic:~# docker history nginx
+IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
+1403e55ab369   2 weeks ago   /bin/sh -c #(nop)  CMD ["nginx" "-g" "daemon…   0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  STOPSIGNAL SIGQUIT           0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  EXPOSE 80                    0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENTRYPOINT ["/docker-entr…   0B
+<missing>      2 weeks ago   /bin/sh -c #(nop) COPY file:e57eef017a414ca7…   4.62kB
+<missing>      2 weeks ago   /bin/sh -c #(nop) COPY file:abbcbf84dc17ee44…   1.27kB
+<missing>      2 weeks ago   /bin/sh -c #(nop) COPY file:5c18272734349488…   2.12kB
+<missing>      2 weeks ago   /bin/sh -c #(nop) COPY file:7b307b62e82255f0…   1.62kB
+<missing>      2 weeks ago   /bin/sh -c set -x     && addgroup --system -…   61.3MB
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENV PKG_RELEASE=1~bullseye   0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENV NJS_VERSION=0.7.9        0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENV NGINX_VERSION=1.23.3     0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  LABEL maintainer=NGINX Do…   0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      2 weeks ago   /bin/sh -c #(nop) ADD file:73e68ae6852c9afbb…   80.5MB
+root@ubuntu-bionic:~# docker image inspect nginx
+[
+    {
+        "Id": "sha256:1403e55ab369cd1c8039c34e6b4d47ca40bbde39c371254c7cba14756f472f52",
+        "RepoTags": [
+            "nginx:latest"
+        ],
+        "RepoDigests": [
+            "nginx@sha256:0047b729188a15da49380d9506d65959cce6d40291ccfb4e039f5dc7efd33286"
+        ],
+        "Parent": "",
+        "Comment": "",
+        "Created": "2022-12-21T11:28:36.032076444Z",
+        "Container": "998db7a2435fd5f47cc2066317b9c502c84c6d386ee02e932fcae89b956d64d1",
+        "ContainerConfig": {
+            "Hostname": "998db7a2435f",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.23.3",
+                "NJS_VERSION=0.7.9",
+                "PKG_RELEASE=1~bullseye"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "#(nop) ",
+                "CMD [\"nginx\" \"-g\" \"daemon off;\"]"
+            ],
+            "Image": "sha256:54be6ffbe9af301b35b9af81ecfae9044801d34e735798a0607839ba6a10ff23",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGQUIT"
+        },
+        "DockerVersion": "20.10.12",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "NGINX_VERSION=1.23.3",
+                "NJS_VERSION=0.7.9",
+                "PKG_RELEASE=1~bullseye"
+            ],
+            "Cmd": [
+                "nginx",
+                "-g",
+                "daemon off;"
+            ],
+            "Image": "sha256:54be6ffbe9af301b35b9af81ecfae9044801d34e735798a0607839ba6a10ff23",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "maintainer": "NGINX Docker Maintainers <docker-maint@nginx.com>"
+            },
+            "StopSignal": "SIGQUIT"
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 141812353,
+        "VirtualSize": 141812353,
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/4900f2c46a6f4350c90e0606e326d437016e81056aa4691babb2cf9705f2f4fc/diff:/var/lib/docker/overlay2/12ee56341cd6d556cc911144e79fdffabe333f42e6ebef86d94a8f68e449837d/diff:/var/lib/docker/overlay2/75113577cdc97c363fd5c7ce40be75447c2dcf2000756a12b8c0e031d3776f4a/diff:/var/lib/docker/overlay2/a8ca9b6b18d3a1207be219eb9d779cd9366a7d914b4aaf0bc717e45f60f93e86/diff:/var/lib/docker/overlay2/759dd090e50eebb63df27da96c3aeb145f4f9e3582a8794bc2840cb05c1afaf5/diff",
+                "MergedDir": "/var/lib/docker/overlay2/02dc46e4a6d5c2803f9b2610ec75486ae714b8d4fcb5dc4d04c3a2c16557698b/merged",
+                "UpperDir": "/var/lib/docker/overlay2/02dc46e4a6d5c2803f9b2610ec75486ae714b8d4fcb5dc4d04c3a2c16557698b/diff",
+                "WorkDir": "/var/lib/docker/overlay2/02dc46e4a6d5c2803f9b2610ec75486ae714b8d4fcb5dc4d04c3a2c16557698b/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:8a70d251b65364698f195f5a0b424e0d67de81307b79afbe662abd797068a069",
+                "sha256:2dadbc36c170719f910a91a5417bf49deabd05bc39ccff3819a391462675ecd0",
+                "sha256:2b3eec3578075bf2ebce00bd6958f1c21b4b5624fcdde301a01b4bda7b8a9bc7",
+                "sha256:d13aea24d2cb0aee650b72ffa8a0c7863a5b06327542ae46fe5987f223cb836c",
+                "sha256:9a0ef04f57f54323637935c32b46a2cae3e0451a39b1c306d5b4bc6d4f479e0b",
+                "sha256:c72d75f45e5b50e9d16b482faac4646268abc644f1bd68dc2f45100defcf08a2"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]
+root@ubuntu-bionic:~# docker image inspect ubuntu:20.04
+[
+    {
+        "Id": "sha256:d5447fc01ae62c20beffbfa50bc51b2797f9d7ebae031b8c2245b5be8ff1c75b",
+        "RepoTags": [
+            "ubuntu:20.04"
+        ],
+        "RepoDigests": [
+            "ubuntu@sha256:0e0402cd13f68137edb0266e1d2c682f217814420f2d43d300ed8f65479b14fb"
+        ],
+        "Parent": "",
+        "Comment": "",
+        "Created": "2022-12-09T01:20:21.654215477Z",
+        "Container": "b6ce0d8da1075f1f7c45bfec88caa5d16654b697cb26397114b25a68547b8709",
+        "ContainerConfig": {
+            "Hostname": "b6ce0d8da107",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "#(nop) ",
+                "CMD [\"bash\"]"
+            ],
+            "Image": "sha256:01fe37f9e4b30b1250690382adf843a09b5fc5082df363dacd0578b8cd0869a1",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "DockerVersion": "20.10.12",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "bash"
+            ],
+            "Image": "sha256:01fe37f9e4b30b1250690382adf843a09b5fc5082df363dacd0578b8cd0869a1",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": null
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 72785453,
+        "VirtualSize": 72785453,
+        "GraphDriver": {
+            "Data": {
+                "MergedDir": "/var/lib/docker/overlay2/d80c78af093d8cf8e58c297c8838f746833173ed652988c6d3a68b26767cc55f/merged",
+                "UpperDir": "/var/lib/docker/overlay2/d80c78af093d8cf8e58c297c8838f746833173ed652988c6d3a68b26767cc55f/diff",
+                "WorkDir": "/var/lib/docker/overlay2/d80c78af093d8cf8e58c297c8838f746833173ed652988c6d3a68b26767cc55f/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:0002c93bdb3704dd9e36ce5153ef637f84de253015f3ee330468dccdeacad60b"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]
+root@ubuntu-bionic:~# docker images
+REPOSITORY                                  TAG             IMAGE ID       CREATED       SIZE
+redis                                       latest          0256c63af7db   2 weeks ago   117MB
+nginx                                       latest          1403e55ab369   2 weeks ago   142MB
+httpd                                       latest          73c10eb9266e   2 weeks ago   145MB
+debian                                      bullseye-slim   dd94cb611937   2 weeks ago   80.5MB
+ubuntu                                      20.04           d5447fc01ae6   4 weeks ago   72.8MB
+registry.access.redhat.com/ubi8/nginx-120   latest          7b6141cc59e8   5 weeks ago   430MB
+alpine                                      latest          49176f190c7e   6 weeks ago   7.05MB
+root@ubuntu-bionic:~# docker rmi -f $(docker images -q)
+Untagged: redis:latest
+Untagged: redis@sha256:8184cfe57f205ab34c62bd0e9552dffeb885d2a7f82ce4295c0df344cb6f0007
+Deleted: sha256:0256c63af7dbecdb8783029521d1bcaf02d194d1451ad8cddc193352b6caedd0
+Deleted: sha256:11d3e7496f9435aa17c32e96886c8b89b6dbe8be9e8263ba9bc5c6fd44e632bb
+Deleted: sha256:95219880a66576cc49e294f293d22234c3518c3bbe64dbdf75a1e79b870e41f5
+Deleted: sha256:34edf27afa3279288ef024346a04b38d4d4984c5c1f6c8e7781a19242094ea22
+Deleted: sha256:710a4b769aced88d2336e11741d3041664a2b442ccfe0a8fae2ee0391cd7c6ac
+Deleted: sha256:555a4acbdb957b13ce0e5320a106dba38014f72d84dcab6ca989ce7ab505308f
+Untagged: nginx:latest
+Untagged: nginx@sha256:0047b729188a15da49380d9506d65959cce6d40291ccfb4e039f5dc7efd33286
+Deleted: sha256:1403e55ab369cd1c8039c34e6b4d47ca40bbde39c371254c7cba14756f472f52
+Deleted: sha256:0274f249eda4c376bde7cbe0b719ea3aef10201846d7262f37f7a0fc0b4fcf90
+Deleted: sha256:e01fc49cb889c5dd6b11390e9863ba00f886315c5a403ee5955fb5c88d2aa576
+Deleted: sha256:b2a367ee540c5d40c704fdece005b422f55f85a61b96a25bd99d6847669958a0
+Deleted: sha256:2c1c6d39cbcc4767b0798aacc03f203951057e77c5edebca1fdfbcd4997f2919
+Deleted: sha256:d260638126e1d2d3202dec36b67f124624fbcdad3afedd334e7260bf75dad8da
+Untagged: httpd:latest
+Untagged: httpd@sha256:f8c7bdfa89fb4448c95856c6145359f67dd447134018247609e7a23e5c5ec03a
+Deleted: sha256:73c10eb9266e7e3850d5368a05e4bdd823d6f4cec0fd03a2b19c0118645a49ea
+Deleted: sha256:4bedba7e48b2c05e7b25237b7872b386808470bfb7c11fc034c4cb574c07da78
+Deleted: sha256:dd0dc3976c2887324ca9a6fed5e0c579805ff525654ad56784f35075ed9ea0ad
+Deleted: sha256:5a9bcff101188f2c1ccca4fbef62ff2437c4a3bb76494a79bb73dadf5f909dbe
+Deleted: sha256:811072e331e87ece66ce8a0d75cfecd3a4390d57bfeb9b7f30c60a037efdd992
+Untagged: debian:bullseye-slim
+Untagged: debian@sha256:171530d298096f0697da36b3324182e872db77c66452b85783ea893680cc1b62
+Deleted: sha256:dd94cb6119372edb0c0b0f6df637121285553e7c5bde84ca1309a3f982706c08
+Deleted: sha256:8a70d251b65364698f195f5a0b424e0d67de81307b79afbe662abd797068a069
+Untagged: ubuntu:20.04
+Untagged: ubuntu@sha256:0e0402cd13f68137edb0266e1d2c682f217814420f2d43d300ed8f65479b14fb
+Deleted: sha256:d5447fc01ae62c20beffbfa50bc51b2797f9d7ebae031b8c2245b5be8ff1c75b
+Deleted: sha256:0002c93bdb3704dd9e36ce5153ef637f84de253015f3ee330468dccdeacad60b
+Untagged: registry.access.redhat.com/ubi8/nginx-120:latest
+Untagged: registry.access.redhat.com/ubi8/nginx-120@sha256:5d67dca0e85c205bcc1a47cb2b51c72afb9de58ccdb6cc5621866ff1995d9c90
+Deleted: sha256:7b6141cc59e8506e1058371e03e647bcca67bd1e0494407820fcd7fa59be1907
+Deleted: sha256:9f3dbf3bab1c5ab6d08f38e6c8079e851a1ea822bf1bd6d1ec1ed8b3e3988b5c
+Deleted: sha256:846ebc65977759f9b1a272fbf7aff37212221f271fcd20c25d0882444ccbad22
+Deleted: sha256:f275d6f51a507a902e387882f655988b24e89bbaaa814a4aa79ad4c350e75e3f
+Untagged: alpine:latest
+Untagged: alpine@sha256:8914eb54f968791faf6a8638949e480fef81e697984fba772b3976835194c6d4
+Deleted: sha256:49176f190c7e9cdb51ac85ab6c6d5e4512352218190cd69b08e6fd803ffbf3da
+Deleted: sha256:ded7a220bb058e28ee3254fbba04ca90b679070424424761a53a043b93b612bf
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+root@ubuntu-bionic:~# docker pull httpd:2.4.18
+2.4.18: Pulling from library/httpd
+Image docker.io/library/httpd:2.4.18 uses outdated schema1 manifest format. Please upgrade to a schema2 image for better future compatibility. More information at https://docs.docker.com/registry/spec/deprecated-schema-v1/
+fdd5d7827f33: Pull complete
+a3ed95caeb02: Pull complete
+6dda107bf71b: Pull complete
+86e2da0d8a9f: Pull complete
+6acf2ff123fe: Pull complete
+94a268baee66: Pull complete
+Digest: sha256:bcfcee1fe86942a96c0b1ee9c2f1aaaca9c5d0f9d261ed48dff50f41ad31e1ac
+Status: Downloaded newer image for httpd:2.4.18
+docker.io/library/httpd:2.4.18
+root@ubuntu-bionic:~# docker search quay.io/httpd
+NAME                              DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+centos7/httpd-24-centos7          Apache httpd 2.4 available as container, is …   0
+redhattraining/httpd-parent                                                       0
+tike/openshift-sp-httpd           This is the httpd half of an Openshift-ready…   0
+jbisson/ubi-base-httpd                                                            0
+sjenning/httpd                                                                    0
+sclorg/httpd-24-c9s                Apache HTTP Server 2.4 available as contain…   0
+ex280rakesh/httpd-task1                                                           0
+spaship/httpd                     SPAship httpd                                   0
+emreozkan/httpd                                                                   0
+openshifttest/httpd-24                                                            0
+jbarous/do180-custom-httpd                                                        0
+ellery/compliance-httpd                                                           0
+workinginterface/httpd-24                                                         0
+dbais76/httpd                                                                     0
+kcalliga/httpd-8080                                                               0
+netbull/httpd-tools                                                               0
+kcalliga/httpd-ping-8080                                                          0
+usernotfound/httpd                                                                0
+sfhassan/basictools               The container has all basic networking tools…   0
+kushal_singh/do288-httpd-new                                                      0
+puzzle/apache-httpd-modsecurity                                                   0
+kushalsamota/httpd                                                                0
+vincenzo_s/do180-custom-httpd                                                     0
+hvanderm/do180-custom-httpd                                                       0
+k_tomas_burkon/tom-httpd                                                          0
+root@ubuntu-bionic:~# docker search registry.access.redhat.com/httpd
+NAME                                               DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+ubi9/httpd-24                                      rhcc_registry.access.redhat.com_ubi9/httpd-24   0
+rhscl/httpd-24-rhel7                               Apache HTTP 2.4 Server                          0
+rhscl/varnish-4-rhel7                              Varnish 4 high-performance HTTP accelerator     0
+rhmap45/httpd                                      Provides an extension to the RHSCL Httpd ima…   0
+rhmap44/httpd                                      Provides an extension to the RHSCL Httpd Doc…   0
+rhmap42/httpd                                      Provides an extension to the RHSCL Httpd Doc…   0
+openshift3/ose-egress-http-proxy                   This is the egress router HTTP proxy for Ope…   0
+rhmap46/httpd                                      Provides an extension to the RHSCL Httpd ima…   0
+cloudforms47/cfme-openshift-httpd                  CloudForms 4.7 APP image for OpenShift          0
+rhscl/varnish-6-rhel7                              Varnish available as container is a base pla…   0
+cloudforms46-beta/cfme-openshift-httpd             CloudForms is a management and automation pl…   0
+ubi8/httpd-24                                      Platform for running Apache httpd 2.4 or bui…   0
+cloudforms46/cfme-openshift-httpd                  Web Server image for a multi-pod Red Hat® Cl…   0
+rhmap43/httpd                                      Provides an extension to the RHSCL Httpd Doc…   0
+rhmap47/httpd                                      Provides an extension to the RHSCL Httpd ima…   0
+rhscl/varnish-5-rhel7                              Varnish available as container is a base pla…   0
+openshift3/prometheus-alert-buffer                 A small server that saves incoming webhook J…   0
+openshift3/ose-f5-router                           The F5 router plug-in integrates with an exi…   0
+openshift3/ose-haproxy-router                      Default router implementation for OpenShift …   0
+cloudforms46-beta/cfme-httpd-configmap-generator   CloudForms is a management and automation pl…   0
+cloudforms46/cfme-httpd-configmap-generator        External Authentication configuration mappin…   0
+cloudforms47/cfme-httpd-configmap-generator        CloudForms 4.7 APP image for OpenShift          0
+rhscl/s2i-core-rhel7                               The s2i core container image serves as a bas…   0
+rhscl/nginx-112-rhel7                              Nginx is a web server and a reverse proxy se…   0
+cloudforms46/cfme-openshift-app                    Red Hat® CloudForms Appliance image to be us…   0
+3scale-amp22/backend                               3scale is an API Management Platform suitabl…   0
+rhscl/nginx-114-rhel7                              Nginx is a web server and a reverse proxy se…   0
+root@ubuntu-bionic:~# docker search docker.io/httpd
+NAME                                 DESCRIPTION                                     STARS     OFFICIAL   AUTOMATED
+httpd                                The Apache HTTP Server Project                  4291      [OK]
+clearlinux/httpd                     httpd HyperText Transfer Protocol (HTTP) ser…   2
+avenga/httpd-static                                                                  0
+betterweb/httpd                                                                      0
+centos/httpd-24-centos7              Platform for running Apache httpd 2.4 or bui…   45
+manageiq/httpd                       Container with httpd, built on CentOS for Ma…   1                    [OK]
+centos/httpd-24-centos8                                                              1
+dockerpinata/httpd                                                                   1
+19022021/httpd-connection_test       This httpd image will test the connectivity …   0
+paketobuildpacks/httpd                                                               0
+publici/httpd                        httpd:latest                                    1                    [OK]
+centos/httpd                                                                         36                   [OK]
+e2eteam/httpd                                                                        0
+manasip/httpd                                                                        0
+httpdocker/kubia                                                                     0
+solsson/httpd-openidc                mod_auth_openidc on official httpd image, ve…   2                    [OK]
+patrickha/httpd-err                                                                  0
+hypoport/httpd-cgi                   httpd-cgi                                       2                    [OK]
+httpdss/archerysec                   ArcherySec repository                           0                    [OK]
+manageiq/httpd_configmap_generator   Httpd Configmap Generator                       0                    [OK]
+amd64/httpd                          The Apache HTTP Server Project                  0
+dariko/httpd-rproxy-ldap             Apache httpd reverse proxy with LDAP authent…   1                    [OK]
+inanimate/httpd-ssl                  A play container with httpd, ssl enabled, an…   1                    [OK]
+lead4good/httpd-fpm                  httpd server which connects via fcgi proxy h…   1                    [OK]
+nnasaki/httpd-ssi                    SSI enabled Apache 2.4 on Alpine Linux          1
+root@ubuntu-bionic:~# docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username:
+Error: Non-null Username Required
+root@ubuntu-bionic:~# docker pull mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine
+1.15.5-alpine: Pulling from oss/nginx/nginx
+4fe2ade4980c: Pull complete
+c3f09dfaf47d: Pull complete
+83283d0e9bb9: Pull complete
+e2e530da9538: Pull complete
+Digest: sha256:f84780a5ad654515bcd9ba2f35e20935e1246799f198683dd2c4f74d19ae9e5e
+Status: Downloaded newer image for mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine
+mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine
+root@ubuntu-bionic:~# docker images
+REPOSITORY                          TAG             IMAGE ID       CREATED       SIZE
+mcr.microsoft.com/oss/nginx/nginx   1.15.5-alpine   aae476eee77d   4 years ago   17.7MB
+httpd                               2.4.18          d10e4c3e7ec9   6 years ago   193MB
+root@ubuntu-bionic:~# docker search mcr.microsoft.com:nginx
+NAME      DESCRIPTION   STARS     OFFICIAL   AUTOMATED
+root@ubuntu-bionic:~# docker search mcr.microsoft.com/nginx
+Error response from daemon: error decoding registry search results: invalid character '<' looking for beginning of value
+root@ubuntu-bionic:~# docker search mcr.microsoft.com/oss/nginx
+Error response from daemon: error decoding registry search results: invalid character '<' looking for beginning of value
+root@ubuntu-bionic:~# docker search mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine
+Error response from daemon: error decoding registry search results: invalid character '<' looking for beginning of value
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker search "mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine"
+Error response from daemon: error decoding registry search results: invalid character '<' looking for beginning of value
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker search mcr.microsoft.com/ubuntu
+Error response from daemon: error decoding registry search results: invalid character '<' looking for beginning of value
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu-bionic:~# ps -ef | grep "docker|PID"
+root     22910  2229  0 15:55 pts/0    00:00:00 grep --color=auto docker|PID
+root@ubuntu-bionic:~# ps -ef | grep "dockerd|PID"
+root     22912  2229  0 15:56 pts/0    00:00:00 grep --color=auto dockerd|PID
+root@ubuntu-bionic:~# ps -ef | grep docker
+root     19905     1  1 13:55 ?        00:01:49 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+root     22914  2229  0 15:56 pts/0    00:00:00 grep --color=auto docker
+root@ubuntu-bionic:~# ps -ef | grep -i "docker|PID"
+root     22916  2229  0 15:56 pts/0    00:00:00 grep --color=auto -i docker|PID
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ps -ef | grep docker
+root     19905     1  1 13:55 ?        00:01:49 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+root     22918  2229  0 15:58 pts/0    00:00:00 grep --color=auto docker
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY                          TAG             IMAGE ID       CREATED       SIZE
+mcr.microsoft.com/oss/nginx/nginx   1.15.5-alpine   aae476eee77d   4 years ago   17.7MB
+httpd                               2.4.18          d10e4c3e7ec9   6 years ago   193MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker run -d --name=httpd-con httpd
+Unable to find image 'httpd:latest' locally
+latest: Pulling from library/httpd
+3f4ca61aafcd: Pull complete
+2e3d233b6299: Pull complete
+6d859023da80: Pull complete
+f856a04699cc: Pull complete
+ec3bbe99d2b1: Pull complete
+Digest: sha256:f8c7bdfa89fb4448c95856c6145359f67dd447134018247609e7a23e5c5ec03a
+Status: Downloaded newer image for httpd:latest
+eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND              CREATED         STATUS         PORTS     NAMES
+eea4d7b8d7e1   httpd     "httpd-foreground"   8 seconds ago   Up 3 seconds   80/tcp    httpd-con
+root@ubuntu-bionic:~# docker history httpd
+IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
+73c10eb9266e   2 weeks ago   /bin/sh -c #(nop)  CMD ["httpd-foreground"]     0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  EXPOSE 80                    0B
+<missing>      2 weeks ago   /bin/sh -c #(nop) COPY file:c432ff61c4993ecd…   138B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  STOPSIGNAL SIGWINCH          0B
+<missing>      2 weeks ago   /bin/sh -c set -eux;   savedAptMark="$(apt-m…   59.9MB
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENV HTTPD_PATCHES=           0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENV HTTPD_SHA256=eb397fee…   0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENV HTTPD_VERSION=2.4.54     0B
+<missing>      2 weeks ago   /bin/sh -c set -eux;  apt-get update;  apt-g…   4.76MB
+<missing>      2 weeks ago   /bin/sh -c #(nop) WORKDIR /usr/local/apache2    0B
+<missing>      2 weeks ago   /bin/sh -c mkdir -p "$HTTPD_PREFIX"  && chow…   0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENV PATH=/usr/local/apach…   0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  ENV HTTPD_PREFIX=/usr/loc…   0B
+<missing>      2 weeks ago   /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      2 weeks ago   /bin/sh -c #(nop) ADD file:73e68ae6852c9afbb…   80.5MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ls /var/lib/docker/containers/
+eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7
+root@ubuntu-bionic:~# ls /var/lib/docker/containers/eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7/
+checkpoints     eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7-json.log  hostname  mounts       resolv.conf.hash
+config.v2.json  hostconfig.json                                                            hosts     resolv.conf
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker top httpd-con
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                23048               23019               0                   16:24               ?                   00:00:00            httpd -DFOREGROUND
+www-data            23084               23048               0                   16:24               ?                   00:00:00            httpd -DFOREGROUND
+www-data            23085               23048               0                   16:24               ?                   00:00:00            httpd -DFOREGROUND
+www-data            23086               23048               0                   16:24               ?                   00:00:00            httpd -DFOREGROUND
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker exec -it httpd-con bash
+root@eea4d7b8d7e1:/usr/local/apache2# pwd
+/usr/local/apache2
+root@eea4d7b8d7e1:/usr/local/apache2# cd
+root@eea4d7b8d7e1:~# pwd
+/root
+root@eea4d7b8d7e1:~# touch newfile
+root@eea4d7b8d7e1:~# ls
+newfile
+root@eea4d7b8d7e1:~# exit
+exit
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND              CREATED          STATUS          PORTS     NAMES
+eea4d7b8d7e1   httpd     "httpd-foreground"   11 minutes ago   Up 10 minutes   80/tcp    httpd-con
+root@ubuntu-bionic:~# docker stop httpd-con
+httpd-con
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND              CREATED          STATUS                     PORTS     NAMES
+eea4d7b8d7e1   httpd     "httpd-foreground"   11 minutes ago   Exited (0) 4 seconds ago             httpd-con
+root@ubuntu-bionic:~# docker start httpd-con
+httpd-con
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND              CREATED          STATUS         PORTS     NAMES
+eea4d7b8d7e1   httpd     "httpd-foreground"   12 minutes ago   Up 2 seconds   80/tcp    httpd-con
+root@ubuntu-bionic:~# docker stop httpd-con
+
+httpd-con
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND              CREATED          STATUS                     PORTS     NAMES
+eea4d7b8d7e1   httpd     "httpd-foreground"   16 minutes ago   Exited (0) 4 seconds ago             httpd-con
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker container inspect httpd-con
+[
+    {
+        "Id": "eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7",
+        "Created": "2023-01-08T16:24:07.122998348Z",
+        "Path": "httpd-foreground",
+        "Args": [],
+        "State": {
+            "Status": "exited",
+            "Running": false,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 0,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2023-01-08T16:36:33.717618544Z",
+            "FinishedAt": "2023-01-08T16:40:42.204872877Z"
+        },
+        "Image": "sha256:73c10eb9266e7e3850d5368a05e4bdd823d6f4cec0fd03a2b19c0118645a49ea",
+        "ResolvConfPath": "/var/lib/docker/containers/eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7/hostname",
+        "HostsPath": "/var/lib/docker/containers/eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7/hosts",
+        "LogPath": "/var/lib/docker/containers/eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7/eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7-json.log",
+        "Name": "/httpd-con",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                30,
+                134
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/6def80b7d4dfdcbc22d37c2773acf2fd8d3d5acafbd3fe3ab44ffac187cb4299-init/diff:/var/lib/docker/overlay2/ec57567dc1e3dc0ee0466f7350a105af702505a5b9d3066728867da712406733/diff:/var/lib/docker/overlay2/1784e44aeed0826981495e621dfe53187f4e732fb655d3481fa8f514820a6b3f/diff:/var/lib/docker/overlay2/89e0f74e8957584a7255c38fb4935920401546d730edd09a52cc983a51265fb4/diff:/var/lib/docker/overlay2/1919f42fd14c2797e9969b4a48ccfdb6c02c4bc0537cd916afcb646c8372b060/diff:/var/lib/docker/overlay2/67050f8419f427b0320bd0b86cb19da0c5fd5cd494965855b124b6cfff2e481f/diff",
+                "MergedDir": "/var/lib/docker/overlay2/6def80b7d4dfdcbc22d37c2773acf2fd8d3d5acafbd3fe3ab44ffac187cb4299/merged",
+                "UpperDir": "/var/lib/docker/overlay2/6def80b7d4dfdcbc22d37c2773acf2fd8d3d5acafbd3fe3ab44ffac187cb4299/diff",
+                "WorkDir": "/var/lib/docker/overlay2/6def80b7d4dfdcbc22d37c2773acf2fd8d3d5acafbd3fe3ab44ffac187cb4299/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "eea4d7b8d7e1",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/apache2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "HTTPD_PREFIX=/usr/local/apache2",
+                "HTTPD_VERSION=2.4.54",
+                "HTTPD_SHA256=eb397feeefccaf254f8d45de3768d9d68e8e73851c49afd5b7176d1ecf80c340",
+                "HTTPD_PATCHES="
+            ],
+            "Cmd": [
+                "httpd-foreground"
+            ],
+            "Image": "httpd",
+            "Volumes": null,
+            "WorkingDir": "/usr/local/apache2",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {},
+            "StopSignal": "SIGWINCH"
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "acb1168a2c3544164f3161d5a41cc45ec27c04e1f626b47051e2106f62286799",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {},
+            "SandboxKey": "/var/run/docker/netns/acb1168a2c35",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "b1a2085cf223cfcbd449db7bc8b7ff2dbb66e48f19f270b45cb78a180db35afd",
+                    "EndpointID": "",
+                    "Gateway": "",
+                    "IPAddress": "",
+                    "IPPrefixLen": 0,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker stats httpd-con
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT   MEM %     NET I/O   BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     0B / 0B             0.00%     0B / 0B   0B / 0B     0
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT   MEM %     NET I/O   BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     0B / 0B             0.00%     0B / 0B   0B / 0B     0
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT   MEM %     NET I/O   BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     0B / 0B             0.00%     0B / 0B   0B / 0B     0
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT   MEM %     NET I/O   BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     0B / 0B             0.00%     0B / 0B   0B / 0B     0
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT   MEM %     NET I/O   BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     0B / 0B             0.00%     0B / 0B   0B / 0B     0
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT   MEM %     NET I/O   BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     0B / 0B             0.00%     0B / 0B   0B / 0B     0
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT   MEM %     NET I/O   BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     0B / 0B             0.00%     0B / 0B   0B / 0B     0
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT   MEM %     NET I/O   BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     0B / 0B             0.00%     0B / 0B   0B / 0B     0
+^C
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker start httpd-con
+httpd-con
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker stats httpd-con
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     6.242MiB / 984.9MiB   0.63%     696B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     6.242MiB / 984.9MiB   0.63%     696B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.02%     6.242MiB / 984.9MiB   0.63%     696B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.02%     6.242MiB / 984.9MiB   0.63%     696B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.04%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.04%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.02%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.02%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.02%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.02%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O     BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.02%     6.242MiB / 984.9MiB   0.63%     766B / 0B   0B / 0B     82
+^C
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker container inspect httpd-con
+[
+    {
+        "Id": "eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7",
+        "Created": "2023-01-08T16:24:07.122998348Z",
+        "Path": "httpd-foreground",
+        "Args": [],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 23985,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2023-01-08T16:43:47.834242997Z",
+            "FinishedAt": "2023-01-08T16:40:42.204872877Z"
+        },
+        "Image": "sha256:73c10eb9266e7e3850d5368a05e4bdd823d6f4cec0fd03a2b19c0118645a49ea",
+        "ResolvConfPath": "/var/lib/docker/containers/eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7/hostname",
+        "HostsPath": "/var/lib/docker/containers/eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7/hosts",
+        "LogPath": "/var/lib/docker/containers/eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7/eea4d7b8d7e1a85ab90c759f4afaef751ca22f11183530f623bd9c72b6e430d7-json.log",
+        "Name": "/httpd-con",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": null,
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {},
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                30,
+                134
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/6def80b7d4dfdcbc22d37c2773acf2fd8d3d5acafbd3fe3ab44ffac187cb4299-init/diff:/var/lib/docker/overlay2/ec57567dc1e3dc0ee0466f7350a105af702505a5b9d3066728867da712406733/diff:/var/lib/docker/overlay2/1784e44aeed0826981495e621dfe53187f4e732fb655d3481fa8f514820a6b3f/diff:/var/lib/docker/overlay2/89e0f74e8957584a7255c38fb4935920401546d730edd09a52cc983a51265fb4/diff:/var/lib/docker/overlay2/1919f42fd14c2797e9969b4a48ccfdb6c02c4bc0537cd916afcb646c8372b060/diff:/var/lib/docker/overlay2/67050f8419f427b0320bd0b86cb19da0c5fd5cd494965855b124b6cfff2e481f/diff",
+                "MergedDir": "/var/lib/docker/overlay2/6def80b7d4dfdcbc22d37c2773acf2fd8d3d5acafbd3fe3ab44ffac187cb4299/merged",
+                "UpperDir": "/var/lib/docker/overlay2/6def80b7d4dfdcbc22d37c2773acf2fd8d3d5acafbd3fe3ab44ffac187cb4299/diff",
+                "WorkDir": "/var/lib/docker/overlay2/6def80b7d4dfdcbc22d37c2773acf2fd8d3d5acafbd3fe3ab44ffac187cb4299/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [],
+        "Config": {
+            "Hostname": "eea4d7b8d7e1",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/apache2/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "HTTPD_PREFIX=/usr/local/apache2",
+                "HTTPD_VERSION=2.4.54",
+                "HTTPD_SHA256=eb397feeefccaf254f8d45de3768d9d68e8e73851c49afd5b7176d1ecf80c340",
+                "HTTPD_PATCHES="
+            ],
+            "Cmd": [
+                "httpd-foreground"
+            ],
+            "Image": "httpd",
+            "Volumes": null,
+            "WorkingDir": "/usr/local/apache2",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {},
+            "StopSignal": "SIGWINCH"
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "4d8b86b0163359b8336edc74f19a42b715e5f9b7527405a6d1f870a7f3a391fb",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "80/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/4d8b86b01633",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "62a6d6a2bce3ca821973ebc072207f62a5b5d1ecf112485e181a403f78a82466",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "b1a2085cf223cfcbd449db7bc8b7ff2dbb66e48f19f270b45cb78a180db35afd",
+                    "EndpointID": "62a6d6a2bce3ca821973ebc072207f62a5b5d1ecf112485e181a403f78a82466",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+root@ubuntu-bionic:~# ping 172.17.0.2
+PING 172.17.0.2 (172.17.0.2) 56(84) bytes of data.
+64 bytes from 172.17.0.2: icmp_seq=1 ttl=64 time=0.292 ms
+64 bytes from 172.17.0.2: icmp_seq=2 ttl=64 time=0.072 ms
+64 bytes from 172.17.0.2: icmp_seq=3 ttl=64 time=0.063 ms
+64 bytes from 172.17.0.2: icmp_seq=4 ttl=64 time=0.074 ms
+64 bytes from 172.17.0.2: icmp_seq=5 ttl=64 time=0.069 ms
+64 bytes from 172.17.0.2: icmp_seq=6 ttl=64 time=0.044 ms
+^C
+--- 172.17.0.2 ping statistics ---
+6 packets transmitted, 6 received, 0% packet loss, time 5136ms
+rtt min/avg/max/mdev = 0.044/0.102/0.292/0.085 ms
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker container inspect httpd-con | grep sha
+        "Image": "sha256:73c10eb9266e7e3850d5368a05e4bdd823d6f4cec0fd03a2b19c0118645a49ea",
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker top httpd-con
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                23985               23959               0                   16:43               ?                   00:00:00            httpd -DFOREGROUND
+www-data            24033               23985               0                   16:43               ?                   00:00:00            httpd -DFOREGROUND
+www-data            24034               23985               0                   16:43               ?                   00:00:00            httpd -DFOREGROUND
+www-data            24035               23985               0                   16:43               ?                   00:00:00            httpd -DFOREGROUND
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND              CREATED          STATUS          PORTS     NAMES
+eea4d7b8d7e1   httpd     "httpd-foreground"   55 minutes ago   Up 35 minutes   80/tcp    httpd-con
+root@ubuntu-bionic:~# docker ps -o wide
+unknown shorthand flag: 'o' in -o
+See 'docker ps --help'.
+root@ubuntu-bionic:~# docker ps --help
+
+Usage:  docker ps [OPTIONS]
+
+List containers
+
+Aliases:
+  docker container ls, docker container list, docker container ps, docker ps
+
+Options:
+  -a, --all             Show all containers (default shows just running)
+  -f, --filter filter   Filter output based on conditions provided
+      --format string   Format output using a custom template:
+                        'table':            Print output in table format with column headers (default)
+                        'table TEMPLATE':   Print output in table format using the given Go template
+                        'json':             Print in JSON format
+                        'TEMPLATE':         Print output using the given Go template.
+                        Refer to https://docs.docker.com/go/formatting/ for more information about formatting output with templates
+  -n, --last int        Show n last created containers (includes all states) (default -1)
+  -l, --latest          Show the latest created container (includes all states)
+      --no-trunc        Don't truncate output
+  -q, --quiet           Only display container IDs
+  -s, --size            Display total file sizes
+root@ubuntu-bionic:~# docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          3         1         356.3MB   211.1MB (59%)
+Containers      1         1         35B       0B (0%)
+Local Volumes   0         0         0B        0B
+Build Cache     0         0         0B        0B
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker top httpd-con
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                23985               23959               0                   16:43               ?                   00:00:00            httpd -DFOREGROUND
+www-data            24033               23985               0                   16:43               ?                   00:00:00            httpd -DFOREGROUND
+www-data            24034               23985               0                   16:43               ?                   00:00:00            httpd -DFOREGROUND
+www-data            24035               23985               0                   16:43               ?                   00:00:00            httpd -DFOREGROUND
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker stats httpd-con
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.00%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.02%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.02%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+CONTAINER ID   NAME        CPU %     MEM USAGE / LIMIT     MEM %     NET I/O         BLOCK I/O   PIDS
+eea4d7b8d7e1   httpd-con   0.01%     6.223MiB / 984.9MiB   0.63%     1.93kB / 672B   0B / 0B     82
+^C
+root@ubuntu-bionic:~# docker images
+REPOSITORY                          TAG             IMAGE ID       CREATED       SIZE
+httpd                               latest          73c10eb9266e   2 weeks ago   145MB
+mcr.microsoft.com/oss/nginx/nginx   1.15.5-alpine   aae476eee77d   4 years ago   17.7MB
+httpd                               2.4.18          d10e4c3e7ec9   6 years ago   193MB
+root@ubuntu-bionic:~# docker run -it --name=ubuntu-con ubuntu
+Unable to find image 'ubuntu:latest' locally
+latest: Pulling from library/ubuntu
+6e3729cf69e0: Pull complete
+Digest: sha256:27cb6e6ccef575a4698b66f5de06c7ecd61589132d5a91d098f7f3f9285415a9
+Status: Downloaded newer image for ubuntu:latest
+root@1df3d5157c2d:/# ls
+bin  boot  dev  etc  home  lib  lib32  lib64  libx32  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@1df3d5157c2d:/# exit
+exit
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND              CREATED              STATUS                     PORTS     NAMES
+1df3d5157c2d   ubuntu    "bash"               About a minute ago   Exited (0) 5 seconds ago             ubuntu-con
+eea4d7b8d7e1   httpd     "httpd-foreground"   About an hour ago    Up 42 minutes              80/tcp    httpd-con
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker run -it --name=ubuntu-con ubuntu
+docker: Error response from daemon: Conflict. The container name "/ubuntu-con" is already in use by container "1df3d5157c2d0b3610a8dbcb7109543261a4046d546c55862164cd6087bc24c2". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker run -it --name=ubuntu-con-2 ubuntu
+root@f03fa96cf7de:/# ps -ef
+UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  2 17:29 pts/0    00:00:00 bash
+root         9     1  0 17:29 pts/0    00:00:00 ps -ef
+root@f03fa96cf7de:/# root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps
+
+CONTAINER ID   IMAGE     COMMAND              CREATED             STATUS          PORTS     NAMES
+f03fa96cf7de   ubuntu    "bash"               20 seconds ago      Up 19 seconds             ubuntu-con-2
+eea4d7b8d7e1   httpd     "httpd-foreground"   About an hour ago   Up 46 minutes   80/tcp    httpd-con
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker -ps a
+unknown shorthand flag: 'p' in -ps
+See 'docker --help'.
+
+Usage:  docker [OPTIONS] COMMAND
+
+A self-sufficient runtime for containers
+
+Common Commands:
+  run         Create and run a new container from an image
+  exec        Execute a command in a running container
+  ps          List containers
+  build       Build an image from a Dockerfile
+  pull        Download an image from a registry
+  push        Upload an image to a registry
+  images      List images
+  login       Log in to a registry
+  logout      Log out from a registry
+  search      Search Docker Hub for images
+  version     Show the Docker version information
+  info        Display system-wide information
+
+Management Commands:
+  builder     Manage builds
+  buildx*     Docker Buildx (Docker Inc., v0.10.0-rc2)
+  compose*    Docker Compose (Docker Inc., v2.14.2)
+  container   Manage containers
+  context     Manage contexts
+  image       Manage images
+  manifest    Manage Docker image manifests and manifest lists
+  network     Manage networks
+  plugin      Manage plugins
+  scan*       Docker Scan (Docker Inc., v0.23.0)
+  system      Manage Docker
+  trust       Manage trust on Docker images
+  volume      Manage volumes
+
+Swarm Commands:
+  swarm       Manage Swarm
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a running container
+  commit      Create a new image from a container's changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container's filesystem
+  events      Get real time events from the server
+  export      Export a container's filesystem as a tar archive
+  history     Show the history of an image
+  import      Import the contents from a tarball to create a filesystem image
+  inspect     Return low-level information on Docker objects
+  kill        Kill one or more running containers
+  load        Load an image from a tar archive or STDIN
+  logs        Fetch the logs of a container
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  rmi         Remove one or more images
+  save        Save one or more images to a tar archive (streamed to STDOUT by default)
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  tag         Create a tag TARGET_IMAGE that refers to SOURCE_IMAGE
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  wait        Block until one or more containers stop, then print their exit codes
+
+Global Options:
+      --config string      Location of client config files (default "/root/.docker")
+  -c, --context string     Name of the context to use to connect to the daemon (overrides DOCKER_HOST env var and default
+                           context set with "docker context use")
+  -D, --debug              Enable debug mode
+  -H, --host list          Daemon socket(s) to connect to
+  -l, --log-level string   Set the logging level ("debug"|"info"|"warn"|"error"|"fatal") (default "info")
+      --tls                Use TLS; implied by --tlsverify
+      --tlscacert string   Trust certs signed only by this CA (default "/root/.docker/ca.pem")
+      --tlscert string     Path to TLS certificate file (default "/root/.docker/cert.pem")
+      --tlskey string      Path to TLS key file (default "/root/.docker/key.pem")
+      --tlsverify          Use TLS and verify the remote
+  -v, --version            Print version information and quit
+
+Run 'docker COMMAND --help' for more information on a command.
+
+For more help on how to use Docker, head to https://docs.docker.com/go/guides/
+
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND              CREATED             STATUS                     PORTS     NAMES
+f03fa96cf7de   ubuntu    "bash"               44 seconds ago      Up 43 seconds                        ubuntu-con-2
+1df3d5157c2d   ubuntu    "bash"               5 minutes ago       Exited (0) 4 minutes ago             ubuntu-con
+eea4d7b8d7e1   httpd     "httpd-foreground"   About an hour ago   Up 46 minutes              80/tcp    httpd-con
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker rm 1df
+1df
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND              CREATED              STATUS              PORTS     NAMES
+f03fa96cf7de   ubuntu    "bash"               About a minute ago   Up About a minute             ubuntu-con-2
+eea4d7b8d7e1   httpd     "httpd-foreground"   About an hour ago    Up 47 minutes       80/tcp    httpd-con
+root@ubuntu-bionic:~# docker attach ubuntu-con-2
+root@f03fa96cf7de:/# ps -ef
+UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  0 17:29 pts/0    00:00:00 bash
+root        10     1  0 17:33 pts/0    00:00:00 ps -ef
+root@f03fa96cf7de:/# ls
+bin  boot  dev  etc  home  lib  lib32  lib64  libx32  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@f03fa96cf7de:/#
+root@f03fa96cf7de:/# read escape sequence
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND              CREATED             STATUS          PORTS     NAMES
+f03fa96cf7de   ubuntu    "bash"               3 minutes ago       Up 3 minutes              ubuntu-con-2
+eea4d7b8d7e1   httpd     "httpd-foreground"   About an hour ago   Up 49 minutes   80/tcp    httpd-con
+root@ubuntu-bionic:~# docker top httpd-con-2
+Error response from daemon: No such container: httpd-con-2
+root@ubuntu-bionic:~# docker top ubuntu-con-2
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                24779               24745               0                   17:29               pts/0               00:00:00            bash
+root@ubuntu-bionic:~# docker exec -it httpd-con-2 /bin/bash
+Error response from daemon: No such container: httpd-con-2
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker exec -it ubuntu-con-2 /bin/bash
+root@f03fa96cf7de:/# ps -ef
+UID        PID  PPID  C STIME TTY          TIME CMD
+root         1     0  0 17:29 pts/0    00:00:00 bash
+root        12     0  2 17:37 pts/1    00:00:00 /bin/bash
+root        20    12  0 17:37 pts/1    00:00:00 ps -ef
+root@f03fa96cf7de:/# exit
+exit
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND              CREATED             STATUS          PORTS     NAMES
+f03fa96cf7de   ubuntu    "bash"               7 minutes ago       Up 7 minutes              ubuntu-con-2
+eea4d7b8d7e1   httpd     "httpd-foreground"   About an hour ago   Up 53 minutes   80/tcp    httpd-con
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker top ubuntu-con-2
+UID                 PID                 PPID                C                   STIME               TTY                 TIME                CMD
+root                24779               24745               0                   17:29               pts/0               00:00:00            bash
+root@ubuntu-bionic:~# docker exec -it ubuntu-con-2 touch /root/newfile
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker stop $(docker ps -aq)
+f03fa96cf7de
+eea4d7b8d7e1
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND              CREATED             STATUS                        PORTS     NAMES
+f03fa96cf7de   ubuntu    "bash"               14 minutes ago      Exited (137) 10 seconds ago             ubuntu-con-2
+eea4d7b8d7e1   httpd     "httpd-foreground"   About an hour ago   Exited (0) 19 seconds ago               httpd-con
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker rm $(docker ps -aq)
+f03fa96cf7de
+eea4d7b8d7e1
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps --filter status=running
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu-bionic:~# docker stop $(docker ps --filter status=running -q)
+"docker stop" requires at least 1 argument.
+See 'docker stop --help'.
+
+Usage:  docker stop [OPTIONS] CONTAINER [CONTAINER...]
+
+Stop one or more running containers
+root@ubuntu-bionic:~# docker rm $(docker ps --filter status=exited -q)
+"docker rm" requires at least 1 argument.
+See 'docker rm --help'.
+
+Usage:  docker rm [OPTIONS] CONTAINER [CONTAINER...]
+
+Remove one or more containers
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY                          TAG             IMAGE ID       CREATED       SIZE
+httpd                               latest          73c10eb9266e   2 weeks ago   145MB
+ubuntu                              latest          6b7dfa7e8fdb   4 weeks ago   77.8MB
+mcr.microsoft.com/oss/nginx/nginx   1.15.5-alpine   aae476eee77d   4 years ago   17.7MB
+httpd                               2.4.18          d10e4c3e7ec9   6 years ago   193MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker rmi $(docker images -q)
+Untagged: httpd:latest
+Untagged: httpd@sha256:f8c7bdfa89fb4448c95856c6145359f67dd447134018247609e7a23e5c5ec03a
+Deleted: sha256:73c10eb9266e7e3850d5368a05e4bdd823d6f4cec0fd03a2b19c0118645a49ea
+Deleted: sha256:4bedba7e48b2c05e7b25237b7872b386808470bfb7c11fc034c4cb574c07da78
+Deleted: sha256:dd0dc3976c2887324ca9a6fed5e0c579805ff525654ad56784f35075ed9ea0ad
+Deleted: sha256:5a9bcff101188f2c1ccca4fbef62ff2437c4a3bb76494a79bb73dadf5f909dbe
+Deleted: sha256:811072e331e87ece66ce8a0d75cfecd3a4390d57bfeb9b7f30c60a037efdd992
+Deleted: sha256:8a70d251b65364698f195f5a0b424e0d67de81307b79afbe662abd797068a069
+Untagged: ubuntu:latest
+Untagged: ubuntu@sha256:27cb6e6ccef575a4698b66f5de06c7ecd61589132d5a91d098f7f3f9285415a9
+Deleted: sha256:6b7dfa7e8fdbe18ad425dd965a1049d984f31cf0ad57fa6d5377cca355e65f03
+Deleted: sha256:6515074984c6f8bb1b8a9962c8fb5f310fc85e70b04c88442a3939c026dbfad3
+Untagged: mcr.microsoft.com/oss/nginx/nginx:1.15.5-alpine
+Untagged: mcr.microsoft.com/oss/nginx/nginx@sha256:f84780a5ad654515bcd9ba2f35e20935e1246799f198683dd2c4f74d19ae9e5e
+Deleted: sha256:aae476eee77d4fd6998c09c3ac5593da3ff26239f383b1189945e34a28a37e11
+Deleted: sha256:f9f31f39770773519cf68265bfbde05ae120c426fff9975c5b3bb783939d1f0a
+Deleted: sha256:5b02757b6cb243755f155311fd17e185e1e2a7f4a592fdacb2eaf46f76ef4ee3
+Deleted: sha256:227e78518471542c51c3244d59d026fabc200374dea3d526fbfb6eacc4a749ab
+Deleted: sha256:df64d3292fd6194b7865d7326af5255db6d81e9df29f48adde61a918fbd8c332
+Untagged: httpd:2.4.18
+Untagged: httpd@sha256:bcfcee1fe86942a96c0b1ee9c2f1aaaca9c5d0f9d261ed48dff50f41ad31e1ac
+Deleted: sha256:d10e4c3e7ec976f313d8f650d1c779bd5fb8783866763f12e4831510c135d8fd
+Deleted: sha256:f899f7e27fe1fb3c1b0708f74933adbabd98981f8c5aefb65b4436a01ec626ce
+Deleted: sha256:230490bc80ed016d0c22cc75c749a8c49c5eab2c00f6b5f77bf5c7721529c59d
+Deleted: sha256:7d1ca4fbc62c8352427cb218d4a1c223d5dd7e54fb6df12f0e53bcd1c14e07ad
+Deleted: sha256:8aeba0eaf0efb0e8f85779ea40db557448f2c760354948789a763ef8a2d4034d
+Deleted: sha256:51a0f60f2b8238548533fccf675d21e60882e145c5cae67aa510be12f8c28c40
+Deleted: sha256:e1832dc691383ccc5db0845651c408a997c31e93c1982d6a18dce69ff3aee96e
+Deleted: sha256:7e1618fad9fb16640d72a5e41f7c3a8651f31d8409b3a7219f0fc84379b6dc31
+Deleted: sha256:69149960f2e2674265edd23f832d6fa26574ab2afdd713a2b75b254a4411b416
+Deleted: sha256:645b3470fd5a2bb863206490119030101847bac3704463f8576fe90e274291ce
+Deleted: sha256:5ae35615df0549b450258af03ec74a0f7996d8aa30df5eae7cea7f9b08ed4be4
+Deleted: sha256:02ff90df226000c1386080f59bc06672a0c442ce1dd5769c294f443368c4deb4
+Deleted: sha256:894fdee79cd8b48c0b0b6ac6664ad0327c67782c80a1d81ac2d0a65505d0e116
+Deleted: sha256:917c0fc99b353c0397a9effdf042d72529de7c452669b1e11b05bec3088c7056
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# exit
+logout
+vagrant@ubuntu-bionic:~$ exit
+logout
+Connection to 127.0.0.1 closed.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant haltt
+Usage: vagrant [options] <command> [<args>]
+
+    -h, --help                       Print this help.
+
+Common commands:
+     autocomplete    manages autocomplete installation on host
+     box             manages boxes: installation, removal, etc.
+     cloud           manages everything related to Vagrant Cloud
+     destroy         stops and deletes all traces of the vagrant machine
+     global-status   outputs status Vagrant environments for this user
+     halt            stops the vagrant machine
+     help            shows the help for a subcommand
+     hostmanager     plugin: vagrant-hostmanager: manages the /etc/hosts file within a multi-machine environment
+     init            initializes a new Vagrant environment by creating a Vagrantfile
+     login
+     package         packages a running vagrant environment into a box
+     plugin          manages plugins: install, uninstall, update, etc.
+     port            displays information about guest port mappings
+     powershell      connects to machine via powershell remoting
+     provision       provisions the vagrant machine
+     push            deploys code in this environment to a configured destination
+     rdp             connects to machine via RDP
+     reload          restarts vagrant machine, loads new Vagrantfile configuration
+     resume          resume a suspended vagrant machine
+     serve           start Vagrant server
+     snapshot        manages snapshots: saving, restoring, etc.
+     ssh             connects to machine via SSH
+     ssh-config      outputs OpenSSH valid configuration to connect to the machine
+     status          outputs status of the vagrant machine
+     suspend         suspends the machine
+     up              starts and provisions the vagrant environment
+     upload          upload to machine via communicator
+     validate        validates the Vagrantfile
+     version         prints current and latest Vagrant version
+     winrm           executes commands on a machine via WinRM
+     winrm-config    outputs WinRM configuration to connect to the machine
+
+For help on any individual command run `vagrant COMMAND -h`
+
+Additional subcommands are available, but are either more advanced
+or not commonly used. To see all subcommands, run the command
+`vagrant list-commands`.
+        --[no-]color                 Enable or disable color output
+        --machine-readable           Enable machine readable output
+    -v, --version                    Display Vagrant version
+        --debug                      Enable debug output
+        --timestamp                  Enable timestamps on log output
+        --debug-timestamp            Enable debug output with timestamps
+        --no-tty                     Enable non-interactive output
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant halt
+==> default: Attempting graceful shutdown of VM...
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant status
+Current machine states:
+
+default                   poweroff (virtualbox)
+
+The VM is powered off. To restart the VM, simply run `vagrant up`
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ exit
+exit
+
+C:\WINDOWS\system32>
