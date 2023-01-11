@@ -1,0 +1,2140 @@
+Microsoft Windows [Version 10.0.19045.2364]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\WINDOWS\system32>bash
+
+Gaurav@DESKTOP-NF0FS2B  /c/WINDOWS/system32
+$ cd ~/devops/provision/vagrant/bionic/
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant status
+==> vagrant: A new version of Vagrant is available: 2.3.4 (installed version: 2.3.2)!
+==> vagrant: To upgrade visit: https://www.vagrantup.com/downloads.html
+
+Current machine states:
+
+default                   saved (virtualbox)
+
+To resume this VM, simply run `vagrant up`.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Checking if box 'ubuntu/bionic64' version '20221102.0.0' is up to date...
+==> default: A newer version of the box 'ubuntu/bionic64' for provider 'virtualbox' is
+==> default: available! You currently have version '20221102.0.0'. The latest is version
+==> default: '20221207.0.0'. Run `vagrant box update` to update.
+==> default: Resuming suspended VM...
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+Timed out while waiting for the machine to boot. This means that
+Vagrant was unable to communicate with the guest machine within
+the configured ("config.vm.boot_timeout" value) time period.
+
+If you look above, you should be able to see the error(s) that
+Vagrant had when attempting to connect to the machine. These errors
+are usually good hints as to what may be wrong.
+
+If you're using a custom box, make sure that networking is properly
+working and you're able to connect to the machine. It is a common
+problem that networking isn't setup properly in these boxes.
+Verify that authentication configurations are also setup properly,
+as well.
+
+If the box appears to be booting properly, you may want to increase
+the timeout ("config.vm.boot_timeout") value.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Checking if box 'ubuntu/bionic64' version '20221102.0.0' is up to date...
+==> default: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+==> default: flag to force provisioning. Provisioners marked to run always will still run.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant destroy -f
+==> default: Forcing shutdown of VM...
+==> default: Destroying VM and associated drives...
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Importing base box 'ubuntu/bionic64'...
+==> default: Matching MAC address for NAT networking...
+==> default: Checking if box 'ubuntu/bionic64' version '20221102.0.0' is up to date...
+==> default: Setting the name of the VM: bionic_default_1673459618315_8143
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+==> default: Forwarding ports...
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Running 'pre-boot' VM customizations...
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default:
+    default: Vagrant insecure key detected. Vagrant will automatically replace
+    default: this with a newly generated keypair for better security.
+    default:
+    default: Inserting generated public key within guest...
+The guest machine entered an invalid state while waiting for it
+to boot. Valid states are 'starting, running'. The machine is in the
+'paused' state. Please verify everything is configured
+properly and try again.
+
+If the provider you're using has a GUI that comes with it,
+it is often helpful to open that and watch the machine, since the
+GUI often has more helpful error messages than Vagrant can retrieve.
+For example, if you're using VirtualBox, run `vagrant up` while the
+VirtualBox GUI is open.
+
+The primary issue for this error is that the provider you're using
+is not properly configured. This is very rarely a Vagrant issue.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant status
+Current machine states:
+
+default                   running (virtualbox)
+
+The VM is running. To stop this VM, you can run `vagrant halt` to
+shut it down forcefully, or you can run `vagrant suspend` to simply
+suspend the virtual machine. In either case, to restart it again,
+simply run `vagrant up`.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant ssh
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-197-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 11 17:54:47 UTC 2023
+
+  System load:  0.82              Processes:             100
+  Usage of /:   2.9% of 38.70GB   Users logged in:       0
+  Memory usage: 13%               IP address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+
+0 updates can be applied immediately.
+
+New release '20.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-197-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 11 17:54:47 UTC 2023
+
+  System load:  0.82              Processes:             100
+  Usage of /:   2.9% of 38.70GB   Users logged in:       0
+  Memory usage: 13%               IP address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+
+0 updates can be applied immediately.
+
+New release '20.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+vagrant@ubuntu-bionic:~$ sudo su -
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# apt update
+Get:1 http://security.ubuntu.com/ubuntu bionic-security InRelease [88.7 kB]
+Hit:2 http://archive.ubuntu.com/ubuntu bionic InRelease
+Get:3 http://archive.ubuntu.com/ubuntu bionic-updates InRelease [88.7 kB]
+Get:4 http://archive.ubuntu.com/ubuntu bionic-backports InRelease [83.3 kB]
+Get:5 http://security.ubuntu.com/ubuntu bionic-security/main amd64 Packages [2521 kB]
+Get:6 http://archive.ubuntu.com/ubuntu bionic/universe amd64 Packages [8570 kB]
+Get:7 http://security.ubuntu.com/ubuntu bionic-security/main Translation-en [436 kB]
+Get:8 http://security.ubuntu.com/ubuntu bionic-security/restricted amd64 Packages [1055 kB]
+Get:9 http://security.ubuntu.com/ubuntu bionic-security/restricted Translation-en [146 kB]
+Get:10 http://security.ubuntu.com/ubuntu bionic-security/universe amd64 Packages [1254 kB]
+Get:11 http://security.ubuntu.com/ubuntu bionic-security/universe Translation-en [290 kB]
+Get:12 http://security.ubuntu.com/ubuntu bionic-security/multiverse amd64 Packages [19.1 kB]
+Get:13 http://security.ubuntu.com/ubuntu bionic-security/multiverse Translation-en [3908 B]
+Get:14 http://archive.ubuntu.com/ubuntu bionic/universe Translation-en [4941 kB]
+Get:15 http://archive.ubuntu.com/ubuntu bionic/multiverse amd64 Packages [151 kB]
+Get:16 http://archive.ubuntu.com/ubuntu bionic/multiverse Translation-en [108 kB]
+Get:17 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 Packages [2855 kB]
+Get:18 http://archive.ubuntu.com/ubuntu bionic-updates/main Translation-en [523 kB]
+Get:19 http://archive.ubuntu.com/ubuntu bionic-updates/restricted amd64 Packages [1085 kB]
+Get:20 http://archive.ubuntu.com/ubuntu bionic-updates/restricted Translation-en [150 kB]
+Get:21 http://archive.ubuntu.com/ubuntu bionic-updates/universe amd64 Packages [1866 kB]
+Get:22 http://archive.ubuntu.com/ubuntu bionic-updates/universe Translation-en [404 kB]
+Get:23 http://archive.ubuntu.com/ubuntu bionic-updates/multiverse amd64 Packages [25.6 kB]
+Get:24 http://archive.ubuntu.com/ubuntu bionic-updates/multiverse Translation-en [6088 B]
+Get:25 http://archive.ubuntu.com/ubuntu bionic-backports/main amd64 Packages [53.3 kB]
+Get:26 http://archive.ubuntu.com/ubuntu bionic-backports/main Translation-en [14.6 kB]
+Get:27 http://archive.ubuntu.com/ubuntu bionic-backports/universe amd64 Packages [18.1 kB]
+Get:28 http://archive.ubuntu.com/ubuntu bionic-backports/universe Translation-en [8668 B]
+Fetched 26.8 MB in 48s (558 kB/s)
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+38 packages can be upgraded. Run 'apt list --upgradable' to see them.
+root@ubuntu-bionic:~# cat /etc/*release
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=18.04
+DISTRIB_CODENAME=bionic
+DISTRIB_DESCRIPTION="Ubuntu 18.04.6 LTS"
+NAME="Ubuntu"
+VERSION="18.04.6 LTS (Bionic Beaver)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 18.04.6 LTS"
+VERSION_ID="18.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=bionic
+UBUNTU_CODENAME=bionic
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# apt install docker.io -y
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  bridge-utils containerd pigz runc ubuntu-fan
+Suggested packages:
+  ifupdown aufs-tools cgroupfs-mount | cgroup-lite debootstrap docker-doc rinse zfs-fuse | zfsutils
+The following NEW packages will be installed:
+  bridge-utils containerd docker.io pigz runc ubuntu-fan
+0 upgraded, 6 newly installed, 0 to remove and 38 not upgraded.
+Need to get 68.9 MB of archives.
+After this operation, 333 MB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu bionic/universe amd64 pigz amd64 2.4-1 [57.4 kB]
+Get:2 http://archive.ubuntu.com/ubuntu bionic/main amd64 bridge-utils amd64 1.5-15ubuntu1 [30.1 kB]
+Get:3 http://archive.ubuntu.com/ubuntu bionic-updates/universe amd64 runc amd64 1.1.0-0ubuntu1~18.04.1 [3896 kB]
+Get:4 http://archive.ubuntu.com/ubuntu bionic-updates/universe amd64 containerd amd64 1.5.9-0ubuntu1~18.04.2 [33.0 MB]
+Get:5 http://archive.ubuntu.com/ubuntu bionic-updates/universe amd64 docker.io amd64 20.10.12-0ubuntu2~18.04.1 [31.8 MB]
+Get:6 http://archive.ubuntu.com/ubuntu bionic/main amd64 ubuntu-fan all 0.12.10 [34.7 kB]
+Fetched 68.9 MB in 11s (6208 kB/s)
+Preconfiguring packages ...
+Selecting previously unselected package pigz.
+(Reading database ... 60200 files and directories currently installed.)
+Preparing to unpack .../0-pigz_2.4-1_amd64.deb ...
+Unpacking pigz (2.4-1) ...
+Selecting previously unselected package bridge-utils.
+Preparing to unpack .../1-bridge-utils_1.5-15ubuntu1_amd64.deb ...
+Unpacking bridge-utils (1.5-15ubuntu1) ...
+Selecting previously unselected package runc.
+Preparing to unpack .../2-runc_1.1.0-0ubuntu1~18.04.1_amd64.deb ...
+Unpacking runc (1.1.0-0ubuntu1~18.04.1) ...
+Selecting previously unselected package containerd.
+Preparing to unpack .../3-containerd_1.5.9-0ubuntu1~18.04.2_amd64.deb ...
+Unpacking containerd (1.5.9-0ubuntu1~18.04.2) ...
+Selecting previously unselected package docker.io.
+Preparing to unpack .../4-docker.io_20.10.12-0ubuntu2~18.04.1_amd64.deb ...
+Unpacking docker.io (20.10.12-0ubuntu2~18.04.1) ...
+Selecting previously unselected package ubuntu-fan.
+Preparing to unpack .../5-ubuntu-fan_0.12.10_all.deb ...
+Unpacking ubuntu-fan (0.12.10) ...
+Setting up runc (1.1.0-0ubuntu1~18.04.1) ...
+Setting up containerd (1.5.9-0ubuntu1~18.04.2) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/containerd.service ? /lib/systemd/system/containerd.service.
+Setting up bridge-utils (1.5-15ubuntu1) ...
+Setting up ubuntu-fan (0.12.10) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/ubuntu-fan.service ? /lib/systemd/system/ubuntu-fan.service.
+Setting up pigz (2.4-1) ...
+Setting up docker.io (20.10.12-0ubuntu2~18.04.1) ...
+Adding group `docker' (GID 116) ...
+Done.
+Created symlink /etc/systemd/system/multi-user.target.wants/docker.service ? /lib/systemd/system/docker.service.
+Created symlink /etc/systemd/system/sockets.target.wants/docker.socket ? /lib/systemd/system/docker.socket.
+Processing triggers for systemd (237-3ubuntu10.56) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Processing triggers for ureadahead (0.100.0-21) ...
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# systemctl is-active docker
+active
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker --version
+Docker version 20.10.12, build 20.10.12-0ubuntu2~18.04.1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# grep -rhE ^deb /etc/apt/sources.list*
+deb http://archive.ubuntu.com/ubuntu bionic main restricted
+deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted
+deb http://archive.ubuntu.com/ubuntu bionic universe
+deb http://archive.ubuntu.com/ubuntu bionic-updates universe
+deb http://archive.ubuntu.com/ubuntu bionic multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-updates multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-backports main restricted universe multiverse
+deb http://security.ubuntu.com/ubuntu bionic-security main restricted
+deb http://security.ubuntu.com/ubuntu bionic-security universe
+deb http://security.ubuntu.com/ubuntu bionic-security multiverse
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# grep ^ /etc/apt/sources.list /etc/apt/sources.list.d/*
+/etc/apt/sources.list:## Note, this file is written by cloud-init on first boot of an instance
+/etc/apt/sources.list:## modifications made here will not survive a re-bundle.
+/etc/apt/sources.list:## if you wish to make changes you can:
+/etc/apt/sources.list:## a.) add 'apt_preserve_sources_list: true' to /etc/cloud/cloud.cfg
+/etc/apt/sources.list:##     or do the same in user-data
+/etc/apt/sources.list:## b.) add sources in /etc/apt/sources.list.d
+/etc/apt/sources.list:## c.) make changes to template file /etc/cloud/templates/sources.list.tmpl
+/etc/apt/sources.list:
+/etc/apt/sources.list:# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+/etc/apt/sources.list:# newer versions of the distribution.
+/etc/apt/sources.list:deb http://archive.ubuntu.com/ubuntu bionic main restricted
+/etc/apt/sources.list:# deb-src http://archive.ubuntu.com/ubuntu bionic main restricted
+/etc/apt/sources.list:
+/etc/apt/sources.list:## Major bug fix updates produced after the final release of the
+/etc/apt/sources.list:## distribution.
+/etc/apt/sources.list:deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted
+/etc/apt/sources.list:# deb-src http://archive.ubuntu.com/ubuntu bionic-updates main restricted
+/etc/apt/sources.list:
+/etc/apt/sources.list:## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+/etc/apt/sources.list:## team. Also, please note that software in universe WILL NOT receive any
+/etc/apt/sources.list:## review or updates from the Ubuntu security team.
+/etc/apt/sources.list:deb http://archive.ubuntu.com/ubuntu bionic universe
+/etc/apt/sources.list:# deb-src http://archive.ubuntu.com/ubuntu bionic universe
+/etc/apt/sources.list:deb http://archive.ubuntu.com/ubuntu bionic-updates universe
+/etc/apt/sources.list:# deb-src http://archive.ubuntu.com/ubuntu bionic-updates universe
+/etc/apt/sources.list:
+/etc/apt/sources.list:## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+/etc/apt/sources.list:## team, and may not be under a free licence. Please satisfy yourself as to
+/etc/apt/sources.list:## your rights to use the software. Also, please note that software in
+/etc/apt/sources.list:## multiverse WILL NOT receive any review or updates from the Ubuntu
+/etc/apt/sources.list:## security team.
+/etc/apt/sources.list:deb http://archive.ubuntu.com/ubuntu bionic multiverse
+/etc/apt/sources.list:# deb-src http://archive.ubuntu.com/ubuntu bionic multiverse
+/etc/apt/sources.list:deb http://archive.ubuntu.com/ubuntu bionic-updates multiverse
+/etc/apt/sources.list:# deb-src http://archive.ubuntu.com/ubuntu bionic-updates multiverse
+/etc/apt/sources.list:
+/etc/apt/sources.list:## N.B. software from this repository may not have been tested as
+/etc/apt/sources.list:## extensively as that contained in the main release, although it includes
+/etc/apt/sources.list:## newer versions of some applications which may provide useful features.
+/etc/apt/sources.list:## Also, please note that software in backports WILL NOT receive any review
+/etc/apt/sources.list:## or updates from the Ubuntu security team.
+/etc/apt/sources.list:deb http://archive.ubuntu.com/ubuntu bionic-backports main restricted universe multiverse
+/etc/apt/sources.list:# deb-src http://archive.ubuntu.com/ubuntu bionic-backports main restricted universe multiverse
+/etc/apt/sources.list:
+/etc/apt/sources.list:## Uncomment the following two lines to add software from Canonical's
+/etc/apt/sources.list:## 'partner' repository.
+/etc/apt/sources.list:## This software is not part of Ubuntu, but is offered by Canonical and the
+/etc/apt/sources.list:## respective vendors as a service to Ubuntu users.
+/etc/apt/sources.list:# deb http://archive.canonical.com/ubuntu bionic partner
+/etc/apt/sources.list:# deb-src http://archive.canonical.com/ubuntu bionic partner
+/etc/apt/sources.list:
+/etc/apt/sources.list:deb http://security.ubuntu.com/ubuntu bionic-security main restricted
+/etc/apt/sources.list:# deb-src http://security.ubuntu.com/ubuntu bionic-security main restricted
+/etc/apt/sources.list:deb http://security.ubuntu.com/ubuntu bionic-security universe
+/etc/apt/sources.list:# deb-src http://security.ubuntu.com/ubuntu bionic-security universe
+/etc/apt/sources.list:deb http://security.ubuntu.com/ubuntu bionic-security multiverse
+/etc/apt/sources.list:# deb-src http://security.ubuntu.com/ubuntu bionic-security multiverse
+grep: /etc/apt/sources.list.d/*: No such file or directory
+root@ubuntu-bionic:~# ls /etc/apt/sources.list.d/
+root@ubuntu-bionic:~# ls /etc/apt/sources.list
+sources.list    sources.list.d/
+root@ubuntu-bionic:~# cat /etc/apt/sources.list.d
+cat: /etc/apt/sources.list.d: Is a directory
+root@ubuntu-bionic:~# cd /etc/apt/sources.list.d
+root@ubuntu-bionic:/etc/apt/sources.list.d# ls
+root@ubuntu-bionic:/etc/apt/sources.list.d#
+root@ubuntu-bionic:/etc/apt/sources.list.d#
+root@ubuntu-bionic:/etc/apt/sources.list.d# cd /
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# grep ^ /etc/apt/sources.list
+## Note, this file is written by cloud-init on first boot of an instance
+## modifications made here will not survive a re-bundle.
+## if you wish to make changes you can:
+## a.) add 'apt_preserve_sources_list: true' to /etc/cloud/cloud.cfg
+##     or do the same in user-data
+## b.) add sources in /etc/apt/sources.list.d
+## c.) make changes to template file /etc/cloud/templates/sources.list.tmpl
+
+# See http://help.ubuntu.com/community/UpgradeNotes for how to upgrade to
+# newer versions of the distribution.
+deb http://archive.ubuntu.com/ubuntu bionic main restricted
+# deb-src http://archive.ubuntu.com/ubuntu bionic main restricted
+
+## Major bug fix updates produced after the final release of the
+## distribution.
+deb http://archive.ubuntu.com/ubuntu bionic-updates main restricted
+# deb-src http://archive.ubuntu.com/ubuntu bionic-updates main restricted
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team. Also, please note that software in universe WILL NOT receive any
+## review or updates from the Ubuntu security team.
+deb http://archive.ubuntu.com/ubuntu bionic universe
+# deb-src http://archive.ubuntu.com/ubuntu bionic universe
+deb http://archive.ubuntu.com/ubuntu bionic-updates universe
+# deb-src http://archive.ubuntu.com/ubuntu bionic-updates universe
+
+## N.B. software from this repository is ENTIRELY UNSUPPORTED by the Ubuntu
+## team, and may not be under a free licence. Please satisfy yourself as to
+## your rights to use the software. Also, please note that software in
+## multiverse WILL NOT receive any review or updates from the Ubuntu
+## security team.
+deb http://archive.ubuntu.com/ubuntu bionic multiverse
+# deb-src http://archive.ubuntu.com/ubuntu bionic multiverse
+deb http://archive.ubuntu.com/ubuntu bionic-updates multiverse
+# deb-src http://archive.ubuntu.com/ubuntu bionic-updates multiverse
+
+## N.B. software from this repository may not have been tested as
+## extensively as that contained in the main release, although it includes
+## newer versions of some applications which may provide useful features.
+## Also, please note that software in backports WILL NOT receive any review
+## or updates from the Ubuntu security team.
+deb http://archive.ubuntu.com/ubuntu bionic-backports main restricted universe multiverse
+# deb-src http://archive.ubuntu.com/ubuntu bionic-backports main restricted universe multiverse
+
+## Uncomment the following two lines to add software from Canonical's
+## 'partner' repository.
+## This software is not part of Ubuntu, but is offered by Canonical and the
+## respective vendors as a service to Ubuntu users.
+# deb http://archive.canonical.com/ubuntu bionic partner
+# deb-src http://archive.canonical.com/ubuntu bionic partner
+
+deb http://security.ubuntu.com/ubuntu bionic-security main restricted
+# deb-src http://security.ubuntu.com/ubuntu bionic-security main restricted
+deb http://security.ubuntu.com/ubuntu bionic-security universe
+# deb-src http://security.ubuntu.com/ubuntu bionic-security universe
+deb http://security.ubuntu.com/ubuntu bionic-security multiverse
+# deb-src http://security.ubuntu.com/ubuntu bionic-security multiverse
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2023-01-11 18:10:48 UTC; 9min ago
+     Docs: https://docs.docker.com
+ Main PID: 2821 (dockerd)
+    Tasks: 8
+   CGroup: /system.slice/docker.service
+           +-2821 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Jan 11 18:10:47 ubuntu-bionic dockerd[2821]: time="2023-01-11T18:10:47.119011048Z" level=info msg="ClientConn switching balancer to \"pick_first\"" module=gJan 11 18:10:47 ubuntu-bionic dockerd[2821]: time="2023-01-11T18:10:47.233263394Z" level=warning msg="Your kernel does not support swap memory limit"
+Jan 11 18:10:47 ubuntu-bionic dockerd[2821]: time="2023-01-11T18:10:47.233747417Z" level=warning msg="Your kernel does not support CPU realtime scheduler"
+Jan 11 18:10:47 ubuntu-bionic dockerd[2821]: time="2023-01-11T18:10:47.234069260Z" level=info msg="Loading containers: start."
+Jan 11 18:10:47 ubuntu-bionic dockerd[2821]: time="2023-01-11T18:10:47.675047249Z" level=info msg="Default bridge (docker0) is assigned with an IP address 1Jan 11 18:10:48 ubuntu-bionic dockerd[2821]: time="2023-01-11T18:10:48.025032565Z" level=info msg="Loading containers: done."
+Jan 11 18:10:48 ubuntu-bionic dockerd[2821]: time="2023-01-11T18:10:48.078121739Z" level=info msg="Docker daemon" commit="20.10.12-0ubuntu2~18.04.1" graphdrJan 11 18:10:48 ubuntu-bionic dockerd[2821]: time="2023-01-11T18:10:48.078452577Z" level=info msg="Daemon has completed initialization"
+Jan 11 18:10:48 ubuntu-bionic systemd[1]: Started Docker Application Container Engine.
+Jan 11 18:10:48 ubuntu-bionic dockerd[2821]: time="2023-01-11T18:10:48.192441892Z" level=info msg="API listen on /var/run/docker.sock"
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# apt list docker*
+Listing... Done
+docker/bionic 1.5-1build1 amd64
+docker-compose/bionic 1.17.1-2 all
+docker-containerd/bionic 0.2.3+git+docker1.13.1~ds1-1 amd64
+docker-doc/bionic-updates 20.10.12-0ubuntu2~18.04.1 all
+docker-registry/bionic 2.6.2~ds1-1 amd64
+docker-runc/bionic 1.0.0~rc2+git+docker1.13.1~ds1-3 amd64
+docker.io/bionic-updates,now 20.10.12-0ubuntu2~18.04.1 amd64 [installed]
+docker2aci/bionic 0.14.0+dfsg-2 amd64
+root@ubuntu-bionic:/# apt list --help
+apt 1.6.14 (amd64)
+Usage: apt [options] command
+
+apt is a commandline package manager and provides commands for
+searching and managing as well as querying information about packages.
+It provides the same functionality as the specialized APT tools,
+like apt-get and apt-cache, but enables options more suitable for
+interactive use by default.
+
+Most used commands:
+  list - list packages based on package names
+  search - search in package descriptions
+  show - show package details
+  install - install packages
+  remove - remove packages
+  autoremove - Remove automatically all unused packages
+  update - update list of available packages
+  upgrade - upgrade the system by installing/upgrading packages
+  full-upgrade - upgrade the system by removing/installing/upgrading packages
+  edit-sources - edit the source information file
+
+See apt(8) for more information about the available commands.
+Configuration options and syntax is detailed in apt.conf(5).
+Information about how to configure sources can be found in sources.list(5).
+Package and version choices can be expressed via apt_preferences(5).
+Security details are available in apt-secure(8).
+                                        This APT has Super Cow Powers.
+root@ubuntu-bionic:/# apt list search docker*
+Listing... Done
+docker/bionic 1.5-1build1 amd64
+docker-compose/bionic 1.17.1-2 all
+docker-containerd/bionic 0.2.3+git+docker1.13.1~ds1-1 amd64
+docker-doc/bionic-updates 20.10.12-0ubuntu2~18.04.1 all
+docker-registry/bionic 2.6.2~ds1-1 amd64
+docker-runc/bionic 1.0.0~rc2+git+docker1.13.1~ds1-3 amd64
+docker.io/bionic-updates,now 20.10.12-0ubuntu2~18.04.1 amd64 [installed]
+docker2aci/bionic 0.14.0+dfsg-2 amd64
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker pull mysql
+Using default tag: latest
+latest: Pulling from library/mysql
+0ed027b72ddc: Pull complete
+0296159747f1: Pull complete
+3d2f9b664bd3: Pull complete
+df6519f81c26: Extracting [==============================================>    ]  4.325MB/4.608MB
+df6519f81c26: Pull complete
+36bb5e56d458: Pull complete
+054e8fde88d0: Pull complete
+f2b494c50c7f: Pull complete
+132bc0d471b8: Pull complete
+135ec7033a05: Pull complete
+5961f0272472: Pull complete
+75b5f7a3d3a4: Pull complete
+Digest: sha256:3d7ae561cf6095f6aca8eb7830e1d14734227b1fb4748092f2be2cfbccf7d614
+Status: Downloaded newer image for mysql:latest
+docker.io/library/mysql:latest
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+mysql        latest    7484689f290f   5 weeks ago   538MB
+root@ubuntu-bionic:/# docker run -d --name=mysql-con1 mysql
+020be708e1c46ae1029df03807f60816f06d62a7c56693f1149c8e6e287a4fe4
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS                     PORTS     NAMES
+020be708e1c4   mysql     "docker-entrypoint.s…"   7 seconds ago   Exited (1) 4 seconds ago             mysql-con1
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker logs mysql-con1
+2023-01-11 19:12:23+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.31-1.el8 started.
+2023-01-11 19:12:23+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2023-01-11 19:12:23+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.31-1.el8 started.
+2023-01-11 19:12:24+00:00 [ERROR] [Entrypoint]: Database is uninitialized and password option is not specified
+    You need to specify one of the following as an environment variable:
+    - MYSQL_ROOT_PASSWORD
+    - MYSQL_ALLOW_EMPTY_PASSWORD
+    - MYSQL_RANDOM_ROOT_PASSWORD
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker logs --help
+
+Usage:  docker logs [OPTIONS] CONTAINER
+
+Fetch the logs of a container
+
+Options:
+      --details        Show extra details provided to logs
+  -f, --follow         Follow log output
+      --since string   Show logs since timestamp (e.g. 2013-01-02T13:23:37Z) or relative (e.g. 42m for 42 minutes)
+  -n, --tail string    Number of lines to show from the end of the logs (default "all")
+  -t, --timestamps     Show timestamps
+      --until string   Show logs before a timestamp (e.g. 2013-01-02T13:23:37Z) or relative (e.g. 42m for 42 minutes)
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker logs mysql-con1 --details
+ 2023-01-11 19:12:23+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.31-1.el8 started.
+ 2023-01-11 19:12:23+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+ 2023-01-11 19:12:23+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.31-1.el8 started.
+ 2023-01-11 19:12:24+00:00 [ERROR] [Entrypoint]: Database is uninitialized and password option is not specified
+     You need to specify one of the following as an environment variable:
+     - MYSQL_ROOT_PASSWORD
+     - MYSQL_ALLOW_EMPTY_PASSWORD
+     - MYSQL_RANDOM_ROOT_PASSWORD
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker run -d --name=mysql-con2 -e MYSQL_ROOT_PASSWORD=gnayakadmin mysql
+0d25b03b17d0bc11c4eaac3f823ec491aac94eedb4a73e7a210a62fcb30280d9
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                 NAMES
+0d25b03b17d0   mysql     "docker-entrypoint.s…"   4 seconds ago   Up 2 seconds   3306/tcp, 33060/tcp   mysql-con2
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                      PORTS                 NAMES
+0d25b03b17d0   mysql     "docker-entrypoint.s…"   7 seconds ago    Up 5 seconds                3306/tcp, 33060/tcp   mysql-con2
+020be708e1c4   mysql     "docker-entrypoint.s…"   12 minutes ago   Exited (1) 12 minutes ago                         mysql-con1
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker logs mysql-con2
+2023-01-11 19:24:51+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.31-1.el8 started.
+2023-01-11 19:24:52+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2023-01-11 19:24:52+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.31-1.el8 started.
+2023-01-11 19:24:52+00:00 [Note] [Entrypoint]: Initializing database files
+2023-01-11T19:24:52.572064Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T19:24:52.573250Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.31) initializing of server in progress as process 81
+2023-01-11T19:24:52.616219Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-01-11T19:24:55.400038Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-01-11T19:24:59.969706Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2023-01-11 19:25:11+00:00 [Note] [Entrypoint]: Database files initialized
+2023-01-11 19:25:11+00:00 [Note] [Entrypoint]: Starting temporary server
+2023-01-11T19:25:11.596585Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T19:25:11.599406Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 130
+2023-01-11T19:25:11.662012Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-01-11T19:25:12.658577Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-01-11T19:25:13.329250Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2023-01-11T19:25:13.329499Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2023-01-11T19:25:13.333407Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2023-01-11T19:25:13.416914Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+2023-01-11T19:25:13.419255Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.31'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
+2023-01-11 19:25:13+00:00 [Note] [Entrypoint]: Temporary server started.
+'/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
+Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+
+2023-01-11 19:25:18+00:00 [Note] [Entrypoint]: Stopping temporary server
+2023-01-11T19:25:19.333328Z 10 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.31).
+2023-01-11T19:25:22.970181Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.31)  MySQL Community Server - GPL.
+2023-01-11 19:25:23+00:00 [Note] [Entrypoint]: Temporary server stopped
+
+2023-01-11 19:25:23+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
+
+2023-01-11T19:25:23.607525Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T19:25:23.608545Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 1
+2023-01-11T19:25:23.614418Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-01-11T19:27:45.688530Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-01-11T19:27:46.243367Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2023-01-11T19:27:46.243583Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2023-01-11T19:27:46.254827Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2023-01-11T19:27:46.285888Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2023-01-11T19:27:46.289748Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.31'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# netstat -tunlp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      15163/systemd-resol
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1330/sshd
+tcp        0      0 127.0.0.1:38399         0.0.0.0:*               LISTEN      2367/containerd
+tcp6       0      0 :::22                   :::*                    LISTEN      1330/sshd
+udp        0      0 127.0.0.53:53           0.0.0.0:*                           15163/systemd-resol
+udp        0      0 10.0.2.15:68            0.0.0.0:*                           15164/systemd-netwo
+root@ubuntu-bionic:/# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                 NAMES
+0d25b03b17d0   mysql     "docker-entrypoint.s…"   3 minutes ago   Up 3 minutes   3306/tcp, 33060/tcp   mysql-con2
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker run -d --name=mysql-con3  -p 3306:3306 -e MYSQL_ROOT_PASSWORD=gnayakadmin mysql
+66cce53b01de84cb9fe96618d24f2bba6ad9fcc1b212dba5d3f78638a549eda1
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                                                  NAMES
+66cce53b01de   mysql     "docker-entrypoint.s…"   5 seconds ago   Up 3 seconds   0.0.0.0:3306->3306/tcp, :::3306->3306/tcp, 33060/tcp   mysql-con3
+0d25b03b17d0   mysql     "docker-entrypoint.s…"   7 minutes ago   Up 7 minutes   3306/tcp, 33060/tcp                                    mysql-con2
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# netstat -tunlp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      15163/systemd-resol
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      1330/sshd
+tcp        0      0 127.0.0.1:38399         0.0.0.0:*               LISTEN      2367/containerd
+tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN      16037/docker-proxy
+tcp6       0      0 :::22                   :::*                    LISTEN      1330/sshd
+tcp6       0      0 :::3306                 :::*                    LISTEN      16044/docker-proxy
+udp        0      0 127.0.0.53:53           0.0.0.0:*                           15163/systemd-resol
+udp        0      0 10.0.2.15:68            0.0.0.0:*                           15164/systemd-netwo
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# apt install mysql-client -y
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  libaio1 mysql-client-5.7 mysql-client-core-5.7 mysql-common
+The following NEW packages will be installed:
+  libaio1 mysql-client mysql-client-5.7 mysql-client-core-5.7 mysql-common
+0 upgraded, 5 newly installed, 0 to remove and 38 not upgraded.
+Need to get 8806 kB of archives.
+After this operation, 62.1 MB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libaio1 amd64 0.3.110-5ubuntu0.1 [6476 B]
+Get:2 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 mysql-client-core-5.7 amd64 5.7.40-0ubuntu0.18.04.1 [6755 kB]
+Get:3 http://archive.ubuntu.com/ubuntu bionic/main amd64 mysql-common all 5.8+1.0.4 [7308 B]
+Get:4 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 mysql-client-5.7 amd64 5.7.40-0ubuntu0.18.04.1 [2028 kB]
+Get:5 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 mysql-client all 5.7.40-0ubuntu0.18.04.1 [9828 B]
+Fetched 8806 kB in 4s (2307 kB/s)
+Selecting previously unselected package libaio1:amd64.
+(Reading database ... 60525 files and directories currently installed.)
+Preparing to unpack .../libaio1_0.3.110-5ubuntu0.1_amd64.deb ...
+Unpacking libaio1:amd64 (0.3.110-5ubuntu0.1) ...
+Selecting previously unselected package mysql-client-core-5.7.
+Preparing to unpack .../mysql-client-core-5.7_5.7.40-0ubuntu0.18.04.1_amd64.deb ...
+Unpacking mysql-client-core-5.7 (5.7.40-0ubuntu0.18.04.1) ...
+Selecting previously unselected package mysql-common.
+Preparing to unpack .../mysql-common_5.8+1.0.4_all.deb ...
+Unpacking mysql-common (5.8+1.0.4) ...
+Selecting previously unselected package mysql-client-5.7.
+Preparing to unpack .../mysql-client-5.7_5.7.40-0ubuntu0.18.04.1_amd64.deb ...
+Unpacking mysql-client-5.7 (5.7.40-0ubuntu0.18.04.1) ...
+Selecting previously unselected package mysql-client.
+Preparing to unpack .../mysql-client_5.7.40-0ubuntu0.18.04.1_all.deb ...
+Unpacking mysql-client (5.7.40-0ubuntu0.18.04.1) ...
+Setting up mysql-common (5.8+1.0.4) ...
+update-alternatives: using /etc/mysql/my.cnf.fallback to provide /etc/mysql/my.cnf (my.cnf) in auto mode
+Setting up libaio1:amd64 (0.3.110-5ubuntu0.1) ...
+Setting up mysql-client-core-5.7 (5.7.40-0ubuntu0.18.04.1) ...
+Setting up mysql-client-5.7 (5.7.40-0ubuntu0.18.04.1) ...
+Setting up mysql-client (5.7.40-0ubuntu0.18.04.1) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Processing triggers for libc-bin (2.27-3ubuntu1.6) ...
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                 NAMES
+0d25b03b17d0   mysql     "docker-entrypoint.s…"   11 minutes ago   Up 11 minutes   3306/tcp, 33060/tcp   mysql-con2
+root@ubuntu-bionic:/# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                          PORTS                 NAMES
+66cce53b01de   mysql     "docker-entrypoint.s…"   3 minutes ago    Exited (1) About a minute ago                         mysql-con3
+0d25b03b17d0   mysql     "docker-entrypoint.s…"   11 minutes ago   Up 11 minutes                   3306/tcp, 33060/tcp   mysql-con2
+020be708e1c4   mysql     "docker-entrypoint.s…"   23 minutes ago   Exited (1) 23 minutes ago                             mysql-con1
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker logs mysql-con3
+2023-01-11 19:32:11+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.31-1.el8 started.
+2023-01-11 19:32:11+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2023-01-11 19:32:12+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.31-1.el8 started.
+2023-01-11 19:32:12+00:00 [Note] [Entrypoint]: Initializing database files
+2023-01-11T19:32:12.309435Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T19:32:12.309541Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.31) initializing of server in progress as process 79
+2023-01-11T19:32:12.329143Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-01-11T19:32:16.660612Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-01-11T19:32:21.176600Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2023-01-11 19:34:07+00:00 [Note] [Entrypoint]: Database files initialized
+2023-01-11 19:34:07+00:00 [Note] [Entrypoint]: Starting temporary server
+2023-01-11T19:34:07.647382Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T19:34:07.657646Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 128
+2023-01-11T19:34:07.681768Z 0 [ERROR] [MY-010946] [Server] Failed to start mysqld daemon. Check mysqld error log.
+2023-01-11 19:34:07+00:00 [ERROR] [Entrypoint]: Unable to start server.
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# systemctl status mysql
+Unit mysql.service could not be found.
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# systemctl status mysqld
+Unit mysqld.service could not be found.
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# journalctl -u mysqld
+-- Logs begin at Wed 2023-01-11 17:54:02 UTC, end at Wed 2023-01-11 19:34:08 UTC. --
+-- No entries --
+root@ubuntu-bionic:/# journalctl -u gd
+-- Logs begin at Wed 2023-01-11 17:54:02 UTC, end at Wed 2023-01-11 19:34:08 UTC. --
+-- No entries --
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker container
+
+Usage:  docker container COMMAND
+
+Manage containers
+
+Commands:
+  attach      Attach local standard input, output, and error streams to a running container
+  commit      Create a new image from a container's changes
+  cp          Copy files/folders between a container and the local filesystem
+  create      Create a new container
+  diff        Inspect changes to files or directories on a container's filesystem
+  exec        Run a command in a running container
+  export      Export a container's filesystem as a tar archive
+  inspect     Display detailed information on one or more containers
+  kill        Kill one or more running containers
+  logs        Fetch the logs of a container
+  ls          List containers
+  pause       Pause all processes within one or more containers
+  port        List port mappings or a specific mapping for the container
+  prune       Remove all stopped containers
+  rename      Rename a container
+  restart     Restart one or more containers
+  rm          Remove one or more containers
+  run         Run a command in a new container
+  start       Start one or more stopped containers
+  stats       Display a live stream of container(s) resource usage statistics
+  stop        Stop one or more running containers
+  top         Display the running processes of a container
+  unpause     Unpause all processes within one or more containers
+  update      Update configuration of one or more containers
+  wait        Block until one or more containers stop, then print their exit codes
+
+Run 'docker container COMMAND --help' for more information on a command.
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS                      PORTS                 NAMES
+66cce53b01de   mysql     "docker-entrypoint.s…"   8 minutes ago    Exited (1) 6 minutes ago                          mysql-con3
+0d25b03b17d0   mysql     "docker-entrypoint.s…"   15 minutes ago   Up 15 minutes               3306/tcp, 33060/tcp   mysql-con2
+020be708e1c4   mysql     "docker-entrypoint.s…"   28 minutes ago   Exited (1) 28 minutes ago                         mysql-con1
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker rm 66c
+66c
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker rm 020
+020
+root@ubuntu-bionic:/# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                 NAMES
+0d25b03b17d0   mysql     "docker-entrypoint.s…"   16 minutes ago   Up 16 minutes   3306/tcp, 33060/tcp   mysql-con2
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/#
+root@ubuntu-bionic:/# docker exec -it mysql-con2 bash
+bash-4.read escape sequence
+root@ubuntu-bionic:/# exit
+logoute to the MySQL monitor.  Commands end with ; or \g.
+vagrant@ubuntu-bionic:~$ is 8
+vagrant@ubuntu-bionic:~$ SQL Community Server - GPL
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$  Oracle and/or its affiliates.
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$ ademark of Oracle Corporation and/or its
+vagrant@ubuntu-bionic:~$ ay be trademarks of their respective
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$ help. Type '\c' to clear the current input statement.
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$ tabase selected
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$
+vagrant@ubuntu-bionic:~$ sudo su -
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# history
+    1  apt update
+    2  cat /etc/*release
+    3  apt install docker.io -y
+    4  systemctl is-active docker
+    5  docker --version
+    6  grep -rhE ^deb /etc/apt/sources.list*
+    7  grep ^ /etc/apt/sources.list /etc/apt/sources.list.d/*
+    8  ls /etc/apt/sources.list.d/
+    9  cat /etc/apt/sources.list.d
+   10  cd /etc/apt/sources.list.d
+   11  ls
+   12  cd /
+   13  grep ^ /etc/apt/sources.list
+   14  systemctl status docker
+   15  apt list docker*
+   16  apt list --help
+   17  apt list search docker*
+   18  docker pull mysql
+   19  docker images
+   20  docker run -d --name=mysql-con1 mysql
+   21  docker ps
+   22  docker ps -a
+   23  docker logs mysql-con1
+   24  docker logs --help
+   25  docker logs mysql-con1 --details
+   26  docker run -d --name=mysql-con2 -e MYSQL_ROOT_PASSWORD=gnayakadmin mysql
+   27  docker ps
+   28  docker ps -a
+   29  docker logs mysql-con2
+   30  netstat -tunlp
+   31  docker ps
+   32  docker run -d --name=mysql-con3  -p 3306:3306 -e MYSQL_ROOT_PASSWORD=gnayakadmin mysql
+   33  docker ps
+   34  netstat -tunlp
+   35  apt install mysql-client -y
+   36  docker ps
+   37  docker ps -a
+   38  docker logs mysql-con3
+   39  systemctl status mysql
+   40  systemctl status mysqld
+   41  journalctl -u mysqld
+   42  journalctl -u gd
+   43  docker container
+   44  docker ps -a
+   45  docker rm 66c
+   46  docker rm 020
+   47  docker ps -a
+   48  docker exec -it mysql-con2 bash
+   49  exit
+   50  history
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                 NAMES
+0d25b03b17d0   mysql     "docker-entrypoint.s…"   22 minutes ago   Up 22 minutes   3306/tcp, 33060/tcp   mysql-con2
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker exec -it mysql-con2 bash
+bash-4.4# ps -ef
+bash: ps: command not found
+bash-4.4# mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.31 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> help;
+
+For information about MySQL products and services, visit:
+   http://www.mysql.com/
+For developer information, including the MySQL Reference Manual, visit:
+   http://dev.mysql.com/
+To buy MySQL Enterprise support, training, or other products, visit:
+   https://shop.mysql.com/
+
+List of all MySQL commands:
+Note that all text commands must be first on line and end with ';'
+?         (\?) Synonym for `help'.
+clear     (\c) Clear the current input statement.
+connect   (\r) Reconnect to the server. Optional arguments are db and host.
+delimiter (\d) Set statement delimiter.
+edit      (\e) Edit command with $EDITOR.
+ego       (\G) Send command to mysql server, display result vertically.
+exit      (\q) Exit mysql. Same as quit.
+go        (\g) Send command to mysql server.
+help      (\h) Display this help.
+nopager   (\n) Disable pager, print to stdout.
+notee     (\t) Don't write into outfile.
+pager     (\P) Set PAGER [to_pager]. Print the query results via PAGER.
+print     (\p) Print current command.
+prompt    (\R) Change your mysql prompt.
+quit      (\q) Quit mysql.
+rehash    (\#) Rebuild completion hash.
+source    (\.) Execute an SQL script file. Takes a file name as an argument.
+status    (\s) Get status information from the server.
+system    (\!) Execute a system shell command.
+tee       (\T) Set outfile [to_outfile]. Append everything into given outfile.
+use       (\u) Use another database. Takes database name as argument.
+charset   (\C) Switch to another charset. Might be needed for processing binlog with multi-byte charsets.
+warnings  (\W) Show warnings after every statement.
+nowarning (\w) Don't show warnings after every statement.
+resetconnection(\x) Clean session context.
+query_attributes Sets string parameters (name1 value1 name2 value2 ...) for the next query to pick up.
+ssl_session_data_print Serializes the current SSL session data to stdout or file
+
+For server side help, type 'help contents'
+
+mysql> help content
+
+Nothing found
+Please try to run 'help contents' for a list of all accessible topics
+
+mysql> help contents
+You asked for help about help category: "Contents"
+For more information, type 'help <item>', where <item> is one of the following
+categories:
+   Account Management
+   Administration
+   Components
+   Compound Statements
+   Contents
+   Data Definition
+   Data Manipulation
+   Data Types
+   Functions
+   Geographic Features
+   Help Metadata
+   Language Structure
+   Loadable Functions
+   Plugins
+   Prepared Statements
+   Replication Statements
+   Storage Engines
+   Table Maintenance
+   Transactions
+   Utility
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE mysql-con2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-con2' at line 1
+mysql> CREATE DATABASE mysqlcon2;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| mysqlcon2          |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> select database mysql-con2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysql-con2' at line 1
+mysql> select database mysqlcon2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'mysqlcon2' at line 1
+mysql> use mysqlcon2
+Database changed
+mysql> create table newtable1
+    -> movie;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'movie' at line 2
+mysql> CREATE TABLE movies(title VARCHAR(50) NOT NULL,genre VARCHAR(30) NOT NULL,director VARCHAR(60) NOT NULL,release_year INT NOT NULL,PRIMARY KEY(title));
+Query OK, 0 rows affected (0.15 sec)
+
+mysql> describe movies;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| title        | varchar(50) | NO   | PRI | NULL    |       |
+| genre        | varchar(30) | NO   |     | NULL    |       |
+| director     | varchar(60) | NO   |     | NULL    |       |
+| release_year | int         | NO   |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO movies VALUE ("Joker", "psychological thriller", "Todd Phillips", 2019);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> SELECT * FROM movies;
++-------+------------------------+---------------+--------------+
+| title | genre                  | director      | release_year |
++-------+------------------------+---------------+--------------+
+| Joker | psychological thriller | Todd Phillips |         2019 |
++-------+------------------------+---------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> read escape sequence
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                 NAMES
+0d25b03b17d0   mysql     "docker-entrypoint.s…"   29 minutes ago   Up 28 minutes   3306/tcp, 33060/tcp   mysql-con2
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker pull mysql/mysql-server
+Using default tag: latest
+latest: Pulling from mysql/mysql-server
+134439bbc243: Pull complete
+24197d57c06a: Pull complete
+a8ff14042390: Pull complete
+209d472e303b: Pull complete
+4158d94acc40: Pull complete
+807107bf7d7a: Pull complete
+5f5d5a703fe0: Pull complete
+Digest: sha256:1b2005199e9dc12d88d5950cd738dfd12172b1224675294646ea9d6031c78408
+Status: Downloaded newer image for mysql/mysql-server:latest
+docker.io/mysql/mysql-server:latest
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY           TAG       IMAGE ID       CREATED        SIZE
+mysql                latest    7484689f290f   5 weeks ago    538MB
+mysql/mysql-server   latest    3f3946d5572f   3 months ago   517MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# sudo docker run --name=mysql-server-con1 -d mysql/mysql-server
+0bd4222e3eddd3853a8e3ac8cd89317de6ef6fe5eeab067b9fa65eb446ad2cb7
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE                COMMAND                  CREATED          STATUS                            PORTS                       NAMES
+0bd4222e3edd   mysql/mysql-server   "/entrypoint.sh mysq…"   9 seconds ago    Up 7 seconds (health: starting)   3306/tcp, 33060-33061/tcp   mysql-server-con1
+0d25b03b17d0   mysql                "docker-entrypoint.s…"   35 minutes ago   Up 35 minutes                     3306/tcp, 33060/tcp         mysql-con2
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker logs mysql-server-con1
+[Entrypoint] MySQL Docker Image 8.0.31-1.2.10-server
+[Entrypoint] No password option specified for new database.
+[Entrypoint]   A random onetime password will be generated.
+[Entrypoint] Initializing database
+2023-01-11T20:00:37.456913Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T20:00:37.457079Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.31) initializing of server in progress as process 16
+2023-01-11T20:00:37.481085Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-01-11T20:00:39.982544Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-01-11T20:00:45.157192Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+[Entrypoint] Database initialized
+2023-01-11T20:04:53.262881Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T20:04:53.264092Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 68
+2023-01-11T20:04:53.270840Z 0 [ERROR] [MY-010946] [Server] Failed to start mysqld daemon. Check mysqld error log.
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE                COMMAND                  CREATED          STATUS                      PORTS                 NAMES
+0bd4222e3edd   mysql/mysql-server   "/entrypoint.sh mysq…"   4 minutes ago    Exited (1) 15 seconds ago                         mysql-server-con1
+0d25b03b17d0   mysql                "docker-entrypoint.s…"   40 minutes ago   Up 40 minutes               3306/tcp, 33060/tcp   mysql-con2
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker logs mysql-server-con1 | grep -i generated
+[Entrypoint] No password option specified for new database.
+[Entrypoint]   A random onetime password will be generated.
+2023-01-11T20:00:37.456913Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T20:00:37.457079Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.31) initializing of server in progress as process 16
+2023-01-11T20:00:37.481085Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-01-11T20:00:39.982544Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-01-11T20:00:45.157192Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2023-01-11T20:04:53.262881Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T20:04:53.264092Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 68
+2023-01-11T20:04:53.270840Z 0 [ERROR] [MY-010946] [Server] Failed to start mysqld daemon. Check mysqld error log.
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker logs mysql-server-con1 | grep GENERATED
+[Entrypoint] No password option specified for new database.
+[Entrypoint]   A random onetime password will be generated.
+2023-01-11T20:00:37.456913Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T20:00:37.457079Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.31) initializing of server in progress as process 16
+2023-01-11T20:00:37.481085Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-01-11T20:00:39.982544Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-01-11T20:00:45.157192Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2023-01-11T20:04:53.262881Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T20:04:53.264092Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 68
+2023-01-11T20:04:53.270840Z 0 [ERROR] [MY-010946] [Server] Failed to start mysqld daemon. Check mysqld error log.
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker logs mysql-server-con1 --details
+ [Entrypoint] MySQL Docker Image 8.0.31-1.2.10-server
+ [Entrypoint] No password option specified for new database.
+ [Entrypoint]   A random onetime password will be generated.
+ [Entrypoint] Initializing database
+ 2023-01-11T20:00:37.456913Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+ 2023-01-11T20:00:37.457079Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.31) initializing of server in progress as process 16
+ 2023-01-11T20:00:37.481085Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+ 2023-01-11T20:00:39.982544Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+ 2023-01-11T20:00:45.157192Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+ [Entrypoint] Database initialized
+ 2023-01-11T20:04:53.262881Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+ 2023-01-11T20:04:53.264092Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 68
+ 2023-01-11T20:04:53.270840Z 0 [ERROR] [MY-010946] [Server] Failed to start mysqld daemon. Check mysqld error log.
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# cat /var/log/mysqld.log
+cat: /var/log/mysqld.log: No such file or directory
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE                COMMAND                  CREATED          STATUS                      PORTS                 NAMES
+0bd4222e3edd   mysql/mysql-server   "/entrypoint.sh mysq…"   18 minutes ago   Exited (1) 14 minutes ago                         mysql-server-con1
+0d25b03b17d0   mysql                "docker-entrypoint.s…"   54 minutes ago   Up 54 minutes               3306/tcp, 33060/tcp   mysql-con2
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker rm 0bd
+0bd
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                 NAMES
+0d25b03b17d0   mysql     "docker-entrypoint.s…"   54 minutes ago   Up 54 minutes   3306/tcp, 33060/tcp   mysql-con2
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY           TAG       IMAGE ID       CREATED        SIZE
+mysql                latest    7484689f290f   5 weeks ago    538MB
+mysql/mysql-server   latest    3f3946d5572f   3 months ago   517MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker rmi mysql/mysql-server
+Untagged: mysql/mysql-server:latest
+Untagged: mysql/mysql-server@sha256:1b2005199e9dc12d88d5950cd738dfd12172b1224675294646ea9d6031c78408
+Deleted: sha256:3f3946d5572fd75437cf18ac20907c76a107d52f3965958654d0ce77478af5ea
+Deleted: sha256:0a755b68aa9bb1c3f8fbc2ecd244d1a4a5c122934656ee36090663c3fed9f415
+Deleted: sha256:3cb95006826f01af1429c5c79366950593520038cdf0ac20c6595b7e3f6b026c
+Deleted: sha256:d5e05b104ad69dedea269d2d630d8f9b5f157596edd3668586096c7f037b64c6
+Deleted: sha256:0a64752eef834602bf5409eee724ca6cffadcd0954c52df47d9480b426664e87
+Deleted: sha256:06445e842e35e0c0020caae1046e16ed0e4446c4a9458d58b785efea842d1019
+Deleted: sha256:09ad243f59cb7d9cc1d07c1878dac39fa102aa6eb1f4d0fa62d706935f54bae6
+Deleted: sha256:553b196ea5e8358e8b819253dc8fb9af6cf5711df6c83e594b4c2109c61eda18
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+mysql        latest    7484689f290f   5 weeks ago   538MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                 NAMES
+0d25b03b17d0   mysql     "docker-entrypoint.s…"   55 minutes ago   Up 55 minutes   3306/tcp, 33060/tcp   mysql-con2
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# exit
+logout
+vagrant@ubuntu-bionic:~$ exit
+logout
+Connection to 127.0.0.1 closed.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ exit
+exit
+
+C:\WINDOWS\system32>
+C:\WINDOWS\system32>bash
+
+Gaurav@DESKTOP-NF0FS2B  /c/WINDOWS/system32
+$ cd ~/devops/provision/vagrant/bi
+bash: cd: /c/Users/Gaurav/devops/provision/vagrant/bi: No such file or directory
+
+Gaurav@DESKTOP-NF0FS2B  /c/WINDOWS/system32
+$ cd ~/devops/provision/vagrant/bionic/
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant destroy -f
+==> default: Forcing shutdown of VM...
+==> default: Destroying VM and associated drives...
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant status
+Current machine states:
+
+default                   not created (virtualbox)
+
+The environment has not yet been created. Run `vagrant up` to
+create the environment. If a machine is not created, only the
+default provider will be shown. So if a provider is not listed,
+then the machine is not created for that environment.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Importing base box 'ubuntu/bionic64'...
+==> default: Matching MAC address for NAT networking...
+==> default: Checking if box 'ubuntu/bionic64' version '20221102.0.0' is up to date...
+==> default: A newer version of the box 'ubuntu/bionic64' for provider 'virtualbox' is
+==> default: available! You currently have version '20221102.0.0'. The latest is version
+==> default: '20221207.0.0'. Run `vagrant box update` to update.
+==> default: Setting the name of the VM: bionic_default_1673470312839_92206
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+==> default: Forwarding ports...
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Running 'pre-boot' VM customizations...
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default: Warning: Connection reset. Retrying...
+    default:
+    default: Vagrant insecure key detected. Vagrant will automatically replace
+    default: this with a newly generated keypair for better security.
+    default:
+    default: Inserting generated public key within guest...
+    default: Removing insecure key from the guest if it's present...
+    default: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> default: Machine booted and ready!
+==> default: Checking for guest additions in VM...
+    default: The guest additions on this VM do not match the installed version of
+    default: VirtualBox! In most cases this is fine, but in rare cases it can
+    default: prevent things such as shared folders from working properly. If you see
+    default: shared folder errors, please make sure the guest additions within the
+    default: virtual machine match the version of VirtualBox you have installed on
+    default: your host and reload your VM.
+    default:
+    default: Guest Additions Version: 5.2.42
+    default: VirtualBox Version: 6.1
+==> default: Mounting shared folders...
+    default: /vagrant => C:/Users/Gaurav/devops/provision/vagrant/bionic
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant ssh
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-197-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 11 20:53:28 UTC 2023
+
+  System load:  0.43              Processes:             101
+  Usage of /:   2.9% of 38.70GB   Users logged in:       0
+  Memory usage: 12%               IP address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+
+0 updates can be applied immediately.
+
+New release '20.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+vagrant@ubuntu-bionic:~$ sudo su -
+root@ubuntu-bionic:~# curl -fsSL https://get.docker.com -o get-docker.sh
+root@ubuntu-bionic:~# sh get-docker.sh
+# Executing docker install script, commit: 4f282167c425347a931ccfd95cc91fab041d414f
++ sh -c apt-get update -qq >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq apt-transport-https ca-certificates curl >/dev/null
++ sh -c mkdir -p /etc/apt/keyrings && chmod -R 0755 /etc/apt/keyrings
++ sh -c curl -fsSL "https://download.docker.com/linux/ubuntu/gpg" | gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg
++ sh -c chmod a+r /etc/apt/keyrings/docker.gpg
++ sh -c echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu bionic stable" > /etc/apt/sources.list.d/docker.list
++ sh -c apt-get update -qq >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-scan-plugin >/dev/null
++ version_gte 20.10
++ [ -z  ]
++ return 0
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker-ce-rootless-extras >/dev/null
++ sh -c docker version
+Client: Docker Engine - Community
+ Version:           20.10.22
+ API version:       1.41
+ Go version:        go1.18.9
+ Git commit:        3a2c30b
+ Built:             Thu Dec 15 22:28:02 2022
+ OS/Arch:           linux/amd64
+ Context:           default
+ Experimental:      true
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          20.10.22
+  API version:      1.41 (minimum version 1.12)
+  Go version:       go1.18.9
+  Git commit:       42c8b31
+  Built:            Thu Dec 15 22:25:51 2022
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.6.15
+  GitCommit:        5b842e528e99d4d4c1686467debf2bd4b88ecd86
+ runc:
+  Version:          1.1.4
+  GitCommit:        v1.1.4-0-g5fd4c4d
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+================================================================================
+
+To run Docker as a non-privileged user, consider setting up the
+Docker daemon in rootless mode for your user:
+
+    dockerd-rootless-setuptool.sh install
+
+Visit https://docs.docker.com/go/rootless/ to learn about rootless mode.
+
+
+To run the Docker daemon as a fully privileged service, but granting non-root
+users access, refer to https://docs.docker.com/go/daemon-access/
+
+WARNING: Access to the remote API on a privileged Docker daemon is equivalent
+         to root access on the host. Refer to the 'Docker daemon attack surface'
+         documentation for details: https://docs.docker.com/go/attack-surface/
+
+================================================================================
+
+root@ubuntu-bionic:~# systemctl is-active docker
+active
+root@ubuntu-bionic:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Wed 2023-01-11 21:07:32 UTC; 1min 0s ago
+     Docs: https://docs.docker.com
+ Main PID: 8805 (dockerd)
+    Tasks: 8
+   CGroup: /system.slice/docker.service
+           +-8805 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Jan 11 21:07:30 ubuntu-bionic dockerd[8805]: time="2023-01-11T21:07:30.833140685Z" level=info msg="ClientConn switching balancer to \"pick_first\"" module=gJan 11 21:07:31 ubuntu-bionic dockerd[8805]: time="2023-01-11T21:07:31.421439960Z" level=warning msg="Your kernel does not support swap memory limit"
+Jan 11 21:07:31 ubuntu-bionic dockerd[8805]: time="2023-01-11T21:07:31.421761228Z" level=warning msg="Your kernel does not support CPU realtime scheduler"
+Jan 11 21:07:31 ubuntu-bionic dockerd[8805]: time="2023-01-11T21:07:31.422910915Z" level=info msg="Loading containers: start."
+Jan 11 21:07:32 ubuntu-bionic dockerd[8805]: time="2023-01-11T21:07:32.136380999Z" level=info msg="Default bridge (docker0) is assigned with an IP address 1Jan 11 21:07:32 ubuntu-bionic dockerd[8805]: time="2023-01-11T21:07:32.498763395Z" level=info msg="Loading containers: done."
+Jan 11 21:07:32 ubuntu-bionic dockerd[8805]: time="2023-01-11T21:07:32.572925386Z" level=info msg="Docker daemon" commit=42c8b31 graphdriver(s)=overlay2 verJan 11 21:07:32 ubuntu-bionic dockerd[8805]: time="2023-01-11T21:07:32.573263585Z" level=info msg="Daemon has completed initialization"
+Jan 11 21:07:32 ubuntu-bionic systemd[1]: Started Docker Application Container Engine.
+Jan 11 21:07:32 ubuntu-bionic dockerd[8805]: time="2023-01-11T21:07:32.662173860Z" level=info msg="API listen on /var/run/docker.sock"
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# sudo docker pull mysql/mysql-server:latest
+latest: Pulling from mysql/mysql-server
+134439bbc243: Pull complete
+24197d57c06a: Pull complete
+a8ff14042390: Extracting [=====================>                             ]  54.59MB/124.9MB
+a8ff14042390: Pull complete
+209d472e303b: Pull complete
+4158d94acc40: Pull complete
+807107bf7d7a: Pull complete
+5f5d5a703fe0: Pull complete
+Digest: sha256:1b2005199e9dc12d88d5950cd738dfd12172b1224675294646ea9d6031c78408
+Status: Downloaded newer image for mysql/mysql-server:latest
+docker.io/mysql/mysql-server:latest
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY           TAG       IMAGE ID       CREATED        SIZE
+mysql/mysql-server   latest    3f3946d5572f   3 months ago   517MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# sudo docker run --name=mysqlserver-con1 -d mysql/mysql-server:latest
+f4ee7e219a85cd70fbc2d1401b60468534cee75cfaddd54dc891911df8edc093
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE                       COMMAND                  CREATED          STATUS                            PORTS                       NAMES
+f4ee7e219a85   mysql/mysql-server:latest   "/entrypoint.sh mysq…"   10 seconds ago   Up 8 seconds (health: starting)   3306/tcp, 33060-33061/tcp   mysqlserver-con1
+root@ubuntu-bionic:~# apt update
+0% [Connecting to archive.ubuntu.com] [Connecting to security.ubuntu.com] [Connecting to download.docker.com]
+Hit:1 https://download.docker.com/linux/ubuntu bionic InRelease
+Hit:2 http://security.ubuntu.com/ubuntu bionic-security InRelease
+Hit:3 http://archive.ubuntu.com/ubuntu bionic InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu bionic-updates InRelease
+Hit:5 http://archive.ubuntu.com/ubuntu bionic-backports InRelease
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+35 packages can be upgraded. Run 'apt list --upgradable' to see them.
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker logs mysqlserver-con1
+[Entrypoint] MySQL Docker Image 8.0.31-1.2.10-server
+[Entrypoint] No password option specified for new database.
+[Entrypoint]   A random onetime password will be generated.
+[Entrypoint] Initializing database
+2023-01-11T21:16:30.929321Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T21:16:30.929471Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.31) initializing of server in progress as process 17
+2023-01-11T21:16:30.954784Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-01-11T21:16:33.893525Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-01-11T21:16:39.757225Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+[Entrypoint] Database initialized
+2023-01-11T21:16:53.799103Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T21:16:53.804294Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 64
+2023-01-11T21:16:53.886633Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-01-11T21:16:55.329189Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-01-11T21:16:56.369458Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2023-01-11T21:16:56.370784Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2023-01-11T21:16:56.459407Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+2023-01-11T21:16:56.463011Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.31'  socket: '/var/lib/mysql/mysql.sock'  port: 0  MySQL Community Server - GPL.
+Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+[Entrypoint] GENERATED ROOT PASSWORD: t;?;Th7f0L=h1+84bZdt=M*Hs=3IkJ23
+
+[Entrypoint] ignoring /docker-entrypoint-initdb.d/*
+
+2023-01-11T21:17:02.880265Z 11 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.31).
+2023-01-11T21:17:07.120142Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.31)  MySQL Community Server - GPL.
+[Entrypoint] Server shut down
+[Entrypoint] Setting root user as expired. Password will need to be changed before database can be used.
+
+[Entrypoint] MySQL init process done. Ready for start up.
+
+[Entrypoint] Starting MySQL 8.0.31-1.2.10-server
+2023-01-11T21:17:08.287650Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T21:17:08.289788Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 1
+2023-01-11T21:17:08.313613Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-01-11T21:17:52.317529Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-01-11T21:17:53.276320Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2023-01-11T21:17:53.277390Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2023-01-11T21:17:53.626209Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.31'  socket: '/var/lib/mysql/mysql.sock'  port: 3306  MySQL Community Server - GPL.
+2023-01-11T21:17:53.626694Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE                       COMMAND                  CREATED         STATUS                   PORTS                       NAMES
+f4ee7e219a85   mysql/mysql-server:latest   "/entrypoint.sh mysq…"   2 minutes ago   Up 2 minutes (healthy)   3306/tcp, 33060-33061/tcp   mysqlserver-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# apt-get install mysql-client
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  libaio1 mysql-client-5.7 mysql-client-core-5.7 mysql-common
+The following NEW packages will be installed:
+  libaio1 mysql-client mysql-client-5.7 mysql-client-core-5.7 mysql-common
+0 upgraded, 5 newly installed, 0 to remove and 35 not upgraded.
+Need to get 8806 kB of archives.
+After this operation, 62.1 MB of additional disk space will be used.
+Do you want to continue? [Y/n] y
+Get:1 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 libaio1 amd64 0.3.110-5ubuntu0.1 [6476 B]
+Get:2 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 mysql-client-core-5.7 amd64 5.7.40-0ubuntu0.18.04.1 [6755 kB]
+Get:3 http://archive.ubuntu.com/ubuntu bionic/main amd64 mysql-common all 5.8+1.0.4 [7308 B]
+Get:4 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 mysql-client-5.7 amd64 5.7.40-0ubuntu0.18.04.1 [2028 kB]
+Get:5 http://archive.ubuntu.com/ubuntu bionic-updates/main amd64 mysql-client all 5.7.40-0ubuntu0.18.04.1 [9828 B]
+Fetched 8806 kB in 32s (271 kB/s)
+Selecting previously unselected package libaio1:amd64.
+(Reading database ... 60440 files and directories currently installed.)
+Preparing to unpack .../libaio1_0.3.110-5ubuntu0.1_amd64.deb ...
+Unpacking libaio1:amd64 (0.3.110-5ubuntu0.1) ...
+Selecting previously unselected package mysql-client-core-5.7.
+Preparing to unpack .../mysql-client-core-5.7_5.7.40-0ubuntu0.18.04.1_amd64.deb ...
+Unpacking mysql-client-core-5.7 (5.7.40-0ubuntu0.18.04.1) ...
+Selecting previously unselected package mysql-common.
+Preparing to unpack .../mysql-common_5.8+1.0.4_all.deb ...
+Unpacking mysql-common (5.8+1.0.4) ...
+Selecting previously unselected package mysql-client-5.7.
+Preparing to unpack .../mysql-client-5.7_5.7.40-0ubuntu0.18.04.1_amd64.deb ...
+Unpacking mysql-client-5.7 (5.7.40-0ubuntu0.18.04.1) ...
+Selecting previously unselected package mysql-client.
+Preparing to unpack .../mysql-client_5.7.40-0ubuntu0.18.04.1_all.deb ...
+Unpacking mysql-client (5.7.40-0ubuntu0.18.04.1) ...
+
+Setting up mysql-common (5.8+1.0.4) ...
+update-alternatives: using /etc/mysql/my.cnf.fallback to provide /etc/mysql/my.cnf (my.cnf) in auto mode
+Setting up libaio1:amd64 (0.3.110-5ubuntu0.1) ...
+Setting up mysql-client-core-5.7 (5.7.40-0ubuntu0.18.04.1) ...
+Setting up mysql-client-5.7 (5.7.40-0ubuntu0.18.04.1) ...
+Setting up mysql-client (5.7.40-0ubuntu0.18.04.1) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Processing triggers for libc-bin (2.27-3ubuntu1.6) ...
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE                       COMMAND                  CREATED         STATUS                   PORTS                       NAMES
+f4ee7e219a85   mysql/mysql-server:latest   "/entrypoint.sh mysq…"   4 minutes ago   Up 4 minutes (healthy)   3306/tcp, 33060-33061/tcp   mysqlserver-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker exec -it mysqlserver-con1 bash
+bash-4.4# mysql&gt; ALTER USER 'root'@'localhost' IDENTIFIED BY '[gnayakarya]';
+[1] 283
+bash: gt: command not found
+bash: ALTER: command not found
+bash-4.4# ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+
+[1]+  Exit 1                  mysql
+bash-4.4# mysql
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+bash-4.4# mysql -uroot -p
+Enter p]';
+    '>  to the MySQL monitor.  Commands end with ; or \g.
+    '> SQL connection id is 24
+    '> version: 8.0.31
+    '>
+    '> ht (c) 2000, 2022, Oracle and/or its affiliates.
+    '>
+    '> is a registered trademark of Oracle Corporation and/or its
+    '> tes. Other names may be trademarks of their respective
+    '>
+    '>
+    '> elp;' or '\h' for help. Type '\c' to clear the current input statement.
+    '>
+    '> ALTER USER 'root'@'localhost' IDENTIFIED BY '[newpassword]';
+    '> ^C
+mysql> ALTER USER 'root'@'localhost' IDENTIFIED BY '[newpassword]';
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> exit
+Bye
+bash-4.4# exit
+exit
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE                       COMMAND                  CREATED          STATUS                    PORTS                       NAMES
+f4ee7e219a85   mysql/mysql-server:latest   "/entrypoint.sh mysq…"   10 minutes ago   Up 10 minutes (healthy)   3306/tcp, 33060-33061/tcp   mysqlserver-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# sudo mkdir -p /root/docker/mysqlserver-con1/conf.d
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# vim /root/docker/mysqlserver-con1/conf.d/my-custom.cnf
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# cat /root/docker/mysqlserver-con1/conf.d/my-custom.cnf
+[mysqld]
+max_connections=250
+root@ubuntu-bionic:~# docker run \
+> --detach \
+> --name=[container_name] \
+> --env="MYSQL_ROOT_PASSWORD=[my_password]" \
+> --publish 6603:3306 \
+> --volume=/root/docker/[container_name]/conf.d:/etc/mysql/conf.d \
+> mysql
+Unable to find image 'mysql:latest' locally
+latest: Pulling from library/mysql
+0ed027b72ddc: Pull complete
+0296159747f1: Pull complete
+3d2f9b664bd3: Pull complete
+df6519f81c26: Pull complete
+36bb5e56d458: Pull complete
+054e8fde88d0: Pull complete
+f2b494c50c7f: Pull complete
+132bc0d471b8: Pull complete
+135ec7033a05: Extracting [==========================================>        ]  46.79MB/55.11MB
+135ec7033a05: Pull complete
+5961f0272472: Pull complete
+75b5f7a3d3a4: Pull complete
+Digest: sha256:3d7ae561cf6095f6aca8eb7830e1d14734227b1fb4748092f2be2cfbccf7d614
+Status: Downloaded newer image for mysql:latest
+docker: Error response from daemon: Invalid container name ([container_name]), only [a-zA-Z0-9][a-zA-Z0-9_.-] are allowed.
+See 'docker run --help'.
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker run --detach --name=[mysqlserver-con1] --env="MYSQL_ROOT_PASSWORD=[gnayakarya]" --publish 6603:3306 --volume=/root/docker/[contai
+ner_name]/conf.d:/etc/mysql/conf.d mysql
+docker: Error response from daemon: Invalid container name ([mysqlserver-con1]), only [a-zA-Z0-9][a-zA-Z0-9_.-] are allowed.
+See 'docker run --help'.
+root@ubuntu-bionic:~# docker run --detach --name=mysqlserver-con1 --env="MYSQL_ROOT_PASSWORD=gnayakarya" --publish 6603:3306 --volume=/root/docker/[container_
+name]/conf.d:/etc/mysql/conf.d mysql
+docker: Error response from daemon: Conflict. The container name "/mysqlserver-con1" is already in use by container "f4ee7e219a85cd70fbc2d1401b60468534cee75cfaddd54dc891911df8edc093". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+root@ubuntu-bionic:~# docker rmi mysqlserver-con1
+Error: No such image: mysqlserver-con1
+root@ubuntu-bionic:~# docker rm mysqlserver-con1
+Error response from daemon: You cannot remove a running container f4ee7e219a85cd70fbc2d1401b60468534cee75cfaddd54dc891911df8edc093. Stop the container before attempting removal or force remove
+root@ubuntu-bionic:~# docker stop mysqlserver-con1
+mysqlserver-con1
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE                       COMMAND                  CREATED          STATUS                     PORTS     NAMES
+f4ee7e219a85   mysql/mysql-server:latest   "/entrypoint.sh mysq…"   20 minutes ago   Exited (0) 7 seconds ago             mysqlserver-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker run --detach --name=mysqlserver-con1 --env="MYSQL_ROOT_PASSWORD=gnayakarya" --publish 6603:3306 --volume=/root/docker/[container_name]/conf.d:/etc/mysql/conf.d mysql
+docker: Error response from daemon: Conflict. The container name "/mysqlserver-con1" is already in use by container "f4ee7e219a85cd70fbc2d1401b60468534cee75cfaddd54dc891911df8edc093". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+root@ubuntu-bionic:~# docker rm mysqlserver-con1
+mysqlserver-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker run --detach --name=mysqlserver-con1 --env="MYSQL_ROOT_PASSWORD=gnayakarya" --publish 6603:3306 --volume=/root/docker/[container_name]/conf.d:/etc/mysql/conf.d mysql
+73272405c8f9b42c67e8cfb7a0a12a4317b6c50276c626d5f2aa98d0d3c644df
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# mysql -uroot -p -h127.0.0.1 -P6603 -e 'show global variables like "max_connections"';
+Enter password:
+ERROR 2013 (HY000): Lost connection to MySQL server at 'reading initial communication packet', system error: 2
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# mysql -uroot -p -h127.0.0.1 -P6603 -e 'show global variables like "max_connections"';
+Enter password:
+ERROR 2013 (HY000): Lost connection to MySQL server at 'reading initial communication packet', system error: 2
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS                                                  NAMES
+73272405c8f9   mysql     "docker-entrypoint.s…"   55 seconds ago   Up 53 seconds   33060/tcp, 0.0.0.0:6603->3306/tcp, :::6603->3306/tcp   mysqlserver-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS          PORTS                                                  NAMES
+73272405c8f9   mysql     "docker-entrypoint.s…"   About a minute ago   Up 59 seconds   33060/tcp, 0.0.0.0:6603->3306/tcp, :::6603->3306/tcp   mysqlserver-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# mysql -uroot -pgnayakarya -h127.0.0.1 -P6603 -e 'show global variables like "max_connections"';
+mysql: [Warning] Using a password on the command line interface can be insecure.
+ERROR 2013 (HY000): Lost connection to MySQL server at 'reading initial communication packet', system error: 2
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# mysql -uroot -p -h127.0.0.1 -P6603 -e 'show global variables like "max_connections"';
+Enter password:
++-----------------+-------+
+| Variable_name   | Value |
++-----------------+-------+
+| max_connections | 151   |
++-----------------+-------+
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker inspect mysqlserver-con1
+[
+    {
+        "Id": "73272405c8f9b42c67e8cfb7a0a12a4317b6c50276c626d5f2aa98d0d3c644df",
+        "Created": "2023-01-11T21:37:34.219162884Z",
+        "Path": "docker-entrypoint.sh",
+        "Args": [
+            "mysqld"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 11777,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2023-01-11T21:37:35.775599571Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:7484689f290f1defe06b65befc54cb6ad91a667cf0af59a265ffe76c46bd0478",
+        "ResolvConfPath": "/var/lib/docker/containers/73272405c8f9b42c67e8cfb7a0a12a4317b6c50276c626d5f2aa98d0d3c644df/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/73272405c8f9b42c67e8cfb7a0a12a4317b6c50276c626d5f2aa98d0d3c644df/hostname",
+        "HostsPath": "/var/lib/docker/containers/73272405c8f9b42c67e8cfb7a0a12a4317b6c50276c626d5f2aa98d0d3c644df/hosts",
+        "LogPath": "/var/lib/docker/containers/73272405c8f9b42c67e8cfb7a0a12a4317b6c50276c626d5f2aa98d0d3c644df/73272405c8f9b42c67e8cfb7a0a12a4317b6c50276c626d5f2aa98d0d3c644df-json.log",
+        "Name": "/mysqlserver-con1",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "/root/docker/[container_name]/conf.d:/etc/mysql/conf.d"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "default",
+            "PortBindings": {
+                "3306/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "6603"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "no",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "host",
+            "Dns": [],
+            "DnsOptions": [],
+            "DnsSearch": [],
+            "ExtraHosts": null,
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": [],
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": [],
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "KernelMemory": 0,
+            "KernelMemoryTCP": 0,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": false,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/5217c4dae27e44238c3edb08209576bb917badad13c50bdcdb380a8ba479e6e5-init/diff:/var/lib/docker/overlay2/b6ea61823b15fa7b9621b366f36c9134f18d6812e132adda126909705c75509f/diff:/var/lib/docker/overlay2/a9002984531716ad892440fd16bb306db722ce36cfe191b240bc93135837fbf0/diff:/var/lib/docker/overlay2/432e2687080427209832d40960e0a1f32b754e7b9a23e750dc5a69e0c461d6c0/diff:/var/lib/docker/overlay2/06aa78d4c2636f251ef96257a6fdc5eb10b2eef4396f839dacdf92187cb8f669/diff:/var/lib/docker/overlay2/9d142d217cc3d64702e5ca6554d9e1b087bdc0299f53333707fcd9b490327090/diff:/var/lib/docker/overlay2/733c7a269f65be43568fc8e41b0ea19c9d2ecb4b691e7df3d108d8376e19809e/diff:/var/lib/docker/overlay2/9fe8609764d618a7a2e46d922f1947bed0e94792f801fb8f7e1448fc98609a8a/diff:/var/lib/docker/overlay2/c8905aefa4813002ef6544cbf2ff98e2919e5100b51054c8ab93d9ff71770472/diff:/var/lib/docker/overlay2/a46c94440236908e33c9d6c62b1b52d7323c7035d1f87260f5b03290cef8cc30/diff:/var/lib/docker/overlay2/2cee669dc0fc55b3c000f4d185e5c91abc3c322ae46924a17ab50459de6ea591/diff:/var/lib/docker/overlay2/2fab09dd09fa7c035e864f7a7c6a7bd7316f6d62c896f8b43dce358730fd35b9/diff",
+                "MergedDir": "/var/lib/docker/overlay2/5217c4dae27e44238c3edb08209576bb917badad13c50bdcdb380a8ba479e6e5/merged",
+                "UpperDir": "/var/lib/docker/overlay2/5217c4dae27e44238c3edb08209576bb917badad13c50bdcdb380a8ba479e6e5/diff",
+                "WorkDir": "/var/lib/docker/overlay2/5217c4dae27e44238c3edb08209576bb917badad13c50bdcdb380a8ba479e6e5/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/root/docker/[container_name]/conf.d",
+                "Destination": "/etc/mysql/conf.d",
+                "Mode": "",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "volume",
+                "Name": "1e30b41f3d5bc661e4b86b0e76cbe86bcc592300a722ccc42470f6c960d4ffd2",
+                "Source": "/var/lib/docker/volumes/1e30b41f3d5bc661e4b86b0e76cbe86bcc592300a722ccc42470f6c960d4ffd2/_data",
+                "Destination": "/var/lib/mysql",
+                "Driver": "local",
+                "Mode": "",
+                "RW": true,
+                "Propagation": ""
+            }
+        ],
+        "Config": {
+            "Hostname": "73272405c8f9",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "3306/tcp": {},
+                "33060/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "MYSQL_ROOT_PASSWORD=gnayakarya",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "GOSU_VERSION=1.14",
+                "MYSQL_MAJOR=8.0",
+                "MYSQL_VERSION=8.0.31-1.el8",
+                "MYSQL_SHELL_VERSION=8.0.31-1.el8"
+            ],
+            "Cmd": [
+                "mysqld"
+            ],
+            "Image": "mysql",
+            "Volumes": {
+                "/var/lib/mysql": {}
+            },
+            "WorkingDir": "",
+            "Entrypoint": [
+                "docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "35a9ac1d4a7b7e7ae2d3a6791ddfd589b335354dab678c664139eb301c9d36cf",
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "Ports": {
+                "3306/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "6603"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "6603"
+                    }
+                ],
+                "33060/tcp": null
+            },
+            "SandboxKey": "/var/run/docker/netns/35a9ac1d4a7b",
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "b691a3e81c2268a5f4ccd04871ea774639c7617967ab68a2c87e5878a04295ab",
+            "Gateway": "172.17.0.1",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "172.17.0.2",
+            "IPPrefixLen": 16,
+            "IPv6Gateway": "",
+            "MacAddress": "02:42:ac:11:00:02",
+            "Networks": {
+                "bridge": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": null,
+                    "NetworkID": "dc7b2f06a6b4968b1df82bc95bc5d55c599081c905e900dace8ac05b082463aa",
+                    "EndpointID": "b691a3e81c2268a5f4ccd04871ea774639c7617967ab68a2c87e5878a04295ab",
+                    "Gateway": "172.17.0.1",
+                    "IPAddress": "172.17.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "MacAddress": "02:42:ac:11:00:02",
+                    "DriverOpts": null
+                }
+            }
+        }
+    }
+]
+root@ubuntu-bionic:~# docker inspect mysqlserver-con1 | grep /var/lib/mysql
+                "Destination": "/var/lib/mysql",
+                "/var/lib/mysql": {}
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                                                  NAMES
+73272405c8f9   mysql     "docker-entrypoint.s…"   3 minutes ago   Up 3 minutes   33060/tcp, 0.0.0.0:6603->3306/tcp, :::6603->3306/tcp   mysqlserver-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker logs mysqlserver-con1
+2023-01-11 21:37:35+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.31-1.el8 started.
+2023-01-11 21:37:36+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2023-01-11 21:37:36+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.31-1.el8 started.
+2023-01-11 21:37:37+00:00 [Note] [Entrypoint]: Initializing database files
+2023-01-11T21:37:37.234849Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T21:37:37.236275Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.31) initializing of server in progress as process 80
+2023-01-11T21:37:37.289486Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-01-11T21:38:25.603895Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-01-11T21:38:30.617277Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2023-01-11 21:38:42+00:00 [Note] [Entrypoint]: Database files initialized
+2023-01-11 21:38:42+00:00 [Note] [Entrypoint]: Starting temporary server
+2023-01-11T21:38:43.574258Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T21:38:43.579724Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 129
+2023-01-11T21:38:43.619282Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-01-11T21:38:44.264191Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-01-11T21:38:44.887166Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2023-01-11T21:38:44.888042Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2023-01-11T21:38:44.892420Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2023-01-11T21:38:44.973434Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.31'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
+2023-01-11T21:38:44.975400Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+2023-01-11 21:38:45+00:00 [Note] [Entrypoint]: Temporary server started.
+'/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
+Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+
+2023-01-11 21:38:52+00:00 [Note] [Entrypoint]: Stopping temporary server
+2023-01-11T21:38:52.600956Z 10 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.31).
+2023-01-11T21:38:57.247568Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.31)  MySQL Community Server - GPL.
+2023-01-11 21:38:57+00:00 [Note] [Entrypoint]: Temporary server stopped
+
+2023-01-11 21:38:57+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
+
+2023-01-11T21:38:57.938409Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2023-01-11T21:38:57.940451Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.31) starting as process 1
+2023-01-11T21:38:57.955268Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2023-01-11T21:38:59.031952Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2023-01-11T21:38:59.870110Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2023-01-11T21:38:59.870359Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2023-01-11T21:38:59.878858Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2023-01-11T21:38:59.924982Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.31'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2023-01-11T21:38:59.924983Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# exit
+logout
+vagrant@ubuntu-bionic:~$ exit
+logout
+Connection to 127.0.0.1 closed.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ exit
+exit
+
+C:\WINDOWS\system32>bash
+
+Gaurav@DESKTOP-NF0FS2B  /c/WINDOWS/system32
+$ cd ~/devops/provision/vagrant/bionic/
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant ssh
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-197-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Wed Jan 11 21:41:37 UTC 2023
+
+  System load:  0.22              Processes:              103
+  Usage of /:   8.0% of 38.70GB   Users logged in:        0
+  Memory usage: 55%               IP address for enp0s3:  10.0.2.15
+  Swap usage:   0%                IP address for docker0: 172.17.0.1
+
+
+37 updates can be applied immediately.
+35 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+New release '20.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Wed Jan 11 20:53:28 2023 from 10.0.2.2
+vagrant@ubuntu-bionic:~$ sudo su -
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                                                  NAMES
+73272405c8f9   mysql     "docker-entrypoint.s…"   6 minutes ago   Up 5 minutes   33060/tcp, 0.0.0.0:6603->3306/tcp, :::6603->3306/tcp   mysqlserver-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker stop $(docker ps -aq)
+73272405c8f9
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS                      PORTS     NAMES
+73272405c8f9   mysql     "docker-entrypoint.s…"   6 minutes ago   Exited (0) 10 seconds ago             mysqlserver-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker rm $(docker ps -aq)
+73272405c8f9
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps --filter status=running
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu-bionic:~# docker stop $(docker ps --filter status=running -q)
+"docker stop" requires at least 1 argument.
+See 'docker stop --help'.
+
+Usage:  docker stop [OPTIONS] CONTAINER [CONTAINER...]
+
+Stop one or more running containers
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker rm $(docker ps --filter status=exited -q)
+"docker rm" requires at least 1 argument.
+See 'docker rm --help'.
+
+Usage:  docker rm [OPTIONS] CONTAINER [CONTAINER...]
+
+Remove one or more containers
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY           TAG       IMAGE ID       CREATED        SIZE
+mysql                latest    7484689f290f   5 weeks ago    538MB
+mysql/mysql-server   latest    3f3946d5572f   3 months ago   517MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker rmi $(docker images -q)
+Untagged: mysql:latest
+Untagged: mysql@sha256:3d7ae561cf6095f6aca8eb7830e1d14734227b1fb4748092f2be2cfbccf7d614
+Deleted: sha256:7484689f290f1defe06b65befc54cb6ad91a667cf0af59a265ffe76c46bd0478
+Deleted: sha256:fb249074ba1621ae2f0021b89488f93d6d591fd42f8bbc760be96a653d18a066
+Deleted: sha256:d7912527c048a7e206c51080f7f1b6b6c383ac8954e3da7d113b00d0a96c7044
+Deleted: sha256:994f05094d147f16e330dd7c9afd5e1472fbf1ce1038eb707e379ae507de6167
+Deleted: sha256:1337fe7eaf3ed7bac1f1842205c3c80466781cf2ed39d755043a24939a9c4408
+Deleted: sha256:4524762c7e21412b3fef00e189fe6b81e78f2751fef4f30355018dc3ab5f3cf2
+Deleted: sha256:5222c8df3c5115dcf6c3bb957d5160d5d7124437fa2f214368d67b8e1e6d670e
+Deleted: sha256:169fcf64e0d193fda3e49267b454ddeb4083f05e70bbcbbc6de2798944c3e555
+Deleted: sha256:bc87451b8005b06fa948e48c2644bc42107cf037499d15dad7f341064035dfc2
+Deleted: sha256:93c1acbf3bfcdd2a82a68687481569a07d619469a596b5f017f17cc092498eef
+Deleted: sha256:29bd3d7c6e1683e422776b9d3285e8a3f1272f07656fc63a941cb7729a169100
+Deleted: sha256:d3cc7b6aa7bc15725c1a856ce06fe436da3fbccf0c9c06b04e45f79b3439c154
+Untagged: mysql/mysql-server:latest
+Untagged: mysql/mysql-server@sha256:1b2005199e9dc12d88d5950cd738dfd12172b1224675294646ea9d6031c78408
+Deleted: sha256:3f3946d5572fd75437cf18ac20907c76a107d52f3965958654d0ce77478af5ea
+Deleted: sha256:0a755b68aa9bb1c3f8fbc2ecd244d1a4a5c122934656ee36090663c3fed9f415
+Deleted: sha256:3cb95006826f01af1429c5c79366950593520038cdf0ac20c6595b7e3f6b026c
+Deleted: sha256:d5e05b104ad69dedea269d2d630d8f9b5f157596edd3668586096c7f037b64c6
+Deleted: sha256:0a64752eef834602bf5409eee724ca6cffadcd0954c52df47d9480b426664e87
+Deleted: sha256:06445e842e35e0c0020caae1046e16ed0e4446c4a9458d58b785efea842d1019
+Deleted: sha256:09ad243f59cb7d9cc1d07c1878dac39fa102aa6eb1f4d0fa62d706935f54bae6
+Deleted: sha256:553b196ea5e8358e8b819253dc8fb9af6cf5711df6c83e594b4c2109c61eda18
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images -aq | xargs docker rmi
+"docker rmi" requires at least 1 argument.
+See 'docker rmi --help'.
+
+Usage:  docker rmi [OPTIONS] IMAGE [IMAGE...]
+
+Remove one or more images
+root@ubuntu-bionic:~# exit
+logout
+vagrant@ubuntu-bionic:~$ exit
+logout
+Connection to 127.0.0.1 closed.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ exit
+exit
+
+C:\WINDOWS\system32>
