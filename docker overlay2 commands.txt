@@ -1,0 +1,731 @@
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Importing base box 'ubuntu/bionic64'...
+==> default: Matching MAC address for NAT networking...
+==> default: Checking if box 'ubuntu/bionic64' version '20221102.0.0' is up to date...
+==> default: A newer version of the box 'ubuntu/bionic64' for provider 'virtualbox' is
+==> default: available! You currently have version '20221102.0.0'. The latest is version
+==> default: '20221207.0.0'. Run `vagrant box update` to update.
+==> default: Setting the name of the VM: bionic_default_1673517984611_96248
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+==> default: Forwarding ports...
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Running 'pre-boot' VM customizations...
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default: Warning: Connection reset. Retrying...
+    default: Warning: Connection aborted. Retrying...
+    default:
+    default: Vagrant insecure key detected. Vagrant will automatically replace
+    default: this with a newly generated keypair for better security.
+    default:
+    default: Inserting generated public key within guest...
+    default: Removing insecure key from the guest if it's present...
+    default: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> default: Machine booted and ready!
+==> default: Checking for guest additions in VM...
+    default: The guest additions on this VM do not match the installed version of
+    default: VirtualBox! In most cases this is fine, but in rare cases it can
+    default: prevent things such as shared folders from working properly. If you see
+    default: shared folder errors, please make sure the guest additions within the
+    default: virtual machine match the version of VirtualBox you have installed on
+    default: your host and reload your VM.
+    default:
+    default: Guest Additions Version: 5.2.42
+    default: VirtualBox Version: 6.1
+==> default: Mounting shared folders...
+    default: /vagrant => C:/Users/Gaurav/devops/provision/vagrant/bionic
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant ssh
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-197-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Thu Jan 12 10:07:28 UTC 2023
+
+  System load:  0.9               Processes:             102
+  Usage of /:   2.9% of 38.70GB   Users logged in:       0
+  Memory usage: 12%               IP address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+
+0 updates can be applied immediately.
+
+New release '20.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+vagrant@ubuntu-bionic:~$ sudo su -
+root@ubuntu-bionic:~# curl -fsSL https://test.docker.com -o test-docker.sh
+root@ubuntu-bionic:~# sh test-docker.sh
+# Executing docker install script, commit: 1d97565eca92bb523082b7d4f530c74104e05d35
++ sh -c apt-get update -qq >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq apt-transport-https ca-certificates curl >/dev/null
++ sh -c mkdir -p /etc/apt/keyrings && chmod -R 0755 /etc/apt/keyrings
++ sh -c curl -fsSL "https://download.docker.com/linux/ubuntu/gpg" | gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg
++ sh -c chmod a+r /etc/apt/keyrings/docker.gpg
++ sh -c echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu bionic test" > /etc/apt/sources.list.d/docker.list
++ sh -c apt-get update -qq >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-scan-plugin docker-buildx-plugin >/dev/null
++ version_gte 20.10
++ [ -z  ]
++ return 0
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker-ce-rootless-extras >/dev/null
++ sh -c docker version
+Client: Docker Engine - Community
+ Version:           23.0.0-rc.1
+ API version:       1.42
+ Go version:        go1.19.4
+ Git commit:        139e924
+ Built:             Thu Dec 22 23:36:50 2022
+ OS/Arch:           linux/amd64
+ Context:           default
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          23.0.0-rc.1
+  API version:      1.42 (minimum version 1.12)
+  Go version:       go1.19.4
+  Git commit:       cba986b
+  Built:            Thu Dec 22 23:36:50 2022
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.6.15
+  GitCommit:        5b842e528e99d4d4c1686467debf2bd4b88ecd86
+ runc:
+  Version:          1.1.4
+  GitCommit:        v1.1.4-0-g5fd4c4d
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+================================================================================
+
+To run Docker as a non-privileged user, consider setting up the
+Docker daemon in rootless mode for your user:
+
+    dockerd-rootless-setuptool.sh install
+
+Visit https://docs.docker.com/go/rootless/ to learn about rootless mode.
+
+
+To run the Docker daemon as a fully privileged service, but granting non-root
+users access, refer to https://docs.docker.com/go/daemon-access/
+
+WARNING: Access to the remote API on a privileged Docker daemon is equivalent
+         to root access on the host. Refer to the 'Docker daemon attack surface'
+         documentation for details: https://docs.docker.com/go/attack-surface/
+
+================================================================================
+
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+l
+root@ubuntu-bionic:~# docker pull alpine
+Using default tag: latest
+latest: Pulling from library/alpine
+8921db27df28: Pull complete
+Digest: sha256:f271e74b17ced29b915d351685fd4644785c6d1559dd1f2d4189a5e851ef753a
+Status: Downloaded newer image for alpine:latest
+docker.io/library/alpine:latest
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+de69836bf472eb603cf6c3d070a916c1ddd59683c8f1c8aaeaa67dfb48f71bea  l
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/de69836bf472eb603cf6c3d070a916c1ddd59683c8f1c8aaeaa67dfb48f71bea/diff
+bin  dev  etc  home  lib  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker run -it --name=alpine-con1 alpine
+/ # ls
+bin    dev    etc    home   lib    media  mnt    opt    proc   root   run    sbin   srv    sys    tmp    usr    var
+/ # ps ef
+PID   USER     TIME  COMMAND
+    1 root      0:00 /bin/sh
+    8 root      0:00 ps ef
+/ # exit
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS                     PORTS     NAMES
+8f63f042ab59   alpine    "/bin/sh"   18 seconds ago   Exited (0) 5 seconds ago             alpine-con1
+root@ubuntu-bionic:~# docker start alpine-con1
+alpine-con1
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS        PORTS     NAMES
+8f63f042ab59   alpine    "/bin/sh"   31 seconds ago   Up 1 second             alpine-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          1         1         7.05MB    0B (0%)
+Containers      1         1         14B       0B (0%)
+Local Volumes   0         0         0B        0B
+Build Cache     0         0         0B        0B
+root@ubuntu-bionic:~# docker exec -it alpine-con1 bash
+OCI runtime exec failed: exec failed: unable to start container process: exec: "bash": executable file not found in $PATH: unknown
+root@ubuntu-bionic:~# docker exec -it alpine-con1 sh
+/ # pwd
+/
+/ # touch {file1..file10}
+/ # ls
+bin              home             mnt              root             srv              usr
+dev              lib              opt              run              sys              var
+etc              media            proc             sbin             tmp              {file1..file10}
+/ # rm {file1..file10}
+/ # touch newfile
+/ # ls
+bin      etc      lib      mnt      opt      root     sbin     sys      usr
+dev      home     media    newfile  proc     run      srv      tmp      var
+/ # read escape sequence
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps
+
+CONTAINER ID   IMAGE     COMMAND     CREATED         STATUS         PORTS     NAMES
+8f63f042ab59   alpine    "/bin/sh"   4 minutes ago   Up 4 minutes             alpine-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/de69836bf472eb603cf6c3d070a916c1ddd59683c8f1c8aaeaa67dfb48f71bea/diff
+bin  dev  etc  home  lib  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker run -it --name=alpine-con2 alpine
+/ # ls
+bin    dev    etc    home   lib    media  mnt    opt    proc   root   run    sbin   srv    sys    tmp    usr    var
+/ # root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS         PORTS     NAMES
+f11bca4dcf8f   alpine    "/bin/sh"   10 seconds ago   Up 8 seconds             alpine-con2
+8f63f042ab59   alpine    "/bin/sh"   8 minutes ago    Up 7 minutes             alpine-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+87b180ce54dc3c5670164c7fae0f8fe54035752972f59426d6803aef2c25774c
+87b180ce54dc3c5670164c7fae0f8fe54035752972f59426d6803aef2c25774c-init
+d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6
+d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6-init
+de69836bf472eb603cf6c3d070a916c1ddd59683c8f1c8aaeaa67dfb48f71bea
+l
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6/diff
+newfile  root
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS          PORTS     NAMES
+f11bca4dcf8f   alpine    "/bin/sh"   35 minutes ago   Up 35 minutes             alpine-con2
+8f63f042ab59   alpine    "/bin/sh"   43 minutes ago   Up 42 minutes             alpine-con1
+root@ubuntu-bionic:~# docker rm alpine-con2 -f
+alpine-con2
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS          PORTS     NAMES
+8f63f042ab59   alpine    "/bin/sh"   43 minutes ago   Up 43 minutes             alpine-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6
+d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6-init
+de69836bf472eb603cf6c3d070a916c1ddd59683c8f1c8aaeaa67dfb48f71bea
+l
+root@ubuntu-bionic:~# docker exec -it alpine-con1 bash
+
+OCI runtime exec failed: exec failed: unable to start container process: exec: "bash": executable file not found in $PATH: unknown
+root@ubuntu-bionic:~# docker exec -it alpine-con1 sh
+/ # ls
+bin      etc      lib      mnt      opt      root     sbin     sys      usr
+dev      home     media    newfile  proc     run      srv      tmp      var
+/ # touch newfile2
+/ # read escape sequence
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS          PORTS     NAMES
+8f63f042ab59   alpine    "/bin/sh"   44 minutes ago   Up 44 minutes             alpine-con1
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6
+d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6-init
+de69836bf472eb603cf6c3d070a916c1ddd59683c8f1c8aaeaa67dfb48f71bea
+l
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6\diff
+ls: cannot access '/var/lib/docker/overlay2/d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6diff': No such file or directory
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6
+d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6-init
+de69836bf472eb603cf6c3d070a916c1ddd59683c8f1c8aaeaa67dfb48f71bea
+l
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6
+diff  link  lower  merged  work
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6/diff
+newfile  newfile2  root
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+alpine       latest    042a816809aa   2 days ago   7.05MB
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND     CREATED       STATUS       PORTS     NAMES
+8f63f042ab59   alpine    "/bin/sh"   2 hours ago   Up 2 hours             alpine-con1
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6
+d5ac9393ad81abc5248f95c6954bde94577252e483c520c00c10568389729bb6-init
+de69836bf472eb603cf6c3d070a916c1ddd59683c8f1c8aaeaa67dfb48f71bea
+l
+root@ubuntu-bionic:~# docker rm -f alpine-con1
+alpine-con1
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+de69836bf472eb603cf6c3d070a916c1ddd59683c8f1c8aaeaa67dfb48f71bea  l
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+alpine       latest    042a816809aa   2 days ago   7.05MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker rmi alpine
+Untagged: alpine:latest
+Untagged: alpine@sha256:f271e74b17ced29b915d351685fd4644785c6d1559dd1f2d4189a5e851ef753a
+Deleted: sha256:042a816809aac8d0f7d7cacac7965782ee2ecac3f21bcf9f24b1de1a7387b769
+Deleted: sha256:8e012198eea15b2554b07014081c85fec4967a1b9cc4b65bd9a4bce3ae1c0c88
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+l
+root@ubuntu-bionic:~# docker pull alpine
+Using default tag: latest
+latest: Pulling from library/alpine
+8921db27df28: Pull complete
+Digest: sha256:f271e74b17ced29b915d351685fd4644785c6d1559dd1f2d4189a5e851ef753a
+Status: Downloaded newer image for alpine:latest
+docker.io/library/alpine:latest
+root@ubuntu-bionic:~# docker run -it --name=alpine-con1 alpine
+
+/ #
+/ # ls
+bin    dev    etc    home   lib    media  mnt    opt    proc   root   run    sbin   srv    sys    tmp    usr    var
+/ # touch newfile
+/ # root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS          PORTS     NAMES
+60f0c2a04473   alpine    "/bin/sh"   18 seconds ago   Up 12 seconds             alpine-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e
+cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe
+cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe-init
+l
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe
+diff  link  lower  merged  work
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe/diff
+newfile  root
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# touch /var/lib/docker/overlay2/bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e/diff/newfile2_created_on_image_namespace
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe/diff
+newfile  root
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e/diff/
+
+bin  etc   lib    mnt                                  opt   root  sbin  sys  usr
+dev  home  media  newfile2_created_on_image_namespace  proc  run   srv   tmp  var
+root@ubuntu-bionic:~# docker stop alpine-con1
+
+
+alpine-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND     CREATED         STATUS                       PORTS     NAMES
+60f0c2a04473   alpine    "/bin/sh"   2 minutes ago   Exited (137) 7 seconds ago             alpine-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker start alpine-con1
+alpine-con1
+root@ubuntu-bionic:~# docker exec -it alpine-con1 sh
+/ # ls
+bin                                  newfile                              srv
+dev                                  newfile2_created_on_image_namespace  sys
+etc                                  opt                                  tmp
+home                                 proc                                 usr
+lib                                  root                                 var
+media                                run
+mnt                                  sbin
+/ # read escape sequence
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker exec -it alpine-con1 sh
+
+/ #
+/ # touch newfile3_created_on_container_namespace
+/ # ls
+bin                                      opt
+dev                                      proc
+etc                                      root
+home                                     run
+lib                                      sbin
+media                                    srv
+mnt                                      sys
+newfile                                  tmp
+newfile2_created_on_image_namespace      usr
+newfile3_created_on_container_namespace  var
+/ # read escape sequence
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e
+cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe
+cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe-init
+l
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e/diff
+bin  etc   lib    mnt                                  opt   root  sbin  sys  usr
+dev  home  media  newfile2_created_on_image_namespace  proc  run   srv   tmp  var
+root@ubuntu-bionic:~# docker version
+Client: Docker Engine - Community
+ Version:           23.0.0-rc.1
+ API version:       1.42
+ Go version:        go1.19.4
+ Git commit:        139e924
+ Built:             Thu Dec 22 23:36:50 2022
+ OS/Arch:           linux/amd64
+ Context:           default
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          23.0.0-rc.1
+  API version:      1.42 (minimum version 1.12)
+  Go version:       go1.19.4
+  Git commit:       cba986b
+  Built:            Thu Dec 22 23:36:50 2022
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.6.15
+  GitCommit:        5b842e528e99d4d4c1686467debf2bd4b88ecd86
+ runc:
+  Version:          1.1.4
+  GitCommit:        v1.1.4-0-g5fd4c4d
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+root@ubuntu-bionic:~# docker info
+Client:
+ Context:    default
+ Debug Mode: false
+ Plugins:
+  buildx: Docker Buildx (Docker Inc.)
+    Version:  v0.10.0-rc2
+    Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+  compose: Docker Compose (Docker Inc.)
+    Version:  v2.14.2
+    Path:     /usr/libexec/docker/cli-plugins/docker-compose
+  scan: Docker Scan (Docker Inc.)
+    Version:  v0.23.0
+    Path:     /usr/libexec/docker/cli-plugins/docker-scan
+
+Server:
+ Containers: 1
+  Running: 1
+  Paused: 0
+  Stopped: 0
+ Images: 1
+ Server Version: 23.0.0-rc.1
+ Storage Driver: overlay2
+  Backing Filesystem: extfs
+  Supports d_type: true
+  Using metacopy: false
+  Native Overlay Diff: true
+  userxattr: false
+ Logging Driver: json-file
+ Cgroup Driver: cgroupfs
+ Cgroup Version: 1
+ Plugins:
+  Volume: local
+  Network: bridge host ipvlan macvlan null overlay
+  Log: awslogs fluentd gcplogs gelf journald json-file local logentries splunk syslog
+ Swarm: inactive
+ Runtimes: io.containerd.runc.v2 runc
+ Default Runtime: runc
+ Init Binary: docker-init
+ containerd version: 5b842e528e99d4d4c1686467debf2bd4b88ecd86
+ runc version: v1.1.4-0-g5fd4c4d
+ init version: de40ad0
+ Security Options:
+  apparmor
+  seccomp
+   Profile: builtin
+ Kernel Version: 4.15.0-197-generic
+ Operating System: Ubuntu 18.04.6 LTS
+ OSType: linux
+ Architecture: x86_64
+ CPUs: 2
+ Total Memory: 984.9MiB
+ Name: ubuntu-bionic
+ ID: 0f7e8632-4d62-4d5e-83fc-07275690486c
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: false
+ Registry: https://index.docker.io/v1/
+ Experimental: false
+ Insecure Registries:
+  127.0.0.0/8
+ Live Restore Enabled: false
+
+WARNING: No swap limit support
+root@ubuntu-bionic:~# docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          1         1         7.05MB    0B (0%)
+Containers      1         1         69B       0B (0%)
+Local Volumes   0         0         0B        0B
+Build Cache     0         0         0B        0B
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+alpine       latest    042a816809aa   2 days ago   7.05MB
+root@ubuntu-bionic:~# docker inspect alpine
+
+[
+    {
+        "Id": "sha256:042a816809aac8d0f7d7cacac7965782ee2ecac3f21bcf9f24b1de1a7387b769",
+        "RepoTags": [
+            "alpine:latest"
+        ],
+        "RepoDigests": [
+            "alpine@sha256:f271e74b17ced29b915d351685fd4644785c6d1559dd1f2d4189a5e851ef753a"
+        ],
+        "Parent": "",
+        "Comment": "",
+        "Created": "2023-01-09T17:05:20.656498283Z",
+        "Container": "d4d39cab50d7e505e946044f9131e99602e21f02d0137599e85a70c0b2b7cd15",
+        "ContainerConfig": {
+            "Hostname": "d4d39cab50d7",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/sh",
+                "-c",
+                "#(nop) ",
+                "CMD [\"/bin/sh\"]"
+            ],
+            "Image": "sha256:7fdd9d695f58803dd6ee7b1b8135122acedeb3817964d644b65995698b438002",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {}
+        },
+        "DockerVersion": "20.10.12",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+            ],
+            "Cmd": [
+                "/bin/sh"
+            ],
+            "Image": "sha256:7fdd9d695f58803dd6ee7b1b8135122acedeb3817964d644b65995698b438002",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": null
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 7049701,
+        "VirtualSize": 7049701,
+        "GraphDriver": {
+            "Data": {
+                "MergedDir": "/var/lib/docker/overlay2/bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e/merged",
+                "UpperDir": "/var/lib/docker/overlay2/bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e/diff",
+                "WorkDir": "/var/lib/docker/overlay2/bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e/work"
+            },
+            "Name": "overlay2"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:8e012198eea15b2554b07014081c85fec4967a1b9cc4b65bd9a4bce3ae1c0c88"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "0001-01-01T00:00:00Z"
+        }
+    }
+]
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker inspect alpine | grep upperdir
+root@ubuntu-bionic:~# docker inspect alpine | grep -i upperdir
+                "UpperDir": "/var/lib/docker/overlay2/bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e/diff",
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+alpine       latest    042a816809aa   2 days ago   7.05MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker inspect alpine | grep -i upperdir
+                "UpperDir": "/var/lib/docker/overlay2/bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e/diff",
+root@ubuntu-bionic:~# docker image inspect alpine | grep -i upperdir
+                "UpperDir": "/var/lib/docker/overlay2/bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e/diff",
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS          PORTS     NAMES
+60f0c2a04473   alpine    "/bin/sh"   22 minutes ago   Up 19 minutes             alpine-con1
+root@ubuntu-bionic:~# docker logs alpine-con1
+
+/ #
+/ # ls
+bin    dev    etc    home   lib    media  mnt    opt    proc   root   run    sbin   srv    sys    tmp    usr    var
+/ # touch newfile
+/ # ^[[31;5R^[[31;5R^[[31;5Rroot@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS          PORTS     NAMES
+60f0c2a04473   alpine    "/bin/sh"   22 minutes ago   Up 20 minutes             alpine-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker inspect alpine-con1 | grep -i upperdir
+                "UpperDir": "/var/lib/docker/overlay2/cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe/diff",
+root@ubuntu-bionic:~# hostname
+ubuntu-bionic
+root@ubuntu-bionic:~# ls /dev/
+autofs           input             network_latency     snapshot  tty2   tty36  tty52  ttyS10  ttyS27     vcs1
+block            kmsg              network_throughput  snd       tty20  tty37  tty53  ttyS11  ttyS28     vcs2
+bsg              log               null                stderr    tty21  tty38  tty54  ttyS12  ttyS29     vcs3
+btrfs-control    loop-control      port                stdin     tty22  tty39  tty55  ttyS13  ttyS3      vcs4
+char             loop0             ppp                 stdout    tty23  tty4   tty56  ttyS14  ttyS30     vcs5
+console          loop1             psaux               tty       tty24  tty40  tty57  ttyS15  ttyS31     vcs6
+core             loop2             ptmx                tty0      tty25  tty41  tty58  ttyS16  ttyS4      vcsa
+cpu_dma_latency  loop3             pts                 tty1      tty26  tty42  tty59  ttyS17  ttyS5      vcsa1
+cuse             loop4             random              tty10     tty27  tty43  tty6   ttyS18  ttyS6      vcsa2
+disk             loop5             rfkill              tty11     tty28  tty44  tty60  ttyS19  ttyS7      vcsa3
+ecryptfs         loop6             rtc                 tty12     tty29  tty45  tty61  ttyS2   ttyS8      vcsa4
+fd               loop7             rtc0                tty13     tty3   tty46  tty62  ttyS20  ttyS9      vcsa5
+full             mapper            sda                 tty14     tty30  tty47  tty63  ttyS21  ttyprintk  vcsa6
+fuse             mcelog            sda1                tty15     tty31  tty48  tty7   ttyS22  uinput     vfio
+hpet             mem               sdb                 tty16     tty32  tty49  tty8   ttyS23  urandom    vga_arbiter
+hugepages        memory_bandwidth  sg0                 tty17     tty33  tty5   tty9   ttyS24  vboxguest  vhost-net
+hwrng            mqueue            sg1                 tty18     tty34  tty50  ttyS0  ttyS25  vboxuser   vhost-vsock
+initctl          net               shm                 tty19     tty35  tty51  ttyS1  ttyS26  vcs        zero
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS          PORTS     NAMES
+60f0c2a04473   alpine    "/bin/sh"   26 minutes ago   Up 24 minutes             alpine-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker exec -it alpine-con1 sh
+/ # ls /dev/
+console  fd       mqueue   ptmx     random   stderr   stdout   urandom
+core     full     null     pts      shm      stdin    tty      zero
+/ # read escape sequence
+root@ubuntu-bionic:~# docker container diff 60f0c2a04473
+A /newfile3_created_on_container_namespace
+C /root
+A /root/.ash_history
+A /newfile
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+alpine       latest    042a816809aa   2 days ago   7.05MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker image inspect alpine | grep -i diff
+                "UpperDir": "/var/lib/docker/overlay2/bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e/diff",
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS          PORTS     NAMES
+60f0c2a04473   alpine    "/bin/sh"   30 minutes ago   Up 27 minutes             alpine-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker container inspect alpine-con1 | grep -i diff
+                "LowerDir": "/var/lib/docker/overlay2/cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe-init/diff:/var/lib/docker/overlay2/bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e/diff",
+                "UpperDir": "/var/lib/docker/overlay2/cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe/diff",
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e
+cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe
+cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe-init
+l
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS          PORTS     NAMES
+60f0c2a04473   alpine    "/bin/sh"   56 minutes ago   Up 53 minutes             alpine-con1
+root@ubuntu-bionic:~# df -hT
+Filesystem     Type      Size  Used Avail Use% Mounted on
+udev           devtmpfs  480M     0  480M   0% /dev
+tmpfs          tmpfs      99M  716K   98M   1% /run
+/dev/sda1      ext4       39G  1.8G   37G   5% /
+tmpfs          tmpfs     493M     0  493M   0% /dev/shm
+tmpfs          tmpfs     5.0M     0  5.0M   0% /run/lock
+tmpfs          tmpfs     493M     0  493M   0% /sys/fs/cgroup
+vagrant        vboxsf    459G  147G  313G  32% /vagrant
+tmpfs          tmpfs      99M     0   99M   0% /run/user/1000
+overlay        overlay    39G  1.8G   37G   5% /var/lib/docker/overlay2/cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe/merged
+root@ubuntu-bionic:~# df -hT overlay
+df: overlay: No such file or directory
+root@ubuntu-bionic:~# df -hT /
+Filesystem     Type  Size  Used Avail Use% Mounted on
+/dev/sda1      ext4   39G  1.8G   37G   5% /
+root@ubuntu-bionic:~# df -hT /var
+Filesystem     Type  Size  Used Avail Use% Mounted on
+/dev/sda1      ext4   39G  1.8G   37G   5% /
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND     CREATED             STATUS          PORTS     NAMES
+60f0c2a04473   alpine    "/bin/sh"   About an hour ago   Up 59 minutes             alpine-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker stats alpine-con1
+CONTAINER ID   NAME          CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O   PIDS
+60f0c2a04473   alpine-con1   0.00%     1.742MiB / 984.9MiB   0.18%     1.33kB / 0B   0B / 0B     4
+CONTAINER ID   NAME          CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O   PIDS
+60f0c2a04473   alpine-con1   0.00%     1.742MiB / 984.9MiB   0.18%     1.33kB / 0B   0B / 0B     4
+CONTAINER ID   NAME          CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O   PIDS
+60f0c2a04473   alpine-con1   0.00%     1.742MiB / 984.9MiB   0.18%     1.33kB / 0B   0B / 0B     4
+CONTAINER ID   NAME          CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O   PIDS
+60f0c2a04473   alpine-con1   0.00%     1.742MiB / 984.9MiB   0.18%     1.33kB / 0B   0B / 0B     4
+q
+CONTAINER ID   NAME          CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O   PIDS
+60f0c2a04473   alpine-con1   0.00%     1.742MiB / 984.9MiB   0.18%     1.33kB / 0B   0B / 0B     4
+CONTAINER ID   NAME          CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O   PIDS
+60f0c2a04473   alpine-con1   0.00%     1.742MiB / 984.9MiB   0.18%     1.33kB / 0B   0B / 0B     4
+CONTAINER ID   NAME          CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O   PIDS
+60f0c2a04473   alpine-con1   0.00%     1.742MiB / 984.9MiB   0.18%     1.33kB / 0B   0B / 0B     4
+CONTAINER ID   NAME          CPU %     MEM USAGE / LIMIT     MEM %     NET I/O       BLOCK I/O   PIDS
+60f0c2a04473   alpine-con1   0.00%     1.742MiB / 984.9MiB   0.18%     1.33kB / 0B   0B / 0B     4
+^C
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND     CREATED             STATUS             PORTS     NAMES
+60f0c2a04473   alpine    "/bin/sh"   About an hour ago   Up About an hour             alpine-con1
+root@ubuntu-bionic:~# docker container inspect alpine-con1 | grep -i diff
+                "LowerDir": "/var/lib/docker/overlay2/cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe-init/diff:/var/lib/docker/overlay2/bf48a435cc3310ac587155ec695fa4582c83a13f24bc8b40b255e77dbf3bb89e/diff",
+                "UpperDir": "/var/lib/docker/overlay2/cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe/diff",
+root@ubuntu-bionic:~# ls "/var/lib/docker/overlay2/cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe/diff"
+newfile  newfile3_created_on_container_namespace  root
+root@ubuntu-bionic:~# rm -f "/var/lib/docker/overlay2/cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe/diff/newfile"
+root@ubuntu-bionic:~# ls "/var/lib/docker/overlay2/cc3de6f35ba4a5570121864897a454944a5f3b983e56cbe07b89450ddd6e8bbe/diff"
+newfile3_created_on_container_namespace  root
+root@ubuntu-bionic:~# exit
+logout
+vagrant@ubuntu-bionic:~$ exit
+logout
+Connection to 127.0.0.1 closed.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$
