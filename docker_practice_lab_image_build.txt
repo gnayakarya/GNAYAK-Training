@@ -1,0 +1,914 @@
+Microsoft Windows [Version 10.0.19045.2486]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\WINDOWS\system32>bash
+
+Gaurav@DESKTOP-NF0FS2B  /c/WINDOWS/system32
+$ cd ~/devops/provision/vagrant/bionic/
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ ls
+Vagrantfile  ubuntu-bionic-18.04-cloudimg-console.log
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant status
+Current machine states:
+
+default                   poweroff (virtualbox)
+
+The VM is powered off. To restart the VM, simply run `vagrant up`
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant destroy -f
+==> default: Destroying VM and associated drives...
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Importing base box 'ubuntu/bionic64'...
+==> default: Matching MAC address for NAT networking...
+==> default: Checking if box 'ubuntu/bionic64' version '20221102.0.0' is up to date...
+==> default: A newer version of the box 'ubuntu/bionic64' for provider 'virtualbox' is
+==> default: available! You currently have version '20221102.0.0'. The latest is version
+==> default: '20230112.0.0'. Run `vagrant box update` to update.
+==> default: Setting the name of the VM: bionic_default_1673608732158_82372
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+==> default: Forwarding ports...
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Running 'pre-boot' VM customizations...
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default: Warning: Connection reset. Retrying...
+    default:
+    default: Vagrant insecure key detected. Vagrant will automatically replace
+    default: this with a newly generated keypair for better security.
+    default:
+    default: Inserting generated public key within guest...
+The guest machine entered an invalid state while waiting for it
+to boot. Valid states are 'starting, running'. The machine is in the
+'paused' state. Please verify everything is configured
+properly and try again.
+
+If the provider you're using has a GUI that comes with it,
+it is often helpful to open that and watch the machine, since the
+GUI often has more helpful error messages than Vagrant can retrieve.
+For example, if you're using VirtualBox, run `vagrant up` while the
+VirtualBox GUI is open.
+
+The primary issue for this error is that the provider you're using
+is not properly configured. This is very rarely a Vagrant issue.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant ssh
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-197-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri Jan 13 11:20:41 UTC 2023
+
+  System load:  1.08              Processes:             102
+  Usage of /:   2.9% of 38.70GB   Users logged in:       0
+  Memory usage: 12%               IP address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+
+0 updates can be applied immediately.
+
+New release '20.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-197-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri Jan 13 11:20:41 UTC 2023
+
+  System load:  1.08              Processes:             102
+  Usage of /:   2.9% of 38.70GB   Users logged in:       0
+  Memory usage: 12%               IP address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+
+0 updates can be applied immediately.
+
+New release '20.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+vagrant@ubuntu-bionic:~$ sudo su -
+root@ubuntu-bionic:~# curl -fsSL https://test.docker.com -o test-docker.sh
+root@ubuntu-bionic:~# sh test-docker.sh
+# Executing docker install script, commit: 1d97565eca92bb523082b7d4f530c74104e05d35
++ sh -c apt-get update -qq >/dev/null
+
+
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq apt-transport-https ca-certificates curl >/dev/null
+E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/main/c/ca-certificates/ca-certificates_20211016ubuntu0.18.04.1_all.deb  Cannot initiate the connection to archive.ubuntu.com:80 (2620:2d:4000:1::19). - connect (101: Network is unreachable) Cannot initiate the connection to archive.ubuntu.com:80 (2620:2d:4000:1::16). - connect (101: Network is unreachable) Could not connect to archive.ubuntu.com:80 (185.125.190.39), connection timed out Could not connect to archive.ubuntu.com:80 (185.125.190.36), connection timed out
+E: Failed to fetch http://archive.ubuntu.com/ubuntu/pool/universe/a/apt/apt-transport-https_1.6.14_all.deb  Cannot initiate the connection to archive.ubuntu.com:80 (2620:2d:4000:1::19). - connect (101: Network is unreachable) Cannot initiate the connection to archive.ubuntu.com:80 (2620:2d:4000:1::16). - connect (101: Network is unreachable)
+E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/main/c/curl/curl_7.58.0-2ubuntu3.22_amd64.deb  Cannot initiate the connection to archive.ubuntu.com:80 (2620:2d:4000:1::19). - connect (101: Network is unreachable) Cannot initiate the connection to archive.ubuntu.com:80 (2620:2d:4000:1::16). - connect (101: Network is unreachable)
+E: Failed to fetch http://security.ubuntu.com/ubuntu/pool/main/c/curl/libcurl4_7.58.0-2ubuntu3.22_amd64.deb  Cannot initiate the connection to archive.ubuntu.com:80 (2620:2d:4000:1::19). - connect (101: Network is unreachable) Cannot initiate the connection to archive.ubuntu.com:80 (2620:2d:4000:1::16). - connect (101: Network is unreachable)
+E: Unable to fetch some archives, maybe run apt-get update or try with --fix-missing?
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# telnet /?
+telnet: could not resolve /?/telnet: Temporary failure in name resolution
+root@ubuntu-bionic:~# apt update
+0% [Waiting for headers] [Connecting to security.ubuntu.com (2620:2d:4000:1::19)]
+0% [Waiting for headers] [Waiting for headers]
+Hit:1 http://security.ubuntu.com/ubuntu bionic-security InRelease
+Err:2 http://archive.ubuntu.com/ubuntu bionic InRelease
+  Connection failed [IP: 185.125.190.39 80]
+Err:3 http://archive.ubuntu.com/ubuntu bionic-updates InRelease
+  Connection failed [IP: 185.125.190.36 80]
+Hit:4 http://archive.ubuntu.com/ubuntu bionic-backports InRelease
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+44 packages can be upgraded. Run 'apt list --upgradable' to see them.
+W: Failed to fetch http://archive.ubuntu.com/ubuntu/dists/bionic/InRelease  Connection failed [IP: 185.125.190.39 80]
+W: Failed to fetch http://archive.ubuntu.com/ubuntu/dists/bionic-updates/InRelease  Connection failed [IP: 185.125.190.36 80]
+W: Some index files failed to download. They have been ignored, or old ones used instead.
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# telnet --help
+telnet: invalid option -- '-'
+Usage: telnet [-4] [-6] [-8] [-E] [-L] [-a] [-d] [-e char] [-l user]
+        [-n tracefile] [ -b addr ] [-r] [host-name [port]]
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# telnet 185.125.190.39 80
+Trying 185.125.190.39...
+^C
+root@ubuntu-bionic:~# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 02:a6:12:9f:2a:1a brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic enp0s3
+       valid_lft 85730sec preferred_lft 85730sec
+    inet6 fe80::a6:12ff:fe9f:2a1a/64 scope link
+       valid_lft forever preferred_lft forever
+root@ubuntu-bionic:~# ifconfig
+enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
+        inet6 fe80::a6:12ff:fe9f:2a1a  prefixlen 64  scopeid 0x20<link>
+        ether 02:a6:12:9f:2a:1a  txqueuelen 1000  (Ethernet)
+        RX packets 20118  bytes 28238251 (28.2 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 10401  bytes 699961 (699.9 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 64  bytes 6042 (6.0 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 64  bytes 6042 (6.0 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@ubuntu-bionic:~# ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=56 time=236 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=56 time=13.9 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=56 time=14.9 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=56 time=14.3 ms
+64 bytes from 8.8.8.8: icmp_seq=5 ttl=56 time=12.4 ms
+64 bytes from 8.8.8.8: icmp_seq=6 ttl=56 time=14.9 ms
+64 bytes from 8.8.8.8: icmp_seq=7 ttl=56 time=11.5 ms
+64 bytes from 8.8.8.8: icmp_seq=8 ttl=56 time=15.3 ms
+64 bytes from 8.8.8.8: icmp_seq=9 ttl=56 time=14.1 ms
+64 bytes from 8.8.8.8: icmp_seq=10 ttl=56 time=12.4 ms
+64 bytes from 8.8.8.8: icmp_seq=11 ttl=56 time=14.4 ms
+64 bytes from 8.8.8.8: icmp_seq=12 ttl=56 time=16.5 ms
+64 bytes from 8.8.8.8: icmp_seq=13 ttl=56 time=14.0 ms
+^C
+--- 8.8.8.8 ping statistics ---
+13 packets transmitted, 13 received, 0% packet loss, time 12071ms
+rtt min/avg/max/mdev = 11.576/31.190/236.210/59.198 ms
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# apt update
+0% [Waiting for headers] [Waiting for headers]^C
+root@ubuntu-bionic:~# exit
+logout
+vagrant@ubuntu-bionic:~$ exit
+logout
+Connection to 127.0.0.1 closed.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant reload
+==> default: Attempting graceful shutdown of VM...
+==> default: Checking if box 'ubuntu/bionic64' version '20221102.0.0' is up to date...
+==> default: Clearing any previously set forwarded ports...
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+==> default: Forwarding ports...
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Running 'pre-boot' VM customizations...
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+==> default: Machine booted and ready!
+==> default: Checking for guest additions in VM...
+    default: The guest additions on this VM do not match the installed version of
+    default: VirtualBox! In most cases this is fine, but in rare cases it can
+    default: prevent things such as shared folders from working properly. If you see
+    default: shared folder errors, please make sure the guest additions within the
+    default: virtual machine match the version of VirtualBox you have installed on
+    default: your host and reload your VM.
+    default:
+    default: Guest Additions Version: 5.2.42
+    default: VirtualBox Version: 6.1
+==> default: Mounting shared folders...
+    default: /vagrant => C:/Users/Gaurav/devops/provision/vagrant/bionic
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant ssh
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-197-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Fri Jan 13 11:35:30 UTC 2023
+
+  System load:  1.46              Processes:             103
+  Usage of /:   3.3% of 38.70GB   Users logged in:       0
+  Memory usage: 12%               IP address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+
+46 updates can be applied immediately.
+43 of these updates are standard security updates.
+To see these additional updates run: apt list --upgradable
+
+New release '20.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+Last login: Fri Jan 13 11:20:42 2023 from 10.0.2.2
+vagrant@ubuntu-bionic:~$ sudo su -
+root@ubuntu-bionic:~# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 02:a6:12:9f:2a:1a brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic enp0s3
+       valid_lft 86372sec preferred_lft 86372sec
+    inet6 fe80::a6:12ff:fe9f:2a1a/64 scope link
+       valid_lft forever preferred_lft forever
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ifconfig
+enp0s3: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
+        inet6 fe80::a6:12ff:fe9f:2a1a  prefixlen 64  scopeid 0x20<link>
+        ether 02:a6:12:9f:2a:1a  txqueuelen 1000  (Ethernet)
+        RX packets 423  bytes 46572 (46.5 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 278  bytes 47344 (47.3 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# apt update
+Hit:1 http://security.ubuntu.com/ubuntu bionic-security InRelease
+Err:2 http://archive.ubuntu.com/ubuntu bionic InRelease
+  Connection failed [IP: 185.125.190.39 80]
+Hit:3 http://archive.ubuntu.com/ubuntu bionic-updates InRelease
+Hit:4 http://archive.ubuntu.com/ubuntu bionic-backports InRelease
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+44 packages can be upgraded. Run 'apt list --upgradable' to see them.
+W: Failed to fetch http://archive.ubuntu.com/ubuntu/dists/bionic/InRelease  Connection failed [IP: 185.125.190.39 80]
+W: Some index files failed to download. They have been ignored, or old ones used instead.
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# sh test-docker.sh
+# Executing docker install script, commit: 1d97565eca92bb523082b7d4f530c74104e05d35
++ sh -c apt-get update -qq >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq apt-transport-https ca-certificates curl >/dev/null
++ sh -c mkdir -p /etc/apt/keyrings && chmod -R 0755 /etc/apt/keyrings
++ sh -c curl -fsSL "https://download.docker.com/linux/ubuntu/gpg" | gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg
++ sh -c chmod a+r /etc/apt/keyrings/docker.gpg
++ sh -c echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu bionic test" > /etc/apt/sources.list.d/docker.list
++ sh -c apt-get update -qq >/dev/null
+W: Failed to fetch http://archive.ubuntu.com/ubuntu/dists/bionic/InRelease  Connection failed [IP: 185.125.190.36 80]
+W: Failed to fetch http://security.ubuntu.com/ubuntu/dists/bionic-security/InRelease  Cannot initiate the connection to security.ubuntu.com:80 (2620:2d:4000:1::19). - connect (101: Network is unreachable) Cannot initiate the connection to security.ubuntu.com:80 (2620:2d:4000:1::16). - connect (101: Network is unreachable) Could not connect to security.ubuntu.com:80 (185.125.190.39), connection timed out Could not connect to security.ubuntu.com:80 (185.125.190.36), connection timed out
+W: Some index files failed to download. They have been ignored, or old ones used instead.
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-scan-plugin docker-buildx-plugin >/dev/null
++ version_gte 20.10
++ [ -z  ]
++ return 0
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker-ce-rootless-extras >/dev/null
++ sh -c docker version
+Client: Docker Engine - Community
+ Version:           23.0.0-rc.2
+ API version:       1.42
+ Go version:        go1.19.5
+ Git commit:        257ff41
+ Built:             Wed Jan 11 23:35:54 2023
+ OS/Arch:           linux/amd64
+ Context:           default
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          23.0.0-rc.2
+  API version:      1.42 (minimum version 1.12)
+  Go version:       go1.19.5
+  Git commit:       225551d
+  Built:            Wed Jan 11 23:35:54 2023
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.6.15
+  GitCommit:        5b842e528e99d4d4c1686467debf2bd4b88ecd86
+ runc:
+  Version:          1.1.4
+  GitCommit:        v1.1.4-0-g5fd4c4d
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+================================================================================
+
+To run Docker as a non-privileged user, consider setting up the
+Docker daemon in rootless mode for your user:
+
+    dockerd-rootless-setuptool.sh install
+
+Visit https://docs.docker.com/go/rootless/ to learn about rootless mode.
+
+
+To run the Docker daemon as a fully privileged service, but granting non-root
+users access, refer to https://docs.docker.com/go/daemon-access/
+
+WARNING: Access to the remote API on a privileged Docker daemon is equivalent
+         to root access on the host. Refer to the 'Docker daemon attack surface'
+         documentation for details: https://docs.docker.com/go/attack-surface/
+
+================================================================================
+
+root@ubuntu-bionic:~# systemctl is-active docker
+active
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker pull ubuntu
+Using default tag: latest
+latest: Pulling from library/ubuntu
+6e3729cf69e0: Pull complete
+Digest: sha256:27cb6e6ccef575a4698b66f5de06c7ecd61589132d5a91d098f7f3f9285415a9
+Status: Downloaded newer image for ubuntu:latest
+docker.io/library/ubuntu:latest
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       latest    6b7dfa7e8fdb   5 weeks ago   77.8MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker run -it --name=ubuntu-con1 ubuntu
+root@408493c8631f:/# apt update
+Get:1 http://archive.ubuntu.com/ubuntu jammy InRelease [270 kB]
+Get:2 http://archive.ubuntu.com/ubuntu jammy-updates InRelease [114 kB]
+Get:3 http://archive.ubuntu.com/ubuntu jammy-backports InRelease [99.8 kB]
+Get:4 http://archive.ubuntu.com/ubuntu jammy/main amd64 Packages [1792 kB]
+Get:5 http://archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [266 kB]
+Get:6 http://archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [17.5 MB]
+Get:7 http://security.ubuntu.com/ubuntu jammy-security InRelease [110 kB]
+Get:8 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [4732 B]
+Get:9 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [786 kB]
+Get:10 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [720 kB]
+Get:11 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [659 kB]
+Get:12 http://archive.ubuntu.com/ubuntu jammy/restricted amd64 Packages [164 kB]
+Get:13 http://archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [8978 B]
+Get:14 http://archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [708 kB]
+Get:15 http://archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [990 kB]
+Get:16 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [1035 kB]
+Get:17 http://archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [7286 B]
+Get:18 http://archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [3520 B]
+Fetched 25.2 MB in 4min 51s (86.7 kB/s)
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+All packages are up to date.
+root@408493c8631f:/# apt install apache2 -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  apache2-bin apache2-data apache2-utils bzip2 ca-certificates file libapr1 libaprutil1 libaprutil1-dbd-sqlite3 libaprutil1-ldap libbrotli1 libcurl4
+  libexpat1 libgdbm-compat4 libgdbm6 libicu70 libjansson4 libldap-2.5-0 libldap-common liblua5.3-0 libmagic-mgc libmagic1 libnghttp2-14 libperl5.34
+  libpsl5 librtmp1 libsasl2-2 libsasl2-modules libsasl2-modules-db libsqlite3-0 libssh-4 libxml2 mailcap media-types mime-support netbase openssl perl
+  perl-modules-5.34 publicsuffix ssl-cert xz-utils
+Suggested packages:
+  apache2-doc apache2-suexec-pristine | apache2-suexec-custom www-browser ufw bzip2-doc gdbm-l10n libsasl2-modules-gssapi-mit
+  | libsasl2-modules-gssapi-heimdal libsasl2-modules-ldap libsasl2-modules-otp libsasl2-modules-sql perl-doc libterm-readline-gnu-perl
+  | libterm-readline-perl-perl make libtap-harness-archive-perl
+The following NEW packages will be installed:
+  apache2 apache2-bin apache2-data apache2-utils bzip2 ca-certificates file libapr1 libaprutil1 libaprutil1-dbd-sqlite3 libaprutil1-ldap libbrotli1
+  libcurl4 libexpat1 libgdbm-compat4 libgdbm6 libicu70 libjansson4 libldap-2.5-0 libldap-common liblua5.3-0 libmagic-mgc libmagic1 libnghttp2-14
+  libperl5.34 libpsl5 librtmp1 libsasl2-2 libsasl2-modules libsasl2-modules-db libsqlite3-0 libssh-4 libxml2 mailcap media-types mime-support netbase
+  openssl perl perl-modules-5.34 publicsuffix ssl-cert xz-utils
+0 upgraded, 43 newly installed, 0 to remove and 0 not upgraded.
+Need to get 25.6 MB of archives.
+After this operation, 111 MB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 perl-modules-5.34 all 5.34.0-3ubuntu1.1 [2976 kB]
+Get:2 http://archive.ubuntu.com/ubuntu jammy/main amd64 libgdbm6 amd64 1.23-1 [33.9 kB]
+Get:3 http://archive.ubuntu.com/ubuntu jammy/main amd64 libgdbm-compat4 amd64 1.23-1 [6606 B]
+Get:4 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libperl5.34 amd64 5.34.0-3ubuntu1.1 [4819 kB]
+Get:5 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 perl amd64 5.34.0-3ubuntu1.1 [232 kB]
+Get:6 http://archive.ubuntu.com/ubuntu jammy/main amd64 libapr1 amd64 1.7.0-8build1 [107 kB]
+Get:7 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libexpat1 amd64 2.4.7-1ubuntu0.2 [91.0 kB]
+Get:8 http://archive.ubuntu.com/ubuntu jammy/main amd64 libaprutil1 amd64 1.6.1-5ubuntu4 [92.4 kB]
+Get:9 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libsqlite3-0 amd64 3.37.2-2ubuntu0.1 [641 kB]
+Get:10 http://archive.ubuntu.com/ubuntu jammy/main amd64 libaprutil1-dbd-sqlite3 amd64 1.6.1-5ubuntu4 [11.3 kB]
+Get:11 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libsasl2-modules-db amd64 2.1.27+dfsg2-3ubuntu1.1 [20.6 kB]
+Get:12 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libsasl2-2 amd64 2.1.27+dfsg2-3ubuntu1.1 [53.8 kB]
+Get:13 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libldap-2.5-0 amd64 2.5.13+dfsg-0ubuntu0.22.04.1 [183 kB]
+Get:14 http://archive.ubuntu.com/ubuntu jammy/main amd64 libaprutil1-ldap amd64 1.6.1-5ubuntu4 [9162 B]
+Get:15 http://archive.ubuntu.com/ubuntu jammy/main amd64 libbrotli1 amd64 1.0.9-2build6 [315 kB]
+Get:16 http://archive.ubuntu.com/ubuntu jammy/main amd64 libnghttp2-14 amd64 1.43.0-1build3 [76.3 kB]
+Get:17 http://archive.ubuntu.com/ubuntu jammy/main amd64 libpsl5 amd64 0.21.0-1.2build2 [58.4 kB]
+Get:18 http://archive.ubuntu.com/ubuntu jammy/main amd64 librtmp1 amd64 2.4+20151223.gitfa8646d.1-2build4 [58.2 kB]
+Get:19 http://archive.ubuntu.com/ubuntu jammy/main amd64 libssh-4 amd64 0.9.6-2build1 [184 kB]
+Get:20 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libcurl4 amd64 7.81.0-1ubuntu1.7 [289 kB]
+Get:21 http://archive.ubuntu.com/ubuntu jammy/main amd64 libjansson4 amd64 2.13.1-1.1build3 [32.4 kB]
+Get:22 http://archive.ubuntu.com/ubuntu jammy/main amd64 liblua5.3-0 amd64 5.3.6-1build1 [140 kB]
+Get:23 http://archive.ubuntu.com/ubuntu jammy/main amd64 libicu70 amd64 70.1-2 [10.6 MB]
+Get:24 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libxml2 amd64 2.9.13+dfsg-1ubuntu0.2 [764 kB]
+Get:25 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 apache2-bin amd64 2.4.52-1ubuntu4.2 [1344 kB]
+Get:26 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 apache2-data all 2.4.52-1ubuntu4.2 [165 kB]
+Get:27 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 apache2-utils amd64 2.4.52-1ubuntu4.2 [89.3 kB]
+Get:28 http://archive.ubuntu.com/ubuntu jammy/main amd64 media-types all 7.0.0 [25.5 kB]
+Get:29 http://archive.ubuntu.com/ubuntu jammy/main amd64 mailcap all 3.70+nmu1ubuntu1 [23.8 kB]
+Get:30 http://archive.ubuntu.com/ubuntu jammy/main amd64 mime-support all 3.66 [3696 B]
+Get:31 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 apache2 amd64 2.4.52-1ubuntu4.2 [97.9 kB]
+Get:32 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 openssl amd64 3.0.2-0ubuntu1.7 [1183 kB]
+Get:33 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 ca-certificates all 20211016ubuntu0.22.04.1 [144 kB]
+Get:34 http://archive.ubuntu.com/ubuntu jammy/main amd64 netbase all 6.3 [12.9 kB]
+Get:35 http://archive.ubuntu.com/ubuntu jammy/main amd64 libmagic-mgc amd64 1:5.41-3 [257 kB]
+Get:36 http://archive.ubuntu.com/ubuntu jammy/main amd64 libmagic1 amd64 1:5.41-3 [87.2 kB]
+Get:37 http://archive.ubuntu.com/ubuntu jammy/main amd64 file amd64 1:5.41-3 [21.5 kB]
+Get:38 http://archive.ubuntu.com/ubuntu jammy/main amd64 publicsuffix all 20211207.1025-1 [129 kB]
+Get:39 http://archive.ubuntu.com/ubuntu jammy/main amd64 xz-utils amd64 5.2.5-2ubuntu1 [84.8 kB]
+Get:40 http://archive.ubuntu.com/ubuntu jammy/main amd64 bzip2 amd64 1.0.8-5build1 [34.8 kB]
+Get:41 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libldap-common all 2.5.13+dfsg-0ubuntu0.22.04.1 [15.9 kB]
+Get:42 http://archive.ubuntu.com/ubuntu jammy-updates/main amd64 libsasl2-modules amd64 2.1.27+dfsg2-3ubuntu1.1 [57.2 kB]
+Get:43 http://archive.ubuntu.com/ubuntu jammy/main amd64 ssl-cert all 1.1.2 [17.4 kB]
+Fetched 25.6 MB in 1min 6s (389 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package perl-modules-5.34.
+(Reading database ... 4395 files and directories currently installed.)
+Preparing to unpack .../00-perl-modules-5.34_5.34.0-3ubuntu1.1_all.deb ...
+Unpacking perl-modules-5.34 (5.34.0-3ubuntu1.1) ...
+Selecting previously unselected package libgdbm6:amd64.
+Preparing to unpack .../01-libgdbm6_1.23-1_amd64.deb ...
+Unpacking libgdbm6:amd64 (1.23-1) ...
+Selecting previously unselected package libgdbm-compat4:amd64.
+Preparing to unpack .../02-libgdbm-compat4_1.23-1_amd64.deb ...
+Unpacking libgdbm-compat4:amd64 (1.23-1) ...
+Selecting previously unselected package libperl5.34:amd64.
+Preparing to unpack .../03-libperl5.34_5.34.0-3ubuntu1.1_amd64.deb ...
+Unpacking libperl5.34:amd64 (5.34.0-3ubuntu1.1) ...
+Selecting previously unselected package perl.
+Preparing to unpack .../04-perl_5.34.0-3ubuntu1.1_amd64.deb ...
+Unpacking perl (5.34.0-3ubuntu1.1) ...
+Selecting previously unselected package libapr1:amd64.
+Preparing to unpack .../05-libapr1_1.7.0-8build1_amd64.deb ...
+Unpacking libapr1:amd64 (1.7.0-8build1) ...
+Selecting previously unselected package libexpat1:amd64.
+Preparing to unpack .../06-libexpat1_2.4.7-1ubuntu0.2_amd64.deb ...
+Unpacking libexpat1:amd64 (2.4.7-1ubuntu0.2) ...
+Selecting previously unselected package libaprutil1:amd64.
+Preparing to unpack .../07-libaprutil1_1.6.1-5ubuntu4_amd64.deb ...
+Unpacking libaprutil1:amd64 (1.6.1-5ubuntu4) ...
+Selecting previously unselected package libsqlite3-0:amd64.
+Preparing to unpack .../08-libsqlite3-0_3.37.2-2ubuntu0.1_amd64.deb ...
+Unpacking libsqlite3-0:amd64 (3.37.2-2ubuntu0.1) ...
+Selecting previously unselected package libaprutil1-dbd-sqlite3:amd64.
+Preparing to unpack .../09-libaprutil1-dbd-sqlite3_1.6.1-5ubuntu4_amd64.deb ...
+Unpacking libaprutil1-dbd-sqlite3:amd64 (1.6.1-5ubuntu4) ...
+Selecting previously unselected package libsasl2-modules-db:amd64.
+Preparing to unpack .../10-libsasl2-modules-db_2.1.27+dfsg2-3ubuntu1.1_amd64.deb ...
+Unpacking libsasl2-modules-db:amd64 (2.1.27+dfsg2-3ubuntu1.1) ...
+Selecting previously unselected package libsasl2-2:amd64.
+Preparing to unpack .../11-libsasl2-2_2.1.27+dfsg2-3ubuntu1.1_amd64.deb ...
+Unpacking libsasl2-2:amd64 (2.1.27+dfsg2-3ubuntu1.1) ...
+Selecting previously unselected package libldap-2.5-0:amd64.
+Preparing to unpack .../12-libldap-2.5-0_2.5.13+dfsg-0ubuntu0.22.04.1_amd64.deb ...
+Unpacking libldap-2.5-0:amd64 (2.5.13+dfsg-0ubuntu0.22.04.1) ...
+Selecting previously unselected package libaprutil1-ldap:amd64.
+Preparing to unpack .../13-libaprutil1-ldap_1.6.1-5ubuntu4_amd64.deb ...
+Unpacking libaprutil1-ldap:amd64 (1.6.1-5ubuntu4) ...
+Selecting previously unselected package libbrotli1:amd64.
+Preparing to unpack .../14-libbrotli1_1.0.9-2build6_amd64.deb ...
+Unpacking libbrotli1:amd64 (1.0.9-2build6) ...
+Selecting previously unselected package libnghttp2-14:amd64.
+Preparing to unpack .../15-libnghttp2-14_1.43.0-1build3_amd64.deb ...
+Unpacking libnghttp2-14:amd64 (1.43.0-1build3) ...
+Selecting previously unselected package libpsl5:amd64.
+Preparing to unpack .../16-libpsl5_0.21.0-1.2build2_amd64.deb ...
+Unpacking libpsl5:amd64 (0.21.0-1.2build2) ...
+Selecting previously unselected package librtmp1:amd64.
+Preparing to unpack .../17-librtmp1_2.4+20151223.gitfa8646d.1-2build4_amd64.deb ...
+Unpacking librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2build4) ...
+Selecting previously unselected package libssh-4:amd64.
+Preparing to unpack .../18-libssh-4_0.9.6-2build1_amd64.deb ...
+Unpacking libssh-4:amd64 (0.9.6-2build1) ...
+Selecting previously unselected package libcurl4:amd64.
+Preparing to unpack .../19-libcurl4_7.81.0-1ubuntu1.7_amd64.deb ...
+Unpacking libcurl4:amd64 (7.81.0-1ubuntu1.7) ...
+Selecting previously unselected package libjansson4:amd64.
+Preparing to unpack .../20-libjansson4_2.13.1-1.1build3_amd64.deb ...
+Unpacking libjansson4:amd64 (2.13.1-1.1build3) ...
+Selecting previously unselected package liblua5.3-0:amd64.
+Preparing to unpack .../21-liblua5.3-0_5.3.6-1build1_amd64.deb ...
+Unpacking liblua5.3-0:amd64 (5.3.6-1build1) ...
+Selecting previously unselected package libicu70:amd64.
+Preparing to unpack .../22-libicu70_70.1-2_amd64.deb ...
+Unpacking libicu70:amd64 (70.1-2) ...
+Selecting previously unselected package libxml2:amd64.
+Preparing to unpack .../23-libxml2_2.9.13+dfsg-1ubuntu0.2_amd64.deb ...
+Unpacking libxml2:amd64 (2.9.13+dfsg-1ubuntu0.2) ...
+Selecting previously unselected package apache2-bin.
+Preparing to unpack .../24-apache2-bin_2.4.52-1ubuntu4.2_amd64.deb ...
+Unpacking apache2-bin (2.4.52-1ubuntu4.2) ...
+Selecting previously unselected package apache2-data.
+Preparing to unpack .../25-apache2-data_2.4.52-1ubuntu4.2_all.deb ...
+Unpacking apache2-data (2.4.52-1ubuntu4.2) ...
+Selecting previously unselected package apache2-utils.
+Preparing to unpack .../26-apache2-utils_2.4.52-1ubuntu4.2_amd64.deb ...
+Unpacking apache2-utils (2.4.52-1ubuntu4.2) ...
+Selecting previously unselected package media-types.
+Preparing to unpack .../27-media-types_7.0.0_all.deb ...
+Unpacking media-types (7.0.0) ...
+Selecting previously unselected package mailcap.
+Preparing to unpack .../28-mailcap_3.70+nmu1ubuntu1_all.deb ...
+Unpacking mailcap (3.70+nmu1ubuntu1) ...
+Selecting previously unselected package mime-support.
+Preparing to unpack .../29-mime-support_3.66_all.deb ...
+Unpacking mime-support (3.66) ...
+Selecting previously unselected package apache2.
+Preparing to unpack .../30-apache2_2.4.52-1ubuntu4.2_amd64.deb ...
+Unpacking apache2 (2.4.52-1ubuntu4.2) ...
+Selecting previously unselected package openssl.
+Preparing to unpack .../31-openssl_3.0.2-0ubuntu1.7_amd64.deb ...
+Unpacking openssl (3.0.2-0ubuntu1.7) ...
+Selecting previously unselected package ca-certificates.
+Preparing to unpack .../32-ca-certificates_20211016ubuntu0.22.04.1_all.deb ...
+Unpacking ca-certificates (20211016ubuntu0.22.04.1) ...
+Selecting previously unselected package netbase.
+Preparing to unpack .../33-netbase_6.3_all.deb ...
+Unpacking netbase (6.3) ...
+Selecting previously unselected package libmagic-mgc.
+Preparing to unpack .../34-libmagic-mgc_1%3a5.41-3_amd64.deb ...
+Unpacking libmagic-mgc (1:5.41-3) ...
+Selecting previously unselected package libmagic1:amd64.
+Preparing to unpack .../35-libmagic1_1%3a5.41-3_amd64.deb ...
+Unpacking libmagic1:amd64 (1:5.41-3) ...
+Selecting previously unselected package file.
+Preparing to unpack .../36-file_1%3a5.41-3_amd64.deb ...
+Unpacking file (1:5.41-3) ...
+Selecting previously unselected package publicsuffix.
+Preparing to unpack .../37-publicsuffix_20211207.1025-1_all.deb ...
+Unpacking publicsuffix (20211207.1025-1) ...
+Selecting previously unselected package xz-utils.
+Preparing to unpack .../38-xz-utils_5.2.5-2ubuntu1_amd64.deb ...
+Unpacking xz-utils (5.2.5-2ubuntu1) ...
+Selecting previously unselected package bzip2.
+Preparing to unpack .../39-bzip2_1.0.8-5build1_amd64.deb ...
+Unpacking bzip2 (1.0.8-5build1) ...
+Selecting previously unselected package libldap-common.
+Preparing to unpack .../40-libldap-common_2.5.13+dfsg-0ubuntu0.22.04.1_all.deb ...
+Unpacking libldap-common (2.5.13+dfsg-0ubuntu0.22.04.1) ...
+Selecting previously unselected package libsasl2-modules:amd64.
+Preparing to unpack .../41-libsasl2-modules_2.1.27+dfsg2-3ubuntu1.1_amd64.deb ...
+Unpacking libsasl2-modules:amd64 (2.1.27+dfsg2-3ubuntu1.1) ...
+Selecting previously unselected package ssl-cert.
+Preparing to unpack .../42-ssl-cert_1.1.2_all.deb ...
+Unpacking ssl-cert (1.1.2) ...
+Setting up libexpat1:amd64 (2.4.7-1ubuntu0.2) ...
+Setting up media-types (7.0.0) ...
+Setting up libpsl5:amd64 (0.21.0-1.2build2) ...
+Setting up libmagic-mgc (1:5.41-3) ...
+Setting up libbrotli1:amd64 (1.0.9-2build6) ...
+Setting up libsqlite3-0:amd64 (3.37.2-2ubuntu0.1) ...
+Setting up libsasl2-modules:amd64 (2.1.27+dfsg2-3ubuntu1.1) ...
+Setting up libnghttp2-14:amd64 (1.43.0-1build3) ...
+Setting up libmagic1:amd64 (1:5.41-3) ...
+Setting up libapr1:amd64 (1.7.0-8build1) ...
+Setting up file (1:5.41-3) ...
+Setting up perl-modules-5.34 (5.34.0-3ubuntu1.1) ...
+Setting up bzip2 (1.0.8-5build1) ...
+Setting up libldap-common (2.5.13+dfsg-0ubuntu0.22.04.1) ...
+Setting up libjansson4:amd64 (2.13.1-1.1build3) ...
+Setting up libsasl2-modules-db:amd64 (2.1.27+dfsg2-3ubuntu1.1) ...
+Setting up librtmp1:amd64 (2.4+20151223.gitfa8646d.1-2build4) ...
+Setting up xz-utils (5.2.5-2ubuntu1) ...
+update-alternatives: using /usr/bin/xz to provide /usr/bin/lzma (lzma) in auto mode
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzma.1.gz because associated file /usr/share/man/man1/xz.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/unlzma.1.gz because associated file /usr/share/man/man1/unxz.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzcat.1.gz because associated file /usr/share/man/man1/xzcat.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzmore.1.gz because associated file /usr/share/man/man1/xzmore.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzless.1.gz because associated file /usr/share/man/man1/xzless.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzdiff.1.gz because associated file /usr/share/man/man1/xzdiff.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzcmp.1.gz because associated file /usr/share/man/man1/xzcmp.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzgrep.1.gz because associated file /usr/share/man/man1/xzgrep.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzegrep.1.gz because associated file /usr/share/man/man1/xzegrep.1.gz (of link group lzma) doesn't exist
+update-alternatives: warning: skip creation of /usr/share/man/man1/lzfgrep.1.gz because associated file /usr/share/man/man1/xzfgrep.1.gz (of link group lzma) doesn't exist
+Setting up libsasl2-2:amd64 (2.1.27+dfsg2-3ubuntu1.1) ...
+Setting up libssh-4:amd64 (0.9.6-2build1) ...
+Setting up liblua5.3-0:amd64 (5.3.6-1build1) ...
+Setting up netbase (6.3) ...
+Setting up apache2-data (2.4.52-1ubuntu4.2) ...
+Setting up openssl (3.0.2-0ubuntu1.7) ...
+Setting up publicsuffix (20211207.1025-1) ...
+Setting up libgdbm6:amd64 (1.23-1) ...
+Setting up libicu70:amd64 (70.1-2) ...
+Setting up libaprutil1:amd64 (1.6.1-5ubuntu4) ...
+Setting up libaprutil1-dbd-sqlite3:amd64 (1.6.1-5ubuntu4) ...
+Setting up libldap-2.5-0:amd64 (2.5.13+dfsg-0ubuntu0.22.04.1) ...
+Setting up ca-certificates (20211016ubuntu0.22.04.1) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 78.)
+debconf: falling back to frontend: Readline
+Updating certificates in /etc/ssl/certs...
+124 added, 0 removed; done.
+Setting up ssl-cert (1.1.2) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 78.)
+debconf: falling back to frontend: Readline
+Setting up libgdbm-compat4:amd64 (1.23-1) ...
+Setting up libcurl4:amd64 (7.81.0-1ubuntu1.7) ...
+Setting up libxml2:amd64 (2.9.13+dfsg-1ubuntu0.2) ...
+Setting up apache2-utils (2.4.52-1ubuntu4.2) ...
+Setting up libperl5.34:amd64 (5.34.0-3ubuntu1.1) ...
+Setting up libaprutil1-ldap:amd64 (1.6.1-5ubuntu4) ...
+Setting up perl (5.34.0-3ubuntu1.1) ...
+Setting up mailcap (3.70+nmu1ubuntu1) ...
+Setting up mime-support (3.66) ...
+Setting up apache2-bin (2.4.52-1ubuntu4.2) ...
+Setting up apache2 (2.4.52-1ubuntu4.2) ...
+Enabling module mpm_event.
+Enabling module authz_core.
+Enabling module authz_host.
+Enabling module authn_core.
+Enabling module auth_basic.
+Enabling module access_compat.
+Enabling module authn_file.
+Enabling module authz_user.
+Enabling module alias.
+Enabling module dir.
+Enabling module autoindex.
+Enabling module env.
+Enabling module mime.
+Enabling module negotiation.
+Enabling module setenvif.
+Enabling module filter.
+Enabling module deflate.
+Enabling module status.
+Enabling module reqtimeout.
+Enabling conf charset.
+Enabling conf localized-error-pages.
+Enabling conf other-vhosts-access-log.
+Enabling conf security.
+Enabling conf serve-cgi-bin.
+Enabling site 000-default.
+invoke-rc.d: could not determine current runlevel
+invoke-rc.d: policy-rc.d denied execution of start.
+Processing triggers for libc-bin (2.35-0ubuntu3.1) ...
+Processing triggers for ca-certificates (20211016ubuntu0.22.04.1) ...
+Updating certificates in /etc/ssl/certs...
+0 added, 0 removed; done.
+Running hooks in /etc/ca-certificates/update.d...
+done.
+root@408493c8631f:/# root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED             STATUS             PORTS     NAMES
+408493c8631f   ubuntu    "bash"    About an hour ago   Up About an hour             ubuntu-con1
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       latest    6b7dfa7e8fdb   5 weeks ago   77.8MB
+root@ubuntu-bionic:~# docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          1         1         77.8MB    0B (0%)
+Containers      1         1         148.5MB   0B (0%)
+Local Volumes   0         0         0B        0B
+Build Cache     0         0         0B        0B
+root@ubuntu-bionic:~# docker container inspect ubuntu-con1 | grep -i diff
+                "LowerDir": "/var/lib/docker/overlay2/1c44d5cdb012bdfdfe66ba6de276c07b5bfafab9c4dcd83710d59f2a5207fd7a-init/diff:/var/lib/docker/overlay2/a74487f21bae7a909b6bf400dfc84ec5d311323680e2ad9b7f50df2bd56c0937/diff",
+                "UpperDir": "/var/lib/docker/overlay2/1c44d5cdb012bdfdfe66ba6de276c07b5bfafab9c4dcd83710d59f2a5207fd7a/diff",
+root@ubuntu-bionic:~# ls -ld /var/lib/docker/overlay2/1c44d5cdb012bdfdfe66ba6de276c07b5bfafab9c4dcd83710d59f2a5207fd7a/diff
+drwxr-xr-x 6 root root 4096 Jan 13 11:55 /var/lib/docker/overlay2/1c44d5cdb012bdfdfe66ba6de276c07b5bfafab9c4dcd83710d59f2a5207fd7a/diff
+root@ubuntu-bionic:~# ls -l /var/lib/docker/overlay2/1c44d5cdb012bdfdfe66ba6de276c07b5bfafab9c4dcd83710d59f2a5207fd7a/diff
+total 28
+drwxr-xr-x 22 root root 4096 Jan 13 12:35 etc
+drwxrwxrwt  2 root root 4096 Jan 13 12:35 tmp
+drwxr-xr-x  7 root root 4096 Nov 30 02:04 usr
+drwxr-xr-x  6 root root 4096 Jan 13 12:35 var
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/1c44d5cdb012bdfdfe66ba6de276c07b5bfafab9c4dcd83710d59f2a5207fd7a/diff
+etc  tmp  usr  var
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# du -sh /var/lib/docker/overlay2/1c44d5cdb012bdfdfe66ba6de276c07b5bfafab9c4dcd83710d59f2a5207fd7a/diff
+152M    /var/lib/docker/overlay2/1c44d5cdb012bdfdfe66ba6de276c07b5bfafab9c4dcd83710d59f2a5207fd7a/diff
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          1         1         77.8MB    0B (0%)
+Containers      1         1         148.5MB   0B (0%)
+Local Volumes   0         0         0B        0B
+Build Cache     0         0         0B        0B
+root@ubuntu-bionic:~# docker history ubuntu
+IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
+6b7dfa7e8fdb   5 weeks ago   /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      5 weeks ago   /bin/sh -c #(nop) ADD file:481dd2da6de715252…   77.8MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       latest    6b7dfa7e8fdb   5 weeks ago   77.8MB
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED             STATUS             PORTS     NAMES
+408493c8631f   ubuntu    "bash"    About an hour ago   Up About an hour             ubuntu-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+1c44d5cdb012bdfdfe66ba6de276c07b5bfafab9c4dcd83710d59f2a5207fd7a       a74487f21bae7a909b6bf400dfc84ec5d311323680e2ad9b7f50df2bd56c0937
+1c44d5cdb012bdfdfe66ba6de276c07b5bfafab9c4dcd83710d59f2a5207fd7a-init  l
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker commit ubuntu-con1 apache2
+sha256:b25b285b70a98eaeef2bb76797a5f45f7d66b56d9aefd82e2f49e74d24b5a4ab
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+apache2      latest    b25b285b70a9   6 seconds ago   226MB
+ubuntu       latest    6b7dfa7e8fdb   5 weeks ago     77.8MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker history apache2
+IMAGE          CREATED          CREATED BY                                      SIZE      COMMENT
+b25b285b70a9   13 seconds ago   bash                                            149MB
+6b7dfa7e8fdb   5 weeks ago      /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      5 weeks ago      /bin/sh -c #(nop) ADD file:481dd2da6de715252…   77.8MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          2         1         226.3MB   226.3MB (100%)
+Containers      1         1         148.5MB   0B (0%)
+Local Volumes   0         0         0B        0B
+Build Cache     0         0         0B        0B
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+1c44d5cdb012bdfdfe66ba6de276c07b5bfafab9c4dcd83710d59f2a5207fd7a       2af31fda5052006d327386cc047089eb3d259148cecb0084816981fb2b090597  l
+1c44d5cdb012bdfdfe66ba6de276c07b5bfafab9c4dcd83710d59f2a5207fd7a-init  a74487f21bae7a909b6bf400dfc84ec5d311323680e2ad9b7f50df2bd56c0937
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED             STATUS             PORTS     NAMES
+408493c8631f   ubuntu    "bash"    About an hour ago   Up About an hour             ubuntu-con1
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker rm -f $(docker ps -q -a)
+408493c8631f
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+2af31fda5052006d327386cc047089eb3d259148cecb0084816981fb2b090597  a74487f21bae7a909b6bf400dfc84ec5d311323680e2ad9b7f50df2bd56c0937  l
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+apache2      latest    b25b285b70a9   3 minutes ago   226MB
+ubuntu       latest    6b7dfa7e8fdb   5 weeks ago     77.8MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker rmi 6b7
+Error response from daemon: conflict: unable to delete 6b7dfa7e8fdb (cannot be forced) - image has dependent child images
+root@ubuntu-bionic:~# docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          2         0         226.3MB   226.3MB (100%)
+Containers      0         0         0B        0B
+Local Volumes   0         0         0B        0B
+Build Cache     0         0         0B        0B
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker history ubuntu
+IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
+6b7dfa7e8fdb   5 weeks ago   /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      5 weeks ago   /bin/sh -c #(nop) ADD file:481dd2da6de715252…   77.8MB
+root@ubuntu-bionic:~# docker history apache2
+IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
+b25b285b70a9   3 hours ago   bash                                            149MB
+6b7dfa7e8fdb   5 weeks ago   /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      5 weeks ago   /bin/sh -c #(nop) ADD file:481dd2da6de715252…   77.8MB
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker save apache2 > apache.tar
+root@ubuntu-bionic:~# docker rmi -f $(docker images -a -q)
+Untagged: apache2:latest
+Deleted: sha256:b25b285b70a98eaeef2bb76797a5f45f7d66b56d9aefd82e2f49e74d24b5a4ab
+Deleted: sha256:944efe9b8abad78484f7824803a816417adf60e94c2206e9a94e5c694694c42a
+Untagged: ubuntu:latest
+Untagged: ubuntu@sha256:27cb6e6ccef575a4698b66f5de06c7ecd61589132d5a91d098f7f3f9285415a9
+Deleted: sha256:6b7dfa7e8fdbe18ad425dd965a1049d984f31cf0ad57fa6d5377cca355e65f03
+Deleted: sha256:6515074984c6f8bb1b8a9962c8fb5f310fc85e70b04c88442a3939c026dbfad3
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+root@ubuntu-bionic:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@ubuntu-bionic:~# ls -l
+total 226132
+-rw-r--r-- 1 root root 231535616 Jan 13 16:10 apache.tar
+-rw-r--r-- 1 root root     19857 Jan 13 11:20 test-docker.sh
+root@ubuntu-bionic:~# docker load -i apache.tar
+6515074984c6: Loading layer [==================================================>]  80.32MB/80.32MB
+88bcff29719f: Loading layer [==================================================>]  151.2MB/151.2MB
+Loaded image: apache2:latest
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+apache2      latest    b25b285b70a9   3 hours ago   226MB
+root@ubuntu-bionic:~# docker history apache2
+IMAGE          CREATED       CREATED BY                                      SIZE      COMMENT
+b25b285b70a9   3 hours ago   bash                                            149MB
+<missing>      5 weeks ago   /bin/sh -c #(nop)  CMD ["bash"]                 0B
+<missing>      5 weeks ago   /bin/sh -c #(nop) ADD file:481dd2da6de715252…   77.8MB
+root@ubuntu-bionic:~# docker pull ubuntu
+Using default tag: latest
+latest: Pulling from library/ubuntu
+6e3729cf69e0: Already exists
+Digest: sha256:27cb6e6ccef575a4698b66f5de06c7ecd61589132d5a91d098f7f3f9285415a9
+Status: Downloaded newer image for ubuntu:latest
+docker.io/library/ubuntu:latest
+root@ubuntu-bionic:~# docker rmi apache2
+Untagged: apache2:latest
+Deleted: sha256:b25b285b70a98eaeef2bb76797a5f45f7d66b56d9aefd82e2f49e74d24b5a4ab
+Deleted: sha256:944efe9b8abad78484f7824803a816417adf60e94c2206e9a94e5c694694c42a
+root@ubuntu-bionic:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       latest    6b7dfa7e8fdb   5 weeks ago   77.8MB
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/
+71bb4f46b129032b35860f84bf72265f26d5659ab0cd99eaa9929b28cd35d2b2  l
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/l
+WKMAFOG5UYDA7PRZWDOPQ72TBN
+root@ubuntu-bionic:~# ls /var/lib/docker/overlay2/71bb4f46b129032b35860f84bf72265f26d5659ab0cd99eaa9929b28cd35d2b2/
+committed  diff  link
+root@ubuntu-bionic:~# cat /var/lib/docker/overlay2/71bb4f46b129032b35860f84bf72265f26d5659ab0cd99eaa9929b28cd35d2b2/link
+WKMAFOG5UYDA7PRZWDOPQ72TBNroot@ubuntu-bionic:~# exit
+logout
+vagrant@ubuntu-bionic:~$ exit
+logout
+Connection to 127.0.0.1 closed.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ exit
+exit
+
+C:\WINDOWS\system32>
