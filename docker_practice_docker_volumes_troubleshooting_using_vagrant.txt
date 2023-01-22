@@ -1,0 +1,1898 @@
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant up
+Bringing machine 'default' up with 'virtualbox' provider...
+==> default: Importing base box 'ubuntu/bionic64'...
+==> default: Matching MAC address for NAT networking...
+==> default: Checking if box 'ubuntu/bionic64' version '20221102.0.0' is up to date...
+==> default: A newer version of the box 'ubuntu/bionic64' for provider 'virtualbox' is
+==> default: available! You currently have version '20221102.0.0'. The latest is version
+==> default: '20230113.0.0'. Run `vagrant box update` to update.
+==> default: Setting the name of the VM: bionic_default_1674368298702_38553
+==> default: Clearing any previously set network interfaces...
+==> default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+==> default: Forwarding ports...
+    default: 22 (guest) => 2222 (host) (adapter 1)
+==> default: Running 'pre-boot' VM customizations...
+==> default: Booting VM...
+==> default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default:
+    default: Vagrant insecure key detected. Vagrant will automatically replace
+    default: this with a newly generated keypair for better security.
+The guest machine entered an invalid state while waiting for it
+to boot. Valid states are 'starting, running'. The machine is in the
+'paused' state. Please verify everything is configured
+properly and try again.
+
+If the provider you're using has a GUI that comes with it,
+it is often helpful to open that and watch the machine, since the
+GUI often has more helpful error messages than Vagrant can retrieve.
+For example, if you're using VirtualBox, run `vagrant up` while the
+VirtualBox GUI is open.
+
+The primary issue for this error is that the provider you're using
+is not properly configured. This is very rarely a Vagrant issue.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant status
+Current machine states:
+
+default                   running (virtualbox)
+
+The VM is running. To stop this VM, you can run `vagrant halt` to
+shut it down forcefully, or you can run `vagrant suspend` to simply
+suspend the virtual machine. In either case, to restart it again,
+simply run `vagrant up`.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant ssh
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 4.15.0-197-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun Jan 22 06:20:47 UTC 2023
+
+  System load:  0.36              Processes:             102
+  Usage of /:   2.9% of 38.70GB   Users logged in:       0
+  Memory usage: 13%               IP address for enp0s3: 10.0.2.15
+  Swap usage:   0%
+
+
+0 updates can be applied immediately.
+
+New release '20.04.5 LTS' available.
+Run 'do-release-upgrade' to upgrade to it.
+
+
+vagrant@ubuntu-bionic:~$ sudo su -
+root@ubuntu-bionic:~# curl -fsSL https://test.docker.com -o test-docker.sh
+root@ubuntu-bionic:~# sh test-docker.sh
+# Executing docker install script, commit: 1d97565eca92bb523082b7d4f530c74104e05d35
++ sh -c apt-get update -qq >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq apt-transport-https ca-certificates curl >/dev/null
++ sh -c mkdir -p /etc/apt/keyrings && chmod -R 0755 /etc/apt/keyrings
++ sh -c curl -fsSL "https://download.docker.com/linux/ubuntu/gpg" | gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg
++ sh -c chmod a+r /etc/apt/keyrings/docker.gpg
++ sh -c echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu bionic test" > /etc/apt/sources.list.d/docker.list
++ sh -c apt-get update -qq >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-scan-plugin docker-buildx-plugin >/dev/null
++ version_gte 20.10
++ [ -z  ]
++ return 0
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker-ce-rootless-extras >/dev/null
++ sh -c docker version
+Client: Docker Engine - Community
+ Version:           23.0.0-rc.3
+ API version:       1.42
+ Go version:        go1.19.5
+ Git commit:        e1152b2
+ Built:             Fri Jan 20 17:57:36 2023
+ OS/Arch:           linux/amd64
+ Context:           default
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          23.0.0-rc.3
+  API version:      1.42 (minimum version 1.12)
+  Go version:       go1.19.5
+  Git commit:       9f62b37
+  Built:            Fri Jan 20 17:57:36 2023
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.6.15
+  GitCommit:        5b842e528e99d4d4c1686467debf2bd4b88ecd86
+ runc:
+  Version:          1.1.4
+  GitCommit:        v1.1.4-0-g5fd4c4d
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+================================================================================
+
+To run Docker as a non-privileged user, consider setting up the
+Docker daemon in rootless mode for your user:
+
+    dockerd-rootless-setuptool.sh install
+
+Visit https://docs.docker.com/go/rootless/ to learn about rootless mode.
+
+
+To run the Docker daemon as a fully privileged service, but granting non-root
+users access, refer to https://docs.docker.com/go/daemon-access/
+
+WARNING: Access to the remote API on a privileged Docker daemon is equivalent
+         to root access on the host. Refer to the 'Docker daemon attack surface'
+         documentation for details: https://docs.docker.com/go/attack-surface/
+
+================================================================================
+
+root@ubuntu-bionic:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2023-01-22 06:23:23 UTC; 46s ago
+     Docs: https://docs.docker.com
+ Main PID: 8445 (dockerd)
+    Tasks: 8
+   CGroup: /system.slice/docker.service
+           +-8445 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Jan 22 06:23:22 ubuntu-bionic dockerd[8445]: time="2023-01-22T06:23:22.488976420Z" level=info msg="[core] [Channel #4] Channel Connectivity change to READY"
+Jan 22 06:23:22 ubuntu-bionic dockerd[8445]: time="2023-01-22T06:23:22.620344753Z" level=info msg="Loading containers: start."
+Jan 22 06:23:23 ubuntu-bionic dockerd[8445]: time="2023-01-22T06:23:23.115799824Z" level=info msg="Default bridge (docker0) is assigned with an IP address 1
+Jan 22 06:23:23 ubuntu-bionic dockerd[8445]: time="2023-01-22T06:23:23.473383645Z" level=info msg="Loading containers: done."
+Jan 22 06:23:23 ubuntu-bionic dockerd[8445]: time="2023-01-22T06:23:23.541996449Z" level=warning msg="WARNING: No swap limit support"
+Jan 22 06:23:23 ubuntu-bionic dockerd[8445]: time="2023-01-22T06:23:23.542281548Z" level=info msg="Docker daemon" commit=9f62b37 graphdriver=overlay2 versio
+Jan 22 06:23:23 ubuntu-bionic dockerd[8445]: time="2023-01-22T06:23:23.542498746Z" level=info msg="Daemon has completed initialization"
+Jan 22 06:23:23 ubuntu-bionic dockerd[8445]: time="2023-01-22T06:23:23.625231066Z" level=info msg="[core] [Server #7] Server created" module=grpc
+Jan 22 06:23:23 ubuntu-bionic systemd[1]: Started Docker Application Container Engine.
+Jan 22 06:23:23 ubuntu-bionic dockerd[8445]: time="2023-01-22T06:23:23.634860114Z" level=info msg="API listen on /run/docker.sock"
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~#
+root@ubuntu-bionic:~# lsblk
+NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+sda      8:0    0  40G  0 disk
++-sda1   8:1    0  40G  0 part /
+sdb      8:16   0  10M  0 disk
+root@ubuntu-bionic:~# exit
+logout
+vagrant@ubuntu-bionic:~$ exit
+logout
+Connection to 127.0.0.1 closed.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant destroy -f
+==> default: Forcing shutdown of VM...
+==> default: Destroying VM and associated drives...
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant status
+Current machine states:
+
+default                   not created (virtualbox)
+
+The environment has not yet been created. Run `vagrant up` to
+create the environment. If a machine is not created, only the
+default provider will be shown. So if a provider is not listed,
+then the machine is not created for that environment.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ ls
+Vagrantfile  ubuntu-bionic-18.04-cloudimg-console.log
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ rm Vagrantfile
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ wget -O Vagrantfile https://raw.githubusercontent.com/gnayakarya/GNAYAK-Training/main/Vagrantfile_additionaldisk_lab_practice
+--2023-01-22 11:56:20--  https://raw.githubusercontent.com/gnayakarya/GNAYAK-Training/main/Vagrantfile_additionaldisk_lab_practice
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.111.133, 185.199.108.133, 185.199.109.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.111.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 3302 (3.2K) [text/plain]
+Saving to: 'Vagrantfile'
+
+Vagrantfile                            100%[============================================================================>]   3.22K  --.-KB/s    in 0.004s
+
+2023-01-22 11:56:20 (765 KB/s) - 'Vagrantfile' saved [3302/3302]
+
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ ls
+Vagrantfile  ubuntu-bionic-18.04-cloudimg-console.log
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ code Vagrantfile
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant up
+==> vagrant: You have requested to enabled the experimental flag with the following features:
+==> vagrant:
+==> vagrant: Features:  disks
+==> vagrant:
+==> vagrant: Please use with caution, as some of the features may not be fully
+==> vagrant: functional yet.
+Bringing machine 'hashicorp' up with 'virtualbox' provider...
+==> hashicorp: Checking if box 'hashicorp/bionic64' version '1.0.282' is up to date...
+==> hashicorp: Clearing any previously set forwarded ports...
+==> hashicorp: Clearing any previously set network interfaces...
+==> hashicorp: Preparing network interfaces based on configuration...
+    hashicorp: Adapter 1: nat
+==> hashicorp: Forwarding ports...
+    hashicorp: 22 (guest) => 2222 (host) (adapter 1)
+==> hashicorp: Configuring storage mediums...
+==> hashicorp: Booting VM...
+==> hashicorp: Waiting for machine to boot. This may take a few minutes...
+    hashicorp: SSH address: 127.0.0.1:2222
+    hashicorp: SSH username: vagrant
+    hashicorp: SSH auth method: private key
+    hashicorp: Warning: Connection reset. Retrying...
+==> hashicorp: Machine booted and ready!
+==> hashicorp: Checking for guest additions in VM...
+    hashicorp: The guest additions on this VM do not match the installed version of
+    hashicorp: VirtualBox! In most cases this is fine, but in rare cases it can
+    hashicorp: prevent things such as shared folders from working properly. If you see
+    hashicorp: shared folder errors, please make sure the guest additions within the
+    hashicorp: virtual machine match the version of VirtualBox you have installed on
+    hashicorp: your host and reload your VM.
+    hashicorp:
+    hashicorp: Guest Additions Version: 6.0.10
+    hashicorp: VirtualBox Version: 6.1
+==> hashicorp: Mounting shared folders...
+    hashicorp: /vagrant => C:/Users/Gaurav/devops/provision/vagrant/bionic
+==> hashicorp: Machine already provisioned. Run `vagrant provision` or use the `--provision`
+==> hashicorp: flag to force provisioning. Provisioners marked to run always will still run.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant ssh
+==> vagrant: You have requested to enabled the experimental flag with the following features:
+==> vagrant:
+==> vagrant: Features:  disks
+==> vagrant:
+==> vagrant: Please use with caution, as some of the features may not be fully
+==> vagrant: functional yet.
+Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-58-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun Jan 22 06:27:36 UTC 2023
+
+  System load:  0.63              Processes:           93
+  Usage of /:   2.5% of 61.80GB   Users logged in:     0
+  Memory usage: 11%               IP address for eth0: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+0 packages can be updated.
+0 updates are security updates.
+
+
+vagrant@vagrant:~$ sudo su -
+root@vagrant:~# lsblk
+NAME                   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                      8:0    0   64G  0 disk
++-sda1                   8:1    0   64G  0 part
+  +-vagrant--vg-root   253:0    0   63G  0 lvm  /
+  +-vagrant--vg-swap_1 253:1    0  980M  0 lvm  [SWAP]
+sdb                      8:16   0   10G  0 disk
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# curl -fsSL https://test.docker.com -o test-docker.sh
+root@vagrant:~# sh test-docker.sh
+# Executing docker install script, commit: 1d97565eca92bb523082b7d4f530c74104e05d35
++ sh -c apt-get update -qq >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq apt-transport-https ca-certificates curl >/dev/null
++ sh -c mkdir -p /etc/apt/keyrings && chmod -R 0755 /etc/apt/keyrings
++ sh -c curl -fsSL "https://download.docker.com/linux/ubuntu/gpg" | gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg
++ sh -c chmod a+r /etc/apt/keyrings/docker.gpg
++ sh -c echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu bionic test" > /etc/apt/sources.list.d/docker.list
++ sh -c apt-get update -qq >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-scan-plugin docker-buildx-plugin >/dev/null
++ version_gte 20.10
++ [ -z  ]
++ return 0
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker-ce-rootless-extras >/dev/null
++ sh -c docker version
+Client: Docker Engine - Community
+ Version:           23.0.0-rc.3
+ API version:       1.42
+ Go version:        go1.19.5
+ Git commit:        e1152b2
+ Built:             Fri Jan 20 17:57:36 2023
+ OS/Arch:           linux/amd64
+ Context:           default
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          23.0.0-rc.3
+  API version:      1.42 (minimum version 1.12)
+  Go version:       go1.19.5
+  Git commit:       9f62b37
+  Built:            Fri Jan 20 17:57:36 2023
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.6.15
+  GitCommit:        5b842e528e99d4d4c1686467debf2bd4b88ecd86
+ runc:
+  Version:          1.1.4
+  GitCommit:        v1.1.4-0-g5fd4c4d
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+================================================================================
+
+To run Docker as a non-privileged user, consider setting up the
+Docker daemon in rootless mode for your user:
+
+    dockerd-rootless-setuptool.sh install
+
+Visit https://docs.docker.com/go/rootless/ to learn about rootless mode.
+
+
+To run the Docker daemon as a fully privileged service, but granting non-root
+users access, refer to https://docs.docker.com/go/daemon-access/
+
+WARNING: Access to the remote API on a privileged Docker daemon is equivalent
+         to root access on the host. Refer to the 'Docker daemon attack surface'
+         documentation for details: https://docs.docker.com/go/attack-surface/
+
+================================================================================
+
+root@vagrant:~# lsblk
+NAME                   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                      8:0    0   64G  0 disk
++-sda1                   8:1    0   64G  0 part
+  +-vagrant--vg-root   253:0    0   63G  0 lvm  /
+  +-vagrant--vg-swap_1 253:1    0  980M  0 lvm  [SWAP]
+sdb                      8:16   0   10G  0 disk
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# mkfs -t xfs /dev/sdb
+meta-data=/dev/sdb               isize=512    agcount=4, agsize=655360 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=0, rmapbt=0, reflink=0
+data     =                       bsize=4096   blocks=2621440, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+root@vagrant:~#
+root@vagrant:~# mkdir /storage
+root@vagrant:~# mount /dev/sdb /storage
+root@vagrant:~# lsblk
+NAME                   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                      8:0    0   64G  0 disk
++-sda1                   8:1    0   64G  0 part
+  +-vagrant--vg-root   253:0    0   63G  0 lvm  /
+  +-vagrant--vg-swap_1 253:1    0  980M  0 lvm  [SWAP]
+sdb                      8:16   0   10G  0 disk /storage
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker pull mysql
+Using default tag: latest
+latest: Pulling from library/mysql
+2c57acc5afca: Pull complete
+0a990ab965c1: Pull complete
+7acb6a84f0f1: Pull complete
+6a2351a691a4: Pull complete
+cdd0aae0ac1a: Pull complete
+0c024d6bf869: Pull complete
+e536ea8ecf65: Pull complete
+d24661dff86b: Pull complete
+95ef82dfce7a: Pull complete
+c9a31e1bffa1: Pull complete
+4edb4789da39: Pull complete
+Digest: sha256:6f54880f928070a036aa3874d4a3fa203adc28688eb89e9f926a0dcacbce3378
+Status: Downloaded newer image for mysql:latest
+docker.io/library/mysql:latest
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED      SIZE
+mysql        latest    b939d379d46e   4 days ago   514MB
+root@vagrant:~# docker run -d --name=sql -v /storage:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=gnayakadmin mysql
+e6aa4e1848490fd86d7c513e3fc2f03fc47a7dae950603cb6b779500f39e8504
+root@vagrant:~# docker exec -it sql bash
+bash-4.4# mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database AWS;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> create database AZURE;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> create database GCP;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| AWS                |
+| AZURE              |
+| GCP                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> exit
+Bye
+bash-4.4# exit
+exit
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS                 NAMES
+e6aa4e184849   mysql     "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes   3306/tcp, 33060/tcp   sql
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker rm -f sql
+sql
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker run -d --name=sql2 -v /storage:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=gnayakadmin mysql
+f49cd1dfc05792234ed7cdfac68c7b7059cc1360fddd7e80ecb8bd3794bb8060
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker exec -it sql2 bash
+bash-4.4# mysql -u root -p
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.32 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2023, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| AWS                |
+| AZURE              |
+| GCP                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+7 rows in set (0.01 sec)
+
+mysql> exit
+Bye
+bash-4.4# exit
+exit
+root@vagrant:~# ls /storage/
+ auto.cnf        binlog.000002   ca.pem           '#ib_16384_0.dblwr'   ibtmp1          mysql.ibd            public_key.pem    undo_001
+ AWS             binlog.000003   client-cert.pem  '#ib_16384_1.dblwr'  '#innodb_redo'   mysql.sock           server-cert.pem   undo_002
+ AZURE           binlog.index    client-key.pem    ib_buffer_pool      '#innodb_temp'   performance_schema   server-key.pem
+ binlog.000001   ca-key.pem      GCP               ibdata1              mysql           private_key.pem      sys
+root@vagrant:~# docker rm -f sql2
+sql2
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# mkdir /storage/logs
+root@vagrant:~# mkdir /storage/data
+root@vagrant:~# docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+8740c948ffd4: Pull complete
+d2c0556a17c5: Pull complete
+c8b9881f2c6a: Pull complete
+693c3ffa8f43: Pull complete
+8316c5e80e6d: Pull complete
+b2fe3577faa4: Pull complete
+Digest: sha256:b8f2383a95879e1ae064940d9a200f67a6c79e710ed82ac42263397367e7cc4e
+Status: Downloaded newer image for nginx:latest
+docker.io/library/nginx:latest
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker run -d --name=nginx -v /storage/logs:/logs -v /storage/data:/usr/share/nginx/html nginx
+3b6ab17e085db0c421e0655a05bdf8c126e44cbcc0c402d4cffdb484aaed64a5
+root@vagrant:~#
+root@vagrant:~# mkdir /storage/sharedvolume
+root@vagrant:~# vim /storage/sharedvolume/index.html
+root@vagrant:~# root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
+3b6ab17e085d   nginx     "/docker-entrypoint.…"   3 minutes ago   Up 3 minutes   80/tcp    nginx
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker rm -f $(docker ps -q -a)
+3b6ab17e085d
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker run -d --name=web-con1 -v /storage/sharedvolume:/usr/share/nginx/html nginx
+89bda3a91290224e98d0f1124d9683a3da41bf989d049afc44415670268d1a66
+root@vagrant:~# docker run -d --name=web-con2 -v /storage/sharedvolume:/usr/share/nginx/html nginx
+c5216462eec6546b66dd08806b929d84ee2ee36ed60c6973842dc4d389f146e6
+root@vagrant:~#
+root@vagrant:~# docker exec -it web-con1 bash
+root@89bda3a91290:/# df -hT /usr/share/nginx/html
+Filesystem     Type  Size  Used Avail Use% Mounted on
+/dev/sdb       xfs    10G  243M  9.8G   3% /usr/share/nginx/html
+root@89bda3a91290:/#
+root@89bda3a91290:/#
+root@89bda3a91290:/# exit
+exit
+root@vagrant:~# docker exec -it web-con2 bash
+root@c5216462eec6:/# cat /usr/share/nginx/html/index.html
+this is a shared file
+root@c5216462eec6:/#
+root@c5216462eec6:/#
+root@c5216462eec6:/# exit
+exit
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED              STATUS              PORTS     NAMES
+c5216462eec6   nginx     "/docker-entrypoint.…"   About a minute ago   Up 59 seconds       80/tcp    web-con2
+89bda3a91290   nginx     "/docker-entrypoint.…"   About a minute ago   Up About a minute   80/tcp    web-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker rm -f web-con2
+web-con2
+root@vagrant:~# docker run -d --name=web-con2 -v /storage/sharedvolume:/usr/share/nginx/html:ro nginx
+72e5d632b8162fae4e364cae8bc0c5e80a931a5f02c071279c28957759add3da
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker exec -it web-con2 touch /usr/share/nginx/html/newfile
+touch: cannot touch '/usr/share/nginx/html/newfile': Read-only file system
+root@vagrant:~# df -h /storage
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdb         10G  243M  9.8G   3% /storage
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker rm -f $(docker ps -q -a)
+72e5d632b816
+89bda3a91290
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker volume prune
+WARNING! This will remove all local volumes not used by at least one container.
+Are you sure you want to continue? [y/N] y
+Total reclaimed space: 0B
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker volume ls
+DRIVER    VOLUME NAME
+root@vagrant:~# ls /var/lib/docker/volumes/
+backingFsBlockDev  metadata.db
+root@vagrant:~# docker volume create vol1 vol2 vol3
+"docker volume create" requires at most 1 argument.
+See 'docker volume create --help'.
+
+Usage:  docker volume create [OPTIONS] [VOLUME]
+
+Create a volume
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker volume ls
+DRIVER    VOLUME NAME
+root@vagrant:~# ls /var/lib/docker/volumes/
+backingFsBlockDev  metadata.db
+root@vagrant:~# ls /var/lib/docker/volumes/
+backingFsBlockDev  metadata.db
+root@vagrant:~# docker volume create vol1
+vol1
+root@vagrant:~# docker volume create vol2
+vol2
+root@vagrant:~# docker volume create vol3
+vol3
+root@vagrant:~# ls /var/lib/docker/volumes/
+backingFsBlockDev  metadata.db  vol1  vol2  vol3
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker volume ls
+DRIVER    VOLUME NAME
+local     vol1
+local     vol2
+local     vol3
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker run -d --name=web-nginx-con1 -v vol1:/usr/share/nginx/html nginx
+08f702417bc6d6608087fb1d7eb2379216a706a655bc492d0921d7ed296fc708
+root@vagrant:~# docker exec -it web-nginx-con1 bash
+root@08f702417bc6:/# cd /usr/share/nginx/html/
+root@08f702417bc6:/usr/share/nginx/html# echo echo hello-world > index.html
+root@08f702417bc6:/usr/share/nginx/html# exit
+exit
+root@vagrant:~# docker rm -f web-nginx-con1
+web-nginx-con1
+root@vagrant:~# docker volume ls
+DRIVER    VOLUME NAME
+local     vol1
+local     vol2
+local     vol3
+root@vagrant:~# ls /var/lib/docker/volumes/vol
+vol1/ vol2/ vol3/
+root@vagrant:~# ls /var/lib/docker/volumes/vol1
+_data
+root@vagrant:~# ls /var/lib/docker/volumes/vol1/_data/
+50x.html  index.html
+root@vagrant:~# docker volume inspect vol1
+[
+    {
+        "CreatedAt": "2023-01-22T08:47:11Z",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/vol1/_data",
+        "Name": "vol1",
+        "Options": null,
+        "Scope": "local"
+    }
+]
+root@vagrant:~# cat /var/lib/docker/volumes/vol1/_data/50x.html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Error</title>
+<style>
+html { color-scheme: light dark; }
+body { width: 35em; margin: 0 auto;
+font-family: Tahoma, Verdana, Arial, sans-serif; }
+</style>
+</head>
+<body>
+<h1>An error occurred.</h1>
+<p>Sorry, the page you are looking for is currently unavailable.<br/>
+Please try again later.</p>
+<p>If you are the system administrator of this resource then you should check
+the error log for details.</p>
+<p><em>Faithfully yours, nginx.</em></p>
+</body>
+</html>
+root@vagrant:~# cat /var/lib/docker/volumes/vol1/_data/index.html
+echo hello-world
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker volume ls
+DRIVER    VOLUME NAME
+local     vol1
+local     vol2
+local     vol3
+root@vagrant:~# docker volume prune
+WARNING! This will remove all local volumes not used by at least one container.
+Are you sure you want to continue? [y/N] y
+Total reclaimed space: 0B
+root@vagrant:~#
+root@vagrant:~# docker volume ls
+DRIVER    VOLUME NAME
+local     vol1
+local     vol2
+local     vol3
+root@vagrant:~# docker volume --help
+
+Usage:  docker volume COMMAND
+
+Manage volumes
+
+Commands:
+  create      Create a volume
+  inspect     Display detailed information on one or more volumes
+  ls          List volumes
+  prune       Remove all unused local volumes
+  rm          Remove one or more volumes
+
+Run 'docker volume COMMAND --help' for more information on a command.
+root@vagrant:~# docker volume rm vol1 vol2 vol3
+vol1
+vol2
+vol3
+root@vagrant:~#
+root@vagrant:~# docker volume ls
+DRIVER    VOLUME NAME
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# ls /var/lib/docker/volumes/
+backingFsBlockDev  metadata.db
+root@vagrant:~# docker system df
+TYPE            TOTAL     ACTIVE    SIZE      RECLAIMABLE
+Images          2         0         656MB     656MB (100%)
+Containers      0         0         0B        0B
+Local Volumes   0         0         0B        0B
+Build Cache     0         0         0B        0B
+root@vagrant:~# docker system df | grep -i volume
+Local Volumes   0         0         0B        0B
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker volume create vol1
+vol1
+root@vagrant:~# docker volume create vol2
+vol2
+root@vagrant:~# docker system df | grep -i volume
+Local Volumes   2         0         0B        0B
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker volume rm vol1
+vol1
+root@vagrant:~# docker volume rm vol2
+vol2
+root@vagrant:~# docker volume ls
+DRIVER    VOLUME NAME
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# mkdir /opt/docker
+root@vagrant:~# lsblk
+NAME                   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                      8:0    0   64G  0 disk
++-sda1                   8:1    0   64G  0 part
+  +-vagrant--vg-root   253:0    0   63G  0 lvm  /
+  +-vagrant--vg-swap_1 253:1    0  980M  0 lvm  [SWAP]
+sdb                      8:16   0   10G  0 disk /storage
+root@vagrant:~# umount /dev/sdb
+root@vagrant:~# mount /dev/sdb /opt/docker
+root@vagrant:~# df -hT /opt/docker
+Filesystem     Type  Size  Used Avail Use% Mounted on
+/dev/sdb       xfs    10G  243M  9.8G   3% /opt/docker
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# ls /opt/docker*
+ auto.cnf        binlog.000002   ca.pem            GCP                  ibdata1         logs         performance_schema   server-key.pem   undo_002
+ AWS             binlog.000003   client-cert.pem  '#ib_16384_0.dblwr'   ibtmp1          mysql        private_key.pem      sharedvolume
+ AZURE           binlog.index    client-key.pem   '#ib_16384_1.dblwr'  '#innodb_redo'   mysql.ibd    public_key.pem       sys
+ binlog.000001   ca-key.pem      data              ib_buffer_pool      '#innodb_temp'   mysql.sock   server-cert.pem      undo_001
+root@vagrant:~# ls /opt/docker/*
+/opt/docker/auto.cnf       /opt/docker/ca-key.pem         /opt/docker/#ib_16384_1.dblwr  /opt/docker/mysql.sock       /opt/docker/undo_001
+/opt/docker/binlog.000001  /opt/docker/ca.pem             /opt/docker/ib_buffer_pool     /opt/docker/private_key.pem  /opt/docker/undo_002
+/opt/docker/binlog.000002  /opt/docker/client-cert.pem    /opt/docker/ibdata1            /opt/docker/public_key.pem
+/opt/docker/binlog.000003  /opt/docker/client-key.pem     /opt/docker/ibtmp1             /opt/docker/server-cert.pem
+/opt/docker/binlog.index   /opt/docker/#ib_16384_0.dblwr  /opt/docker/mysql.ibd          /opt/docker/server-key.pem
+
+/opt/docker/AWS:
+
+/opt/docker/AZURE:
+
+/opt/docker/data:
+
+/opt/docker/GCP:
+
+/opt/docker/#innodb_redo:
+'#ib_redo10_tmp'  '#ib_redo14_tmp'  '#ib_redo18_tmp'  '#ib_redo22_tmp'  '#ib_redo26_tmp'  '#ib_redo30_tmp'  '#ib_redo34_tmp'  '#ib_redo38_tmp'
+'#ib_redo11_tmp'  '#ib_redo15_tmp'  '#ib_redo19_tmp'  '#ib_redo23_tmp'  '#ib_redo27_tmp'  '#ib_redo31_tmp'  '#ib_redo35_tmp'  '#ib_redo39_tmp'
+'#ib_redo12_tmp'  '#ib_redo16_tmp'  '#ib_redo20_tmp'  '#ib_redo24_tmp'  '#ib_redo28_tmp'  '#ib_redo32_tmp'  '#ib_redo36_tmp'  '#ib_redo40_tmp'
+'#ib_redo13_tmp'  '#ib_redo17_tmp'  '#ib_redo21_tmp'  '#ib_redo25_tmp'  '#ib_redo29_tmp'  '#ib_redo33_tmp'  '#ib_redo37_tmp'  '#ib_redo9'
+
+/opt/docker/#innodb_temp:
+temp_10.ibt  temp_1.ibt  temp_2.ibt  temp_3.ibt  temp_4.ibt  temp_5.ibt  temp_6.ibt  temp_7.ibt  temp_8.ibt  temp_9.ibt
+
+/opt/docker/logs:
+
+/opt/docker/mysql:
+general_log_213.sdi  general_log.CSM  general_log.CSV  slow_log_214.sdi  slow_log.CSM  slow_log.CSV
+
+/opt/docker/performance_schema:
+accounts_145.sdi          events_statement_119.sdi  events_transacti_138.sdi  log_status_174.sdi        replication_asyn_172.sdi  status_by_accoun_177.sdi
+binary_log_trans_189.sdi  events_statement_120.sdi  events_waits_cur_84.sdi   memory_summary_b_154.sdi  replication_asyn_173.sdi  status_by_host_178.sdi
+cond_instances_82.sdi     events_statement_121.sdi  events_waits_his_85.sdi   memory_summary_b_155.sdi  replication_conn_162.sdi  status_by_thread_179.sdi
+data_locks_160.sdi        events_statement_122.sdi  events_waits_his_86.sdi   memory_summary_b_156.sdi  replication_conn_164.sdi  status_by_user_180.sdi
+data_lock_waits_161.sdi   events_statement_123.sdi  events_waits_sum_87.sdi   memory_summary_b_157.sdi  replication_grou_163.sdi  table_handles_158.sdi
+error_log_83.sdi          events_statement_124.sdi  events_waits_sum_88.sdi   memory_summary_g_153.sdi  replication_grou_169.sdi  table_io_waits_s_107.sdi
+events_errors_su_139.sdi  events_statement_125.sdi  events_waits_sum_89.sdi   metadata_locks_159.sdi    rwlock_instances_101.sdi  table_io_waits_s_108.sdi
+events_errors_su_140.sdi  events_statement_126.sdi  events_waits_sum_90.sdi   mutex_instances_97.sdi    session_account__151.sdi  table_lock_waits_109.sdi
+events_errors_su_141.sdi  events_statement_127.sdi  events_waits_sum_91.sdi   objects_summary__98.sdi   session_connect__150.sdi  threads_110.sdi
+events_errors_su_142.sdi  events_statement_128.sdi  events_waits_sum_92.sdi   performance_time_99.sdi   session_status_182.sdi    tls_channel_stat_190.sdi
+events_errors_su_143.sdi  events_statement_129.sdi  file_instances_93.sdi     persisted_variab_187.sdi  session_variable_185.sdi  user_defined_fun_188.sdi
+events_stages_cu_111.sdi  events_statement_130.sdi  file_summary_by__94.sdi   prepared_stateme_175.sdi  setup_actors_102.sdi      users_144.sdi
+events_stages_hi_112.sdi  events_transacti_131.sdi  file_summary_by__95.sdi   processlist_100.sdi       setup_consumers_103.sdi   user_variables_b_176.sdi
+events_stages_hi_113.sdi  events_transacti_132.sdi  global_status_181.sdi     replication_appl_165.sdi  setup_instrument_104.sdi  variables_by_thr_183.sdi
+events_stages_su_114.sdi  events_transacti_133.sdi  global_variables_184.sdi  replication_appl_166.sdi  setup_objects_105.sdi     variables_info_186.sdi
+events_stages_su_115.sdi  events_transacti_134.sdi  host_cache_96.sdi         replication_appl_167.sdi  setup_threads_106.sdi
+events_stages_su_116.sdi  events_transacti_135.sdi  hosts_146.sdi             replication_appl_168.sdi  socket_instances_147.sdi
+events_stages_su_117.sdi  events_transacti_136.sdi  keyring_componen_191.sdi  replication_appl_170.sdi  socket_summary_b_148.sdi
+events_stages_su_118.sdi  events_transacti_137.sdi  keyring_keys_152.sdi      replication_appl_171.sdi  socket_summary_b_149.sdi
+
+/opt/docker/sharedvolume:
+index.html
+
+/opt/docker/sys:
+sys_config.ibd
+root@vagrant:~# df -hT /opt/docker
+Filesystem     Type  Size  Used Avail Use% Mounted on
+/dev/sdb       xfs    10G  243M  9.8G   3% /opt/docker
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2023-01-22 06:30:51 UTC; 3h 42min ago
+     Docs: https://docs.docker.com
+ Main PID: 20383 (dockerd)
+    Tasks: 9
+   CGroup: /system.slice/docker.service
+           +-20383 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Jan 22 06:30:51 vagrant dockerd[20383]: time="2023-01-22T06:30:51.624900576Z" level=info msg="[core] [Server #7] Server created" module=grpc
+Jan 22 06:30:51 vagrant dockerd[20383]: time="2023-01-22T06:30:51.636080748Z" level=info msg="API listen on /run/docker.sock"
+Jan 22 06:30:51 vagrant systemd[1]: Started Docker Application Container Engine.
+Jan 22 06:42:21 vagrant dockerd[20383]: time="2023-01-22T06:42:21.970369839Z" level=info msg="ignoring event" container=e6aa4e1848490fd86d7c513e3fc2f03fc47a
+Jan 22 06:45:40 vagrant dockerd[20383]: time="2023-01-22T06:45:40.164827291Z" level=info msg="ignoring event" container=f49cd1dfc05792234ed7cdfac68c7b7059cc
+Jan 22 06:52:02 vagrant dockerd[20383]: time="2023-01-22T06:52:02.071262711Z" level=info msg="ignoring event" container=3b6ab17e085db0c421e0655a05bdf8c126e4
+Jan 22 08:27:44 vagrant dockerd[20383]: time="2023-01-22T08:27:44.033402449Z" level=info msg="ignoring event" container=c5216462eec6546b66dd08806b929d84ee2e
+Jan 22 08:45:28 vagrant dockerd[20383]: time="2023-01-22T08:45:28.246078090Z" level=info msg="ignoring event" container=89bda3a91290224e98d0f1124d9683a3da41
+Jan 22 08:45:28 vagrant dockerd[20383]: time="2023-01-22T08:45:28.261637092Z" level=info msg="ignoring event" container=72e5d632b8162fae4e364cae8bc0c5e80a93
+Jan 22 08:52:39 vagrant dockerd[20383]: time="2023-01-22T08:52:39.358734358Z" level=info msg="ignoring event" container=08f702417bc6d6608087fb1d7eb2379216a7
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl restart docker
+root@vagrant:~#
+root@vagrant:~# systemctl id-active docker
+Unknown operation id-active.
+root@vagrant:~# systemctl is-active docker
+active
+root@vagrant:~# vim /lib/systemd/system/docker.service
+root@vagrant:~# systemctl daemon-reload
+root@vagrant:~# systemctl restart docker
+Job for docker.service failed because the control process exited with error code.
+See "systemctl status docker.service" and "journalctl -xe" for details.
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: failed (Result: exit-code) since Sun 2023-01-22 10:15:14 UTC; 1s ago
+     Docs: https://docs.docker.com
+  Process: 24088 ExecStart=/usr/bin/dockerd -g /opt/docker -H fd:// --containerd=/run/containerd/containerd.sock (code=exited, status=1/FAILURE)
+ Main PID: 24088 (code=exited, status=1/FAILURE)
+
+Jan 22 10:15:12 vagrant systemd[1]: docker.service: Main process exited, code=exited, status=1/FAILURE
+Jan 22 10:15:12 vagrant systemd[1]: docker.service: Failed with result 'exit-code'.
+Jan 22 10:15:12 vagrant systemd[1]: Failed to start Docker Application Container Engine.
+Jan 22 10:15:14 vagrant systemd[1]: docker.service: Service hold-off time over, scheduling restart.
+Jan 22 10:15:14 vagrant systemd[1]: docker.service: Scheduled restart job, restart counter is at 3.
+Jan 22 10:15:14 vagrant systemd[1]: Stopped Docker Application Container Engine.
+Jan 22 10:15:14 vagrant systemd[1]: docker.service: Start request repeated too quickly.
+Jan 22 10:15:14 vagrant systemd[1]: docker.service: Failed with result 'exit-code'.
+Jan 22 10:15:14 vagrant systemd[1]: Failed to start Docker Application Container Engine.
+root@vagrant:~# q
+-su: q: command not found
+root@vagrant:~# df -hT
+Filesystem                   Type      Size  Used Avail Use% Mounted on
+udev                         devtmpfs  463M     0  463M   0% /dev
+tmpfs                        tmpfs      99M  5.5M   94M   6% /run
+/dev/mapper/vagrant--vg-root ext4       62G  2.8G   56G   5% /
+tmpfs                        tmpfs     493M     0  493M   0% /dev/shm
+tmpfs                        tmpfs     5.0M     0  5.0M   0% /run/lock
+tmpfs                        tmpfs     493M     0  493M   0% /sys/fs/cgroup
+vagrant                      vboxsf    459G  146G  314G  32% /vagrant
+tmpfs                        tmpfs      99M     0   99M   0% /run/user/1000
+/dev/sdb                     xfs        10G  243M  9.8G   3% /opt/docker
+root@vagrant:~# rm -rf /opt/docker*
+rm: cannot remove '/opt/docker': Device or resource busy
+root@vagrant:~# vim /lib/systemd/system/docker.service
+root@vagrant:~# systemctl daemon-reload
+root@vagrant:~# systemctl restart docker
+root@vagrant:~#
+root@vagrant:~# rm -rf /opt/docker/*
+root@vagrant:~# ls /opt/docker
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# vim /lib/systemd/system/docker.service
+root@vagrant:~# systemctl daemon-reload
+root@vagrant:~# systemctl restart docker
+Job for docker.service failed because the control process exited with error code.
+See "systemctl status docker.service" and "journalctl -xe" for details.
+root@vagrant:~# journalctl -xe
+-- Unit docker.service has begun starting up.
+Jan 22 10:21:32 vagrant dockerd[24389]: Flag --graph has been deprecated, Use --data-root instead
+Jan 22 10:21:32 vagrant dockerd[24389]: the "graph" config file option is deprecated; use "data-root" instead
+Jan 22 10:21:32 vagrant systemd[1]: docker.service: Main process exited, code=exited, status=1/FAILURE
+Jan 22 10:21:32 vagrant systemd[1]: docker.service: Failed with result 'exit-code'.
+Jan 22 10:21:32 vagrant systemd[1]: Failed to start Docker Application Container Engine.
+-- Subject: Unit docker.service has failed
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+--
+-- Unit docker.service has failed.
+--
+-- The result is RESULT.
+Jan 22 10:21:34 vagrant systemd[1]: docker.service: Service hold-off time over, scheduling restart.
+Jan 22 10:21:34 vagrant systemd[1]: docker.service: Scheduled restart job, restart counter is at 3.
+-- Subject: Automatic restarting of a unit has been scheduled
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+--
+-- Automatic restarting of the unit docker.service has been scheduled, as the result for
+-- the configured Restart= setting for the unit.
+Jan 22 10:21:34 vagrant systemd[1]: Stopped Docker Application Container Engine.
+-- Subject: Unit docker.service has finished shutting down
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+--
+-- Unit docker.service has finished shutting down.
+Jan 22 10:21:34 vagrant systemd[1]: docker.service: Start request repeated too quickly.
+Jan 22 10:21:34 vagrant systemd[1]: docker.service: Failed with result 'exit-code'.
+Jan 22 10:21:34 vagrant systemd[1]: Failed to start Docker Application Container Engine.
+-- Subject: Unit docker.service has failed
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+--
+-- Unit docker.service has failed.
+--
+-- The result is RESULT.
+Jan 22 10:21:34 vagrant systemd[1]: docker.socket: Failed with result 'service-start-limit-hit'.
+root@vagrant:~# exit
+logout
+vagrant@vagrant:~$ exit
+logout
+Connection to 127.0.0.1 closed.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ nano /?
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ exit
+exit
+
+C:\WINDOWS\system32>nano /?
+
+C:\WINDOWS\system32>nano /?
+
+C:\WINDOWS\system32>nano --version
+ GNU nano from git, v6.4-11-gca57881b7
+ (C) 2022 the Free Software Foundation and various contributors
+ Compiled options: --disable-libmagic --disable-speller --disable-nls --disable-utf8
+
+C:\WINDOWS\system32>
+C:\WINDOWS\system32>bash
+
+Gaurav@DESKTOP-NF0FS2B  /c/WINDOWS/system32
+$ cd ~/devops/provision/vagrant/bionic/
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant ssh
+==> vagrant: You have requested to enabled the experimental flag with the following features:
+==> vagrant:
+==> vagrant: Features:  disks
+==> vagrant:
+==> vagrant: Please use with caution, as some of the features may not be fully
+==> vagrant: functional yet.
+Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-58-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun Jan 22 11:26:58 UTC 2023
+
+  System load:  0.0               Processes:              101
+  Usage of /:   4.5% of 61.80GB   Users logged in:        0
+  Memory usage: 16%               IP address for eth0:    10.0.2.15
+  Swap usage:   0%                IP address for docker0: 172.17.0.1
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+276 packages can be updated.
+221 updates are security updates.
+
+
+*** System restart required ***
+Last login: Sun Jan 22 06:27:36 2023 from 10.0.2.2
+vagrant@vagrant:~$ sudo su -
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: failed (Result: exit-code) since Sun 2023-01-22 10:21:34 UTC; 1h 5min ago
+     Docs: https://docs.docker.com
+  Process: 24389 ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --graph=/opt/docker/ (code=exited, status=1/FAILURE)
+ Main PID: 24389 (code=exited, status=1/FAILURE)
+
+Jan 22 10:21:32 vagrant systemd[1]: docker.service: Main process exited, code=exited, status=1/FAILURE
+Jan 22 10:21:32 vagrant systemd[1]: docker.service: Failed with result 'exit-code'.
+Jan 22 10:21:32 vagrant systemd[1]: Failed to start Docker Application Container Engine.
+Jan 22 10:21:34 vagrant systemd[1]: docker.service: Service hold-off time over, scheduling restart.
+Jan 22 10:21:34 vagrant systemd[1]: docker.service: Scheduled restart job, restart counter is at 3.
+Jan 22 10:21:34 vagrant systemd[1]: Stopped Docker Application Container Engine.
+Jan 22 10:21:34 vagrant systemd[1]: docker.service: Start request repeated too quickly.
+Jan 22 10:21:34 vagrant systemd[1]: docker.service: Failed with result 'exit-code'.
+Jan 22 10:21:34 vagrant systemd[1]: Failed to start Docker Application Container Engine.
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl status firewalld
+Unit firewalld.service could not be found.
+root@vagrant:~# systemctl status ufw
+? ufw.service - Uncomplicated firewall
+   Loaded: loaded (/lib/systemd/system/ufw.service; enabled; vendor preset: enabled)
+   Active: active (exited) since Sun 2023-01-22 06:27:09 UTC; 5h 0min ago
+     Docs: man:ufw(8)
+ Main PID: 368 (code=exited, status=0/SUCCESS)
+    Tasks: 0 (limit: 1109)
+   CGroup: /system.slice/ufw.service
+
+Warning: Journal has been rotated since unit was started. Log output is incomplete or unavailable.
+root@vagrant:~# systemctl disable ufw
+Synchronizing state of ufw.service with SysV service script with /lib/systemd/systemd-sysv-install.
+Executing: /lib/systemd/systemd-sysv-install disable ufw
+root@vagrant:~#
+root@vagrant:~# systemctl status ufw
+? ufw.service - Uncomplicated firewall
+   Loaded: loaded (/lib/systemd/system/ufw.service; disabled; vendor preset: enabled)
+   Active: active (exited) since Sun 2023-01-22 06:27:09 UTC; 5h 0min ago
+     Docs: man:ufw(8)
+ Main PID: 368 (code=exited, status=0/SUCCESS)
+    Tasks: 0 (limit: 1109)
+   CGroup: /system.slice/ufw.service
+
+Warning: Journal has been rotated since unit was started. Log output is incomplete or unavailable.
+root@vagrant:~# systemctl stop ufw
+root@vagrant:~# systemctl status ufw
+? ufw.service - Uncomplicated firewall
+   Loaded: loaded (/lib/systemd/system/ufw.service; disabled; vendor preset: enabled)
+   Active: inactive (dead)
+     Docs: man:ufw(8)
+
+Jan 22 11:27:47 vagrant systemd[1]: Stopping Uncomplicated firewall...
+Jan 22 11:27:47 vagrant ufw-init[24640]: Skip stopping firewall: ufw (not enabled)
+Jan 22 11:27:47 vagrant systemd[1]: Stopped Uncomplicated firewall.
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: failed (Result: exit-code) since Sun 2023-01-22 10:21:34 UTC; 1h 6min ago
+     Docs: https://docs.docker.com
+ Main PID: 24389 (code=exited, status=1/FAILURE)
+
+Jan 22 10:21:32 vagrant systemd[1]: docker.service: Main process exited, code=exited, status=1/FAILURE
+Jan 22 10:21:32 vagrant systemd[1]: docker.service: Failed with result 'exit-code'.
+Jan 22 10:21:32 vagrant systemd[1]: Failed to start Docker Application Container Engine.
+Jan 22 10:21:34 vagrant systemd[1]: docker.service: Service hold-off time over, scheduling restart.
+Jan 22 10:21:34 vagrant systemd[1]: docker.service: Scheduled restart job, restart counter is at 3.
+Jan 22 10:21:34 vagrant systemd[1]: Stopped Docker Application Container Engine.
+Jan 22 10:21:34 vagrant systemd[1]: docker.service: Start request repeated too quickly.
+Jan 22 10:21:34 vagrant systemd[1]: docker.service: Failed with result 'exit-code'.
+Jan 22 10:21:34 vagrant systemd[1]: Failed to start Docker Application Container Engine.
+root@vagrant:~#
+root@vagrant:~# systemctl restart docker
+Job for docker.service failed because the control process exited with error code.
+See "systemctl status docker.service" and "journalctl -xe" for details.
+root@vagrant:~#
+root@vagrant:~# ls /etc/systemd/system/
+apt-daily.service                      default.target.wants    iscsi.service                   remote-fs.target.wants  syslog.service
+apt-daily-upgrade.service              final.target.wants      multi-user.target.wants         sockets.target.wants    timers.target.wants
+cloud-final.service.wants              getty.target.wants      open-vm-tools.service.requires  sshd.service
+dbus-org.freedesktop.resolve1.service  graphical.target.wants  paths.target.wants              sysinit.target.wants
+root@vagrant:~# vim /lib/systemd/system/docker.service
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl daemon-reload
+root@vagrant:~# systemctl restart docker
+Job for docker.service failed because the control process exited with error code.
+See "systemctl status docker.service" and "journalctl -xe" for details.
+root@vagrant:~# docker ps -a
+Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running?
+root@vagrant:~# ls /etc/docker
+ls: cannot access '/etc/docker': No such file or directory
+root@vagrant:~# ls /etc
+acpi                           cron.hourly           group            kernel-img.conf  mailcap.order        passwd-           rmt           sysctl.conf
+adduser.conf                   cron.monthly          group-           landscape        manpath.config       perl              rpc           sysctl.d
+alternatives                   crontab               grub.d           ldap             mdadm                pm                rsyslog.conf  systemd
+apm                            cron.weekly           gshadow          ld.so.cache      mime.types           polkit-1          rsyslog.d     terminfo
+apparmor                       cryptsetup-initramfs  gshadow-         ld.so.conf       mke2fs.conf          pollinate         samba         timezone
+apparmor.d                     crypttab              gss              ld.so.conf.d     modprobe.d           profile           screenrc      tmpfiles.d
+apport                         dbus-1                hdparm.conf      legal            modules              profile.d         securetty     ucf.conf
+apt                            debconf.conf          host.conf        libaudit.conf    modules-load.d       protocols         security      udev
+at.deny                        debian_version        hostname         libnl-3          mtab                 python            selinux       ufw
+bash.bashrc                    default               hosts            locale.alias     nanorc               python2.7         services      updatedb.conf
+bash_completion.d              deluser.conf          hosts.allow      locale.gen       netconfig            python3           shadow        update-manager
+bindresvport.blacklist         depmod.d              hosts.deny       localtime        netplan              python3.6         shadow-       update-motd.d
+binfmt.d                       dhcp                  idmapd.conf      logcheck         network              rc0.d             shells        update-notifier
+byobu                          dnsmasq.d             init             login.defs       networkd-dispatcher  rc1.d             skel          vim
+ca-certificates                dnsmasq.d-available   init.d           logrotate.conf   networks             rc2.d             sos.conf      vmware-tools
+ca-certificates.conf           dpkg                  initramfs-tools  logrotate.d      newt                 rc3.d             ssh           vtrgb
+ca-certificates.conf.dpkg-old  environment           inputrc          lsb-release      nsswitch.conf        rc4.d             ssl           wgetrc
+calendar                       ethertypes            insserv.conf.d   ltrace.conf      opt                  rc5.d             subgid        X11
+cifs-utils                     fonts                 iproute2         lvm              os-release           rc6.d             subgid-       xdg
+console-setup                  fstab                 iscsi            machine-id       overlayroot.conf     rcS.d             subuid
+containerd                     fuse.conf             issue            magic            pam.conf             request-key.conf  subuid-
+cron.d                         gai.conf              issue.net        magic.mime       pam.d                request-key.d     sudoers
+cron.daily                     groff                 kernel           mailcap          passwd               resolv.conf       sudoers.d
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# vim /lib/systemd/system/docker.service
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl daemon-reload
+root@vagrant:~# systemctl restart docker
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2023-01-22 11:34:46 UTC; 5s ago
+     Docs: https://docs.docker.com
+ Main PID: 24920 (dockerd)
+    Tasks: 7
+   CGroup: /system.slice/docker.service
+           +-24920 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Jan 22 11:34:45 vagrant dockerd[24920]: time="2023-01-22T11:34:45.756249010Z" level=info msg="[graphdriver] using prior storage driver: overlay2"
+Jan 22 11:34:45 vagrant dockerd[24920]: time="2023-01-22T11:34:45.791497758Z" level=info msg="Loading containers: start."
+Jan 22 11:34:45 vagrant dockerd[24920]: time="2023-01-22T11:34:45.970017785Z" level=info msg="Default bridge (docker0) is assigned with an IP address 172.17
+Jan 22 11:34:46 vagrant dockerd[24920]: time="2023-01-22T11:34:46.085649237Z" level=info msg="Loading containers: done."
+Jan 22 11:34:46 vagrant dockerd[24920]: time="2023-01-22T11:34:46.137535866Z" level=warning msg="WARNING: No swap limit support"
+Jan 22 11:34:46 vagrant dockerd[24920]: time="2023-01-22T11:34:46.137969877Z" level=info msg="Docker daemon" commit=9f62b37 graphdriver=overlay2 version=23.
+Jan 22 11:34:46 vagrant dockerd[24920]: time="2023-01-22T11:34:46.138167271Z" level=info msg="Daemon has completed initialization"
+Jan 22 11:34:46 vagrant dockerd[24920]: time="2023-01-22T11:34:46.190053270Z" level=info msg="[core] [Server #7] Server created" module=grpc
+Jan 22 11:34:46 vagrant systemd[1]: Started Docker Application Container Engine.
+Jan 22 11:34:46 vagrant dockerd[24920]: time="2023-01-22T11:34:46.209109728Z" level=info msg="API listen on /run/docker.sock"
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl edit docker
+Editing "/etc/systemd/system/docker.service.d/override.conf" canceled: temporary file is empty.
+root@vagrant:~# systemctl daemon-reload
+root@vagrant:~# systemctl restart docker
+Job for docker.service failed because the control process exited with error code.
+See "systemctl status docker.service" and "journalctl -xe" for details.
+root@vagrant:~# ls /etc/sys
+sysctl.conf  sysctl.d/    systemd/
+root@vagrant:~# ls /etc/systemd/docker.service.d
+ls: cannot access '/etc/systemd/docker.service.d': No such file or directory
+root@vagrant:~# ls /etc/systemd
+journald.conf  logind.conf  network  resolved.conf  system  system.conf  timesyncd.conf  user  user.conf
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl edit docker
+root@vagrant:~# vim /lib/systemd/system/docker.service
+root@vagrant:~# whereis override.conf
+override:
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+  Drop-In: /etc/systemd/system/docker.service.d
+           +-override.conf
+   Active: activating (start) since Sun 2023-01-22 11:47:26 UTC; 21s ago
+     Docs: https://docs.docker.com
+ Main PID: 25230 (dockerd)
+    Tasks: 6
+   CGroup: /system.slice/docker.service
+           +-25230 /usr/bin/dockerd --data-root /opt/docker/ -H fd:// --containerd=/run/containerd/containerd.soc
+
+Jan 22 11:47:40 vagrant dockerd[25230]: time="2023-01-22T11:47:40.380219285Z" level=info msg="[core] [Channel #1 SubChannel #2] Subchannel Connectivity chan
+Jan 22 11:47:40 vagrant dockerd[25230]: time="2023-01-22T11:47:40.380482265Z" level=info msg="[core] [Channel #1] Channel Connectivity change to TRANSIENT_F
+Jan 22 11:47:43 vagrant dockerd[25230]: time="2023-01-22T11:47:43.816092809Z" level=info msg="[core] [Channel #1 SubChannel #2] Subchannel Connectivity chan
+Jan 22 11:47:43 vagrant dockerd[25230]: time="2023-01-22T11:47:43.816955891Z" level=info msg="[core] [Channel #1] Channel Connectivity change to IDLE" modul
+Jan 22 11:47:43 vagrant dockerd[25230]: time="2023-01-22T11:47:43.817183548Z" level=info msg="[core] [Channel #1 SubChannel #2] Subchannel Connectivity chan
+Jan 22 11:47:43 vagrant dockerd[25230]: time="2023-01-22T11:47:43.817371821Z" level=info msg="[core] [Channel #1 SubChannel #2] Subchannel picks a new addre
+Jan 22 11:47:43 vagrant dockerd[25230]: time="2023-01-22T11:47:43.817698369Z" level=info msg="[core] [Channel #1] Channel Connectivity change to CONNECTING"
+Jan 22 11:47:46 vagrant dockerd[25230]: time="2023-01-22T11:47:46.670545283Z" level=warning msg="[core] [Channel #1 SubChannel #2] grpc: addrConn.createTran
+Jan 22 11:47:46 vagrant dockerd[25230]: time="2023-01-22T11:47:46.671350656Z" level=info msg="[core] [Channel #1 SubChannel #2] Subchannel Connectivity chan
+Jan 22 11:47:46 vagrant dockerd[25230]: time="2023-01-22T11:47:46.671588551Z" level=info msg="[core] [Channel #1] Channel Connectivity change to TRANSIENT_F
+root@vagrant:~#
+root@vagrant:~# rm /etc/systemd/system/docker.service.d/override.conf
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl restart docker
+Warning: The unit file, source configuration file or drop-ins of docker.service changed on disk. Run 'systemctl daemon-reload' to reload units.
+
+q
+^C
+root@vagrant:~# systemctl deamon-reload
+Unknown operation deamon-reload.
+root@vagrant:~# systemctl daemon-reload
+root@vagrant:~# systemctl restart docker
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2023-01-22 11:51:34 UTC; 5s ago
+     Docs: https://docs.docker.com
+ Main PID: 25373 (dockerd)
+    Tasks: 7
+   CGroup: /system.slice/docker.service
+           +-25373 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.041071287Z" level=info msg="[graphdriver] using prior storage driver: overlay2"
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.073335164Z" level=info msg="Loading containers: start."
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.250600123Z" level=info msg="Default bridge (docker0) is assigned with an IP address 172.17
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.339288483Z" level=info msg="Loading containers: done."
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.376924291Z" level=warning msg="WARNING: No swap limit support"
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.377180345Z" level=info msg="Docker daemon" commit=9f62b37 graphdriver=overlay2 version=23.
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.377268618Z" level=info msg="Daemon has completed initialization"
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.408675022Z" level=info msg="[core] [Server #7] Server created" module=grpc
+Jan 22 11:51:34 vagrant systemd[1]: Started Docker Application Container Engine.
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.421573164Z" level=info msg="API listen on /run/docker.sock"
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl status vagrant
+Unit vagrant.service could not be found.
+root@vagrant:~# docker system info | grep - root
+grep: root: No such file or directory
+root@vagrant:~# docker system info
+Client:
+ Context:    default
+ Debug Mode: false
+ Plugins:
+  buildx: Docker Buildx (Docker Inc.)
+    Version:  v0.10.0-rc2
+    Path:     /usr/libexec/docker/cli-plugins/docker-buildx
+  compose: Docker Compose (Docker Inc.)
+    Version:  v2.15.1
+    Path:     /usr/libexec/docker/cli-plugins/docker-compose
+  scan: Docker Scan (Docker Inc.)
+    Version:  v0.23.0
+    Path:     /usr/libexec/docker/cli-plugins/docker-scan
+
+Server:
+ Containers: 0
+  Running: 0
+  Paused: 0
+  Stopped: 0
+ Images: 2
+ Server Version: 23.0.0-rc.3
+ Storage Driver: overlay2
+  Backing Filesystem: extfs
+  Supports d_type: true
+  Using metacopy: false
+  Native Overlay Diff: true
+  userxattr: false
+ Logging Driver: json-file
+ Cgroup Driver: cgroupfs
+ Cgroup Version: 1
+ Plugins:
+  Volume: local
+  Network: bridge host ipvlan macvlan null overlay
+  Log: awslogs fluentd gcplogs gelf journald json-file local logentries splunk syslog
+ Swarm: inactive
+ Runtimes: io.containerd.runc.v2 runc
+ Default Runtime: runc
+ Init Binary: docker-init
+ containerd version: 5b842e528e99d4d4c1686467debf2bd4b88ecd86
+ runc version: v1.1.4-0-g5fd4c4d
+ init version: de40ad0
+ Security Options:
+  apparmor
+  seccomp
+   Profile: builtin
+ Kernel Version: 4.15.0-58-generic
+ Operating System: Ubuntu 18.04.3 LTS
+ OSType: linux
+ Architecture: x86_64
+ CPUs: 1
+ Total Memory: 985.5MiB
+ Name: vagrant
+ ID: fae10c3c-430a-4dc3-8924-580425a595a2
+ Docker Root Dir: /var/lib/docker
+ Debug Mode: false
+ Registry: https://index.docker.io/v1/
+ Experimental: false
+ Insecure Registries:
+  127.0.0.0/8
+ Live Restore Enabled: false
+
+WARNING: No swap limit support
+root@vagrant:~# docker system info | grep -i Root
+WARNING: No swap limit support
+ Docker Root Dir: /var/lib/docker
+root@vagrant:~# ls /var/lib/docker
+buildkit  containers  engine-id  image  network  overlay2  plugins  runtimes  swarm  tmp  volumes
+root@vagrant:~# ps -ef | grep -i vagrant
+root     24441   664  0 11:26 ?        00:00:00 sshd: vagrant [priv]
+vagrant  24443     1  0 11:26 ?        00:00:00 /lib/systemd/systemd --user
+vagrant  24444 24443  0 11:26 ?        00:00:00 (sd-pam)
+vagrant  24546 24441  0 11:26 ?        00:00:02 sshd: vagrant@pts/0
+vagrant  24547 24546  0 11:26 pts/0    00:00:00 -bash
+root     25646 24559  0 11:59 pts/0    00:00:00 grep --color=auto -i vagrant
+root@vagrant:~# ls /lib/systemd/system
+accounts-daemon.service                 irqbalance.service                 quotaon.service                        systemd-backlight@.service
+acpid.path                              iscsid.service                     rc-local.service                       systemd-binfmt.service
+acpid.service                           iscsid.socket                      rc.local.service                       systemd-exit.service
+acpid.socket                            kexec.target                       rc-local.service.d                     systemd-fsckd.service
+apparmor.service                        kexec.target.wants                 rc.service                             systemd-fsckd.socket
+apport-autoreport.path                  keyboard-setup.service             rcS.service                            systemd-fsck-root.service
+apport-autoreport.service               killprocs.service                  reboot.service                         systemd-fsck@.service
+apport-forward@.service                 kmod.service                       reboot.target                          systemd-halt.service
+apport-forward.socket                   kmod-static-nodes.service          reboot.target.wants                    systemd-hibernate-resume@.service
+apt-daily.service                       local-fs-pre.target                remote-cryptsetup.target               systemd-hibernate.service
+apt-daily.timer                         local-fs.target                    remote-fs-pre.target                   systemd-hostnamed.service
+apt-daily-upgrade.service               local-fs.target.wants              remote-fs.target                       systemd-hwdb-update.service
+apt-daily-upgrade.timer                 lvm2-lvmetad.service               rescue.service                         systemd-hybrid-sleep.service
+atd.service                             lvm2-lvmetad.socket                rescue.target                          systemd-initctl.service
+auth-rpcgss-module.service              lvm2-lvmpolld.service              rescue.target.wants                    systemd-initctl.socket
+autovt@.service                         lvm2-lvmpolld.socket               rmnologin.service                      systemd-journald-audit.socket
+basic.target                            lvm2-monitor.service               rpcbind.service                        systemd-journald-dev-log.socket
+blk-availability.service                lvm2-pvscan@.service               rpcbind.socket                         systemd-journald.service
+bluetooth.target                        lvm2.service                       rpcbind.target                         systemd-journald.socket
+bootlogd.service                        lxcfs.service                      rpc-gssd.service                       systemd-journal-flush.service
+bootlogs.service                        lxd-containers.service             rpc-statd-notify.service               systemd-kexec.service
+bootmisc.service                        lxd.service                        rpc-statd.service                      systemd-localed.service
+checkfs.service                         lxd.socket                         rpc-svcgssd.service                    systemd-logind.service
+checkroot-bootclean.service             machine.slice                      rsync.service                          systemd-machine-id-commit.service
+checkroot.service                       mdadm-grow-continue@.service       rsyslog.service                        systemd-modules-load.service
+console-getty.service                   mdadm-last-resort@.service         runlevel0.target                       systemd-networkd.service
+console-setup.service                   mdadm-last-resort@.timer           runlevel1.target                       systemd-networkd.socket
+containerd.service                      mdadm.service                      runlevel1.target.wants                 systemd-networkd-wait-online.service
+container-getty@.service                mdadm-shutdown.service             runlevel2.target                       systemd-poweroff.service
+cron.service                            mdadm-waitidle.service             runlevel2.target.wants                 systemd-quotacheck.service
+cryptdisks-early.service                mdmonitor.service                  runlevel3.target                       systemd-random-seed.service
+cryptdisks.service                      mdmon@.service                     runlevel3.target.wants                 systemd-reboot.service
+cryptsetup-pre.target                   module-init-tools.service          runlevel4.target                       systemd-remount-fs.service
+cryptsetup.target                       motd-news.service                  runlevel4.target.wants                 systemd-resolved.service
+ctrl-alt-del.target                     motd-news.timer                    runlevel5.target                       systemd-rfkill.service
+dbus-org.freedesktop.hostname1.service  motd.service                       runlevel5.target.wants                 systemd-rfkill.socket
+dbus-org.freedesktop.locale1.service    mountall-bootclean.service         runlevel6.target                       systemd-suspend.service
+dbus-org.freedesktop.login1.service     mountall.service                   run-rpc_pipefs.mount                   systemd-suspend-then-hibernate.service
+dbus-org.freedesktop.timedate1.service  mountdevsubfs.service              screen-cleanup.service                 systemd-sysctl.service
+dbus.service                            mountkernfs.service                sendsigs.service                       systemd-timedated.service
+dbus.socket                             mountnfs-bootclean.service         serial-getty@.service                  systemd-timesyncd.service
+debug-shell.service                     mountnfs.service                   setvtrgb.service                       systemd-tmpfiles-clean.service
+default.target                          multi-user.target                  shutdown.target                        systemd-tmpfiles-clean.timer
+dev-hugepages.mount                     multi-user.target.wants            sigpwr.target                          systemd-tmpfiles-setup-dev.service
+dev-mqueue.mount                        netplan-wpa@.service               single.service                         systemd-tmpfiles-setup.service
+dm-event.service                        networkd-dispatcher.service        sleep.target                           systemd-udevd-control.socket
+dm-event.socket                         network-online.target              slices.target                          systemd-udevd-kernel.socket
+docker.service                          network-pre.target                 smartcard.target                       systemd-udevd.service
+docker.socket                           network.target                     snapd.autoimport.service               systemd-udev-settle.service
+ebtables.service                        nfs-client.target                  snapd.core-fixup.service               systemd-udev-trigger.service
+emergency.service                       nfs-common.service                 snapd.failure.service                  systemd-update-utmp-runlevel.service
+emergency.target                        nfs-config.service                 snapd.seeded.service                   systemd-update-utmp.service
+exit.target                             nfs-idmapd.service                 snapd.service                          systemd-user-sessions.service
+final.target                            nfs-utils.service                  snapd.snap-repair.service              systemd-volatile-root.service
+fstrim.service                          nss-lookup.target                  snapd.snap-repair.timer                system.slice
+fstrim.timer                            nss-user-lookup.target             snapd.socket                           system-update-cleanup.service
+fuse.service                            ondemand.service                   snapd.system-shutdown.service          system-update.target
+getty-pre.target                        open-iscsi.service                 sockets.target                         timers.target
+getty@.service                          open-vm-tools.service              sockets.target.wants                   timers.target.wants
+getty-static.service                    paths.target                       sound.target                           time-sync.target
+getty.target                            plymouth-halt.service              ssh.service                            udev.service
+getty.target.wants                      plymouth-kexec.service             ssh@.service                           ufw.service
+graphical.target                        plymouth-log.service               ssh.socket                             umountfs.service
+graphical.target.wants                  plymouth-poweroff.service          stop-bootlogd.service                  umountnfs.service
+halt.service                            plymouth-quit.service              stop-bootlogd-single.service           umountroot.service
+halt.target                             plymouth-quit-wait.service         sudo.service                           umount.target
+halt.target.wants                       plymouth-read-write.service        suspend.target                         urandom.service
+hibernate.target                        plymouth-reboot.service            suspend-then-hibernate.target          ureadahead.service
+hostname.service                        plymouth.service                   swap.target                            ureadahead-stop.service
+hwclock.service                         plymouth-start.service             sys-fs-fuse-connections.mount          ureadahead-stop.timer
+hybrid-sleep.target                     plymouth-switch-root.service       sysinit.target                         user@.service
+initrd-cleanup.service                  polkit.service                     sysinit.target.wants                   user@.service.d
+initrd-fs.target                        pollinate.service                  sys-kernel-config.mount                user.slice
+initrd-parse-etc.service                portmap.service                    sys-kernel-debug.mount                 uuidd.service
+initrd-root-device.target               poweroff.target                    syslog.socket                          uuidd.socket
+initrd-root-fs.target                   poweroff.target.wants              systemd-ask-password-console.path      vboxadd.service
+initrd-switch-root.service              printer.target                     systemd-ask-password-console.service   vboxadd-service.service
+initrd-switch-root.target               proc-fs-nfsd.mount                 systemd-ask-password-plymouth.path     vgauth.service
+initrd-switch-root.target.wants         procps.service                     systemd-ask-password-plymouth.service  x11-common.service
+initrd.target                           proc-sys-fs-binfmt_misc.automount  systemd-ask-password-wall.path
+initrd-udevadm-cleanup-db.service       proc-sys-fs-binfmt_misc.mount      systemd-ask-password-wall.service
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2023-01-22 11:51:34 UTC; 8min ago
+     Docs: https://docs.docker.com
+ Main PID: 25373 (dockerd)
+    Tasks: 7
+   CGroup: /system.slice/docker.service
+           +-25373 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.041071287Z" level=info msg="[graphdriver] using prior storage driver: overlay2"
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.073335164Z" level=info msg="Loading containers: start."
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.250600123Z" level=info msg="Default bridge (docker0) is assigned with an IP address 172.17
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.339288483Z" level=info msg="Loading containers: done."
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.376924291Z" level=warning msg="WARNING: No swap limit support"
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.377180345Z" level=info msg="Docker daemon" commit=9f62b37 graphdriver=overlay2 version=23.
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.377268618Z" level=info msg="Daemon has completed initialization"
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.408675022Z" level=info msg="[core] [Server #7] Server created" module=grpc
+Jan 22 11:51:34 vagrant systemd[1]: Started Docker Application Container Engine.
+Jan 22 11:51:34 vagrant dockerd[25373]: time="2023-01-22T11:51:34.421573164Z" level=info msg="API listen on /run/docker.sock"
+root@vagrant:~# exit
+logout
+vagrant@vagrant:~$ exit
+logout
+Connection to 127.0.0.1 closed.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ code Vagrantfile
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ cat Vagrantfile
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+ENV['VAGRANT_EXPERIMENTAL']="disks"
+Vagrant.configure("2") do |config|
+  config.vm.define "hashicorp" do |h|
+    h.vm.box = "hashicorp/bionic64"
+    h.vm.provider :virtualbox
+
+    h.vm.disk :disk, size: "10GB", name: "extra_storage"
+  end
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://vagrantcloud.com/search.
+  config.vm.box = "ubuntu/bionic64"
+
+  # Disable automatic box update checking. If you disable this, then
+  # boxes will only be checked for updates when the user runs
+  # `vagrant box outdated`. This is not recommended.
+  # config.vm.box_check_update = false
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # NOTE: This will enable public access to the opened port
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine and only allow access
+  # via 127.0.0.1 to disable public access
+  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  # config.vm.network "private_network", ip: "192.168.33.10"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network "public_network"
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  # config.vm.provider "virtualbox" do |vb|
+  #   # Display the VirtualBox GUI when booting the machine
+  #   vb.gui = true
+  #
+  #   # Customize the amount of memory on the VM:
+  #   vb.memory = "1024"
+  # end
+  #
+  # View the documentation for the provider you are using for more
+  # information on available options.
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   apt-get update
+  #   apt-get install -y apache2
+  # SHELL
+end
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant halt
+Vagrant failed to initialize at a very early stage:
+
+There is a syntax error in the following Vagrantfile. The syntax error
+message is reproduced below for convenience:
+
+C:/Users/Gaurav/devops/provision/vagrant/bionic/Vagrantfile:87: syntax error, unexpected `end', expecting end-of-input
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant destory -f
+Vagrant failed to initialize at a very early stage:
+
+There is a syntax error in the following Vagrantfile. The syntax error
+message is reproduced below for convenience:
+
+C:/Users/Gaurav/devops/provision/vagrant/bionic/Vagrantfile:87: syntax error, unexpected `end', expecting end-of-input
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ code Vagrantfile
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant halt
+==> vagrant: You have requested to enabled the experimental flag with the following features:
+==> vagrant:
+==> vagrant: Features:  disks
+==> vagrant:
+==> vagrant: Please use with caution, as some of the features may not be fully
+==> vagrant: functional yet.
+==> hashicorp: Attempting graceful shutdown of VM...
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant destroy -f
+==> vagrant: You have requested to enabled the experimental flag with the following features:
+==> vagrant:
+==> vagrant: Features:  disks
+==> vagrant:
+==> vagrant: Please use with caution, as some of the features may not be fully
+==> vagrant: functional yet.
+==> hashicorp: Destroying VM and associated drives...
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant up
+==> vagrant: You have requested to enabled the experimental flag with the following features:
+==> vagrant:
+==> vagrant: Features:  disks
+==> vagrant:
+==> vagrant: Please use with caution, as some of the features may not be fully
+==> vagrant: functional yet.
+Bringing machine 'hashicorp' up with 'virtualbox' provider...
+==> hashicorp: Importing base box 'hashicorp/bionic64'...
+==> hashicorp: Matching MAC address for NAT networking...
+==> hashicorp: Checking if box 'hashicorp/bionic64' version '1.0.282' is up to date...
+==> hashicorp: Setting the name of the VM: bionic_hashicorp_1674390716788_67503
+==> hashicorp: Clearing any previously set network interfaces...
+==> hashicorp: Preparing network interfaces based on configuration...
+    hashicorp: Adapter 1: nat
+==> hashicorp: Forwarding ports...
+    hashicorp: 22 (guest) => 2222 (host) (adapter 1)
+==> hashicorp: Configuring storage mediums...
+    hashicorp: Disk 'extra_storage' not found in guest. Creating and attaching disk to guest...
+==> hashicorp: Booting VM...
+==> hashicorp: Waiting for machine to boot. This may take a few minutes...
+    hashicorp: SSH address: 127.0.0.1:2222
+    hashicorp: SSH username: vagrant
+    hashicorp: SSH auth method: private key
+    hashicorp: Warning: Connection reset. Retrying...
+    hashicorp: Warning: Remote connection disconnect. Retrying...
+    hashicorp:
+    hashicorp: Vagrant insecure key detected. Vagrant will automatically replace
+    hashicorp: this with a newly generated keypair for better security.
+    hashicorp:
+    hashicorp: Inserting generated public key within guest...
+    hashicorp: Removing insecure key from the guest if it's present...
+    hashicorp: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> hashicorp: Machine booted and ready!
+==> hashicorp: Checking for guest additions in VM...
+    hashicorp: The guest additions on this VM do not match the installed version of
+    hashicorp: VirtualBox! In most cases this is fine, but in rare cases it can
+    hashicorp: prevent things such as shared folders from working properly. If you see
+    hashicorp: shared folder errors, please make sure the guest additions within the
+    hashicorp: virtual machine match the version of VirtualBox you have installed on
+    hashicorp: your host and reload your VM.
+    hashicorp:
+    hashicorp: Guest Additions Version: 6.0.10
+    hashicorp: VirtualBox Version: 6.1
+==> hashicorp: Mounting shared folders...
+    hashicorp: /vagrant => C:/Users/Gaurav/devops/provision/vagrant/bionic
+==> hashicorp: Running provisioner: docker...
+    hashicorp: Installing Docker onto machine...
+    hashicorp: Running: inline script
+==> hashicorp: Starting Docker containers...
+==> hashicorp: -- Container: ubuntu
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant ssh
+==> vagrant: You have requested to enabled the experimental flag with the following features:
+==> vagrant:
+==> vagrant: Features:  disks
+==> vagrant:
+==> vagrant: Please use with caution, as some of the features may not be fully
+==> vagrant: functional yet.
+Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-58-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun Jan 22 12:40:33 UTC 2023
+
+  System load:  0.04              Processes:              96
+  Usage of /:   3.6% of 61.80GB   Users logged in:        0
+  Memory usage: 17%               IP address for eth0:    10.0.2.15
+  Swap usage:   0%                IP address for docker0: 172.17.0.1
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+276 packages can be updated.
+221 updates are security updates.
+
+
+*** System restart required ***
+vagrant@vagrant:~$ sudo su -
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2023-01-22 12:35:50 UTC; 4min 50s ago
+     Docs: https://docs.docker.com
+ Main PID: 20886 (dockerd)
+    Tasks: 9
+   CGroup: /system.slice/docker.service
+           +-20886 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Jan 22 12:36:45 vagrant dockerd[20886]: time="2023-01-22T12:36:45.116883518Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:36:46 vagrant dockerd[20886]: time="2023-01-22T12:36:46.499627183Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:36:48 vagrant dockerd[20886]: time="2023-01-22T12:36:48.649581321Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:36:52 vagrant dockerd[20886]: time="2023-01-22T12:36:52.410472217Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:36:59 vagrant dockerd[20886]: time="2023-01-22T12:36:59.401380592Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:37:12 vagrant dockerd[20886]: time="2023-01-22T12:37:12.793443329Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:37:38 vagrant dockerd[20886]: time="2023-01-22T12:37:38.974873039Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:38:30 vagrant dockerd[20886]: time="2023-01-22T12:38:30.694938831Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:39:31 vagrant dockerd[20886]: time="2023-01-22T12:39:31.307279749Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:40:31 vagrant dockerd[20886]: time="2023-01-22T12:40:31.793833195Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker system info | grep -i Root
+WARNING: No swap limit support
+ Docker Root Dir: /var/lib/docker
+root@vagrant:~#
+root@vagrant:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       latest    6b7dfa7e8fdb   6 weeks ago   77.8MB
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND     CREATED         STATUS                          PORTS     NAMES
+c1be8c590d56   ubuntu    "bash -l"   4 minutes ago   Restarting (0) 40 seconds ago             ubuntu
+root@vagrant:~# docker logs ubuntu
+root@vagrant:~# docker logs c1b
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND     CREATED         STATUS                          PORTS     NAMES
+c1be8c590d56   ubuntu    "bash -l"   7 minutes ago   Restarting (0) 33 seconds ago             ubuntu
+root@vagrant:~# docker logs c1be8c590d56
+root@vagrant:~# ls /var/lib/docker/containers/c1be8c590d56/
+ls: cannot access '/var/lib/docker/containers/c1be8c590d56/': No such file or directory
+root@vagrant:~# ls /var/lib/docker/containers
+c1be8c590d564933b7a522054ca758cad42588c731ccf2959944795ba11e73f7
+root@vagrant:~# ls /var/lib/docker/containers/c1be8c590d564933b7a522054ca758cad42588c731ccf2959944795ba11e73f7/
+c1be8c590d564933b7a522054ca758cad42588c731ccf2959944795ba11e73f7-json.log  config.v2.json   hostname  mounts       resolv.conf.hash
+checkpoints                                                                hostconfig.json  hosts     resolv.conf
+root@vagrant:~# tail /var/lib/docker/containers/c1be8c590d564933b7a522054ca758cad42588c731ccf2959944795ba11e73f7/c1be8c590d564933b7a522054ca758cad42588c731c
+cf2959944795ba11e73f7-json.log
+root@vagrant:~# cat /var/lib/docker/containers/c1be8c590d564933b7a522054ca758cad42588c731ccf2959944795ba11e73f7/c1be8c590d564933b7a522054ca758cad42588c731cc
+f2959944795ba11e73f7-json.log
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED       SIZE
+ubuntu       latest    6b7dfa7e8fdb   6 weeks ago   77.8MB
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND     CREATED          STATUS                          PORTS     NAMES
+c1be8c590d56   ubuntu    "bash -l"   10 minutes ago   Restarting (0) 43 seconds ago             ubuntu
+root@vagrant:~# docker rm c1be8c590d56
+Error response from daemon: You cannot remove a restarting container c1be8c590d564933b7a522054ca758cad42588c731ccf2959944795ba11e73f7. Stop the container before attempting removal or force remove
+root@vagrant:~# docker rm c1be8c590d56 -f
+c1be8c590d56
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker run --name=ubuntu-con1 ubuntu
+root@vagrant:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS                     PORTS     NAMES
+7b7c5f43dd8a   ubuntu    "bash"    8 seconds ago   Exited (0) 6 seconds ago             ubuntu-con1
+root@vagrant:~# docker run -it --name=ubuntu-con2 ubuntu
+root@c1b5b1b28d1e:/# root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED         STATUS         PORTS     NAMES
+c1b5b1b28d1e   ubuntu    "bash"    7 seconds ago   Up 7 seconds             ubuntu-con2
+root@vagrant:~# docker rm ubuntu-con1
+ubuntu-con1
+root@vagrant:~#
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS          PORTS     NAMES
+c1b5b1b28d1e   ubuntu    "bash"    23 seconds ago   Up 22 seconds             ubuntu-con2
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# lsblk
+NAME                   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                      8:0    0   64G  0 disk
++-sda1                   8:1    0   64G  0 part
+  +-vagrant--vg-root   253:0    0   63G  0 lvm  /
+  +-vagrant--vg-swap_1 253:1    0  980M  0 lvm  [SWAP]
+sdb                      8:16   0   10G  0 disk
+root@vagrant:~# mkfs -t xfs /dev/sdb
+meta-data=/dev/sdb               isize=512    agcount=4, agsize=655360 blks
+         =                       sectsz=512   attr=2, projid32bit=1
+         =                       crc=1        finobt=1, sparse=0, rmapbt=0, reflink=0
+data     =                       bsize=4096   blocks=2621440, imaxpct=25
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=2560, version=2
+         =                       sectsz=512   sunit=0 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+root@vagrant:~# mkdir /storage
+root@vagrant:~# mount /dev/sdb /storage
+root@vagrant:~# df -hT
+Filesystem                   Type      Size  Used Avail Use% Mounted on
+udev                         devtmpfs  463M     0  463M   0% /dev
+tmpfs                        tmpfs      99M  5.6M   93M   6% /run
+/dev/mapper/vagrant--vg-root ext4       62G  2.3G   57G   4% /
+tmpfs                        tmpfs     493M     0  493M   0% /dev/shm
+tmpfs                        tmpfs     5.0M     0  5.0M   0% /run/lock
+tmpfs                        tmpfs     493M     0  493M   0% /sys/fs/cgroup
+vagrant                      vboxsf    459G  145G  315G  32% /vagrant
+tmpfs                        tmpfs      99M     0   99M   0% /run/user/1000
+overlay                      overlay    62G  2.3G   57G   4% /var/lib/docker/overlay2/59e7d7e61367848464d504962bc5ca955ddead82ee1c104f16f0d7ab86bf5108/merged
+/dev/sdb                     xfs        10G   43M   10G   1% /storage
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2023-01-22 12:35:50 UTC; 14min ago
+     Docs: https://docs.docker.com
+ Main PID: 20886 (dockerd)
+    Tasks: 9
+   CGroup: /system.slice/docker.service
+           +-20886 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Jan 22 12:38:30 vagrant dockerd[20886]: time="2023-01-22T12:38:30.694938831Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:39:31 vagrant dockerd[20886]: time="2023-01-22T12:39:31.307279749Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:40:31 vagrant dockerd[20886]: time="2023-01-22T12:40:31.793833195Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:41:32 vagrant dockerd[20886]: time="2023-01-22T12:41:32.435020118Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:42:32 vagrant dockerd[20886]: time="2023-01-22T12:42:32.900430950Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:43:33 vagrant dockerd[20886]: time="2023-01-22T12:43:33.409242057Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:44:34 vagrant dockerd[20886]: time="2023-01-22T12:44:34.110414683Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:45:34 vagrant dockerd[20886]: time="2023-01-22T12:45:34.608791262Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:46:35 vagrant dockerd[20886]: time="2023-01-22T12:46:35.244672000Z" level=info msg="ignoring event" container=c1be8c590d564933b7a522054ca758cad425
+Jan 22 12:47:46 vagrant dockerd[20886]: time="2023-01-22T12:47:46.677011313Z" level=info msg="ignoring event" container=7b7c5f43dd8a72794f336c0d1f08d11d9784
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# vim /lib/systemd/system/docker.service
+root@vagrant:~# root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl daemon-reload
+root@vagrant:~# systemctl restart docker
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sun 2023-01-22 12:52:12 UTC; 6s ago
+     Docs: https://docs.docker.com
+ Main PID: 24820 (dockerd)
+    Tasks: 7
+   CGroup: /system.slice/docker.service
+           +-24820 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --graph=/storage
+
+Jan 22 12:52:11 vagrant dockerd[24820]: time="2023-01-22T12:52:11.560610504Z" level=info msg="ClientConn switching balancer to \"pick_first\"" module=grpc
+Jan 22 12:52:11 vagrant dockerd[24820]: time="2023-01-22T12:52:11.637674973Z" level=warning msg="Your kernel does not support swap memory limit"
+Jan 22 12:52:11 vagrant dockerd[24820]: time="2023-01-22T12:52:11.637992451Z" level=warning msg="Your kernel does not support CPU realtime scheduler"
+Jan 22 12:52:11 vagrant dockerd[24820]: time="2023-01-22T12:52:11.638389840Z" level=info msg="Loading containers: start."
+Jan 22 12:52:11 vagrant dockerd[24820]: time="2023-01-22T12:52:11.804897124Z" level=info msg="Default bridge (docker0) is assigned with an IP address 172.17
+Jan 22 12:52:11 vagrant dockerd[24820]: time="2023-01-22T12:52:11.920268890Z" level=info msg="Loading containers: done."
+Jan 22 12:52:11 vagrant dockerd[24820]: time="2023-01-22T12:52:11.948000122Z" level=info msg="Docker daemon" commit=6051f14 graphdriver(s)=overlay2 version=
+Jan 22 12:52:11 vagrant dockerd[24820]: time="2023-01-22T12:52:11.948403856Z" level=info msg="Daemon has completed initialization"
+Jan 22 12:52:12 vagrant dockerd[24820]: time="2023-01-22T12:52:12.042900433Z" level=info msg="API listen on /var/run/docker.sock"
+Jan 22 12:52:12 vagrant systemd[1]: Started Docker Application Container Engine.
+root@vagrant:~#
+root@vagrant:~# docker system info | grep -i Root
+WARNING: No swap limit support
+ Docker Root Dir: /storage
+root@vagrant:~# exit
+logout
+vagrant@vagrant:~$ exit
+logout
+Connection to 127.0.0.1 closed.
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ cat Vagrantfile
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+ENV['VAGRANT_EXPERIMENTAL']="disks"
+Vagrant.configure("2") do |config|
+  config.vm.define "hashicorp" do |h|
+    h.vm.box = "hashicorp/bionic64"
+    h.vm.provider :virtualbox
+
+    h.vm.disk :disk, size: "10GB", name: "extra_storage"
+  end
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://vagrantcloud.com/search.
+  #config.vm.box = "ubuntu/bionic64"
+
+  # Disable automatic box update checking. If you disable this, then
+  # boxes will only be checked for updates when the user runs
+  # `vagrant box outdated`. This is not recommended.
+  # config.vm.box_check_update = false
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # NOTE: This will enable public access to the opened port
+  # config.vm.network "forwarded_port", guest: 80, host: 8080
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine and only allow access
+  # via 127.0.0.1 to disable public access
+  # config.vm.network "forwarded_port", guest: 80, host: 8080, host_ip: "127.0.0.1"
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  # config.vm.network "private_network", ip: "192.168.33.10"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network "public_network"
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  # config.vm.provider "virtualbox" do |vb|
+  #   # Display the VirtualBox GUI when booting the machine
+  #   vb.gui = true
+  #
+  #   # Customize the amount of memory on the VM:
+  #   vb.memory = "1024"
+  # end
+  #
+  # View the documentation for the provider you are using for more
+  # information on available options.
+
+  # Enable provisioning with a shell script. Additional provisioners such as
+  # Ansible, Chef, Docker, Puppet and Salt are also available. Please see the
+  # documentation for more information about their specific syntax and use.
+  config.vm.provision "docker" do |d|
+    d.post_install_provision "shell", inline:"echo export http_proxy='http://127.0.0.1:3128/' >> /etc/default/docker"
+    d.run "ubuntu",
+      cmd: "bash -l",
+      args: "-v '/vagrant:/var/www'"
+  end
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   apt-get update
+  #   apt-get install -y apache2
+  # SHELL
+end
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$
