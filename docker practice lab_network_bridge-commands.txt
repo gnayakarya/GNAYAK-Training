@@ -1,0 +1,1511 @@
+
+Gaurav@DESKTOP-NF0FS2B  ~/devops/provision/vagrant/bionic
+$ vagrant ssh
+Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-58-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Thu Jan 26 16:22:12 UTC 2023
+
+  System load:  0.26              Processes:           91
+  Usage of /:   2.5% of 61.80GB   Users logged in:     0
+  Memory usage: 10%               IP address for eth0: 10.0.2.15
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+0 packages can be updated.
+0 updates are security updates.
+
+
+vagrant@vagrant:~$ sudo su -
+root@vagrant:~# curl -fsSL https://get.docker.com -o get-docker.sh
+root@vagrant:~# sh get-docker.sh
+# Executing docker install script, commit: 1d97565eca92bb523082b7d4f530c74104e05d35
++ sh -c apt-get update -qq >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq apt-transport-https ca-certificates curl >/dev/null
++ sh -c mkdir -p /etc/apt/keyrings && chmod -R 0755 /etc/apt/keyrings
++ sh -c curl -fsSL "https://download.docker.com/linux/ubuntu/gpg" | gpg --dearmor --yes -o /etc/apt/keyrings/docker.gpg
++ sh -c chmod a+r /etc/apt/keyrings/docker.gpg
++ sh -c echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu bionic stable" > /etc/apt/sources.list.d/docker.list
++ sh -c apt-get update -qq >/dev/null
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends docker-ce docker-ce-cli containerd.io docker-compose-plugin docker-scan-plugin >/dev/null
++ version_gte 20.10
++ [ -z  ]
++ return 0
++ sh -c DEBIAN_FRONTEND=noninteractive apt-get install -y -qq docker-ce-rootless-extras >/dev/null
++ sh -c docker version
+Client: Docker Engine - Community
+ Version:           20.10.23
+ API version:       1.41
+ Go version:        go1.18.10
+ Git commit:        7155243
+ Built:             Thu Jan 19 17:34:12 2023
+ OS/Arch:           linux/amd64
+ Context:           default
+ Experimental:      true
+
+Server: Docker Engine - Community
+ Engine:
+  Version:          20.10.23
+  API version:      1.41 (minimum version 1.12)
+  Go version:       go1.18.10
+  Git commit:       6051f14
+  Built:            Thu Jan 19 17:32:03 2023
+  OS/Arch:          linux/amd64
+  Experimental:     false
+ containerd:
+  Version:          1.6.15
+  GitCommit:        5b842e528e99d4d4c1686467debf2bd4b88ecd86
+ runc:
+  Version:          1.1.4
+  GitCommit:        v1.1.4-0-g5fd4c4d
+ docker-init:
+  Version:          0.19.0
+  GitCommit:        de40ad0
+
+================================================================================
+
+To run Docker as a non-privileged user, consider setting up the
+Docker daemon in rootless mode for your user:
+
+    dockerd-rootless-setuptool.sh install
+
+Visit https://docs.docker.com/go/rootless/ to learn about rootless mode.
+
+
+To run the Docker daemon as a fully privileged service, but granting non-root
+users access, refer to https://docs.docker.com/go/daemon-access/
+
+WARNING: Access to the remote API on a privileged Docker daemon is equivalent
+         to root access on the host. Refer to the 'Docker daemon attack surface'
+         documentation for details: https://docs.docker.com/go/attack-surface/
+
+================================================================================
+
+root@vagrant:~# lsblk
+NAME                   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda                      8:0    0   64G  0 disk
++-sda1                   8:1    0   64G  0 part
+  +-vagrant--vg-root   253:0    0   63G  0 lvm  /
+  +-vagrant--vg-swap_1 253:1    0  980M  0 lvm  [SWAP]
+root@vagrant:~# df -hT
+Filesystem                   Type      Size  Used Avail Use% Mounted on
+udev                         devtmpfs  463M     0  463M   0% /dev
+tmpfs                        tmpfs      99M  5.2M   94M   6% /run
+/dev/mapper/vagrant--vg-root ext4       62G  2.2G   57G   4% /
+tmpfs                        tmpfs     493M     0  493M   0% /dev/shm
+tmpfs                        tmpfs     5.0M     0  5.0M   0% /run/lock
+tmpfs                        tmpfs     493M     0  493M   0% /sys/fs/cgroup
+vagrant                      vboxsf    459G  149G  311G  33% /vagrant
+tmpfs                        tmpfs      99M     0   99M   0% /run/user/1000
+root@vagrant:~# docker pull nginx
+Using default tag: latest
+latest: Pulling from library/nginx
+8740c948ffd4: Pull complete
+d2c0556a17c5: Pull complete
+c8b9881f2c6a: Pull complete
+693c3ffa8f43: Pull complete
+8316c5e80e6d: Pull complete
+b2fe3577faa4: Pull complete
+Digest: sha256:b8f2383a95879e1ae064940d9a200f67a6c79e710ed82ac42263397367e7cc4e
+Status: Downloaded newer image for nginx:latest
+docker.io/library/nginx:latest
+root@vagrant:~# docker run --name=nginx-con1 nginx -d
+/docker-entrypoint.sh: 47: exec: -d: not found
+root@vagrant:~# docker run --name=nginx-con1 -d nginx
+docker: Error response from daemon: Conflict. The container name "/nginx-con1" is already in use by container "d5bbd0ad0ccd01556972db4e8e729ec9491275d435fe1bd68da65ff79dd2d905". You have to remove (or rename) that container to be able to reuse that name.
+See 'docker run --help'.
+root@vagrant:~# docker rm nginx-con1
+nginx-con1
+root@vagrant:~# docker run --name=nginx-con1 -d nginx
+d6634434b183086e824bccaf3e2da3900a95e92309b6925f3bf39f43f4ff7a73
+root@vagrant:~# docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
+d6634434b183   nginx     "/docker-entrypoint.…"   5 seconds ago   Up 4 seconds   80/tcp    nginx-con1
+root@vagrant:~# docker container inspect nginx-con1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.2",
+                    "IPAddress": "172.17.0.2",
+root@vagrant:~# docker run -it --name=centos-con1 centos
+Unable to find image 'centos:latest' locally
+latest: Pulling from library/centos
+a1d0c7532777: Pull complete
+Digest: sha256:a27fd8080b517143cbbbab9dfb7c8571c40d67d534bbdee55bd6c473f432b177
+Status: Downloaded newer image for centos:latest
+[root@46290c026471 /]# ifconfig
+bash: ifconfig: command not found
+[root@46290c026471 /]# ping 172.17.0.2
+PING 172.17.0.2 (172.17.0.2) 56(84) bytes of data.
+64 bytes from 172.17.0.2: icmp_seq=1 ttl=64 time=0.072 ms
+64 bytes from 172.17.0.2: icmp_seq=2 ttl=64 time=0.079 ms
+64 bytes from 172.17.0.2: icmp_seq=3 ttl=64 time=0.084 ms
+64 bytes from 172.17.0.2: icmp_seq=4 ttl=64 time=0.079 ms
+64 bytes from 172.17.0.2: icmp_seq=5 ttl=64 time=0.087 ms
+64 bytes from 172.17.0.2: icmp_seq=6 ttl=64 time=0.079 ms
+^C
+--- 172.17.0.2 ping statistics ---
+6 packets transmitted, 6 received, 0% packet loss, time 5088ms
+rtt min/avg/max/mdev = 0.072/0.080/0.087/0.004 ms
+[root@46290c026471 /]# root@vagrant:~#
+root@vagrant:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS     NAMES
+46290c026471   centos    "/bin/bash"              26 seconds ago   Up 24 seconds             centos-con1
+d6634434b183   nginx     "/docker-entrypoint.…"   3 minutes ago    Up 3 minutes    80/tcp    nginx-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker exec -it nginx-con1 bash
+root@d6634434b183:/# ping 172.17.0.3
+bash: ping: command not found
+root@d6634434b183:/# apt update ; apt install net-tools -y
+Get:1 http://deb.debian.org/debian bullseye InRelease [116 kB]
+Get:2 http://deb.debian.org/debian-security bullseye-security InRelease [48.4 kB]
+Get:3 http://deb.debian.org/debian bullseye-updates InRelease [44.1 kB]
+Get:4 http://deb.debian.org/debian bullseye/main amd64 Packages [8183 kB]
+Get:5 http://deb.debian.org/debian-security bullseye-security/main amd64 Packages [216 kB]
+Get:6 http://deb.debian.org/debian bullseye-updates/main amd64 Packages [14.6 kB]
+Fetched 8622 kB in 8s (1105 kB/s)
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+All packages are up to date.
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following NEW packages will be installed:
+  net-tools
+0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 250 kB of archives.
+After this operation, 1015 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bullseye/main amd64 net-tools amd64 1.60+git20181103.0eebece-1 [250 kB]
+Fetched 250 kB in 0s (2277 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package net-tools.
+(Reading database ... 7823 files and directories currently installed.)
+Preparing to unpack .../net-tools_1.60+git20181103.0eebece-1_amd64.deb ...
+Unpacking net-tools (1.60+git20181103.0eebece-1) ...
+Setting up net-tools (1.60+git20181103.0eebece-1) ...
+root@d6634434b183:/# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.2  netmask 255.255.0.0  broadcast 172.17.255.255
+        ether 02:42:ac:11:00:02  txqueuelen 0  (Ethernet)
+        RX packets 3638  bytes 9073821 (8.6 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 741  bytes 41748 (40.7 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@d6634434b183:/# apt install iputils-ping -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following additional packages will be installed:
+  libcap2 libcap2-bin libpam-cap
+The following NEW packages will be installed:
+  iputils-ping libcap2 libcap2-bin libpam-cap
+0 upgraded, 4 newly installed, 0 to remove and 0 not upgraded.
+Need to get 121 kB of archives.
+After this operation, 348 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bullseye/main amd64 libcap2 amd64 1:2.44-1 [23.6 kB]
+Get:2 http://deb.debian.org/debian bullseye/main amd64 libcap2-bin amd64 1:2.44-1 [32.6 kB]
+Get:3 http://deb.debian.org/debian bullseye/main amd64 iputils-ping amd64 3:20210202-1 [49.8 kB]
+Get:4 http://deb.debian.org/debian bullseye/main amd64 libpam-cap amd64 1:2.44-1 [15.4 kB]
+Fetched 121 kB in 0s (877 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package libcap2:amd64.
+(Reading database ... 7880 files and directories currently installed.)
+Preparing to unpack .../libcap2_1%3a2.44-1_amd64.deb ...
+Unpacking libcap2:amd64 (1:2.44-1) ...
+Selecting previously unselected package libcap2-bin.
+Preparing to unpack .../libcap2-bin_1%3a2.44-1_amd64.deb ...
+Unpacking libcap2-bin (1:2.44-1) ...
+Selecting previously unselected package iputils-ping.
+Preparing to unpack .../iputils-ping_3%3a20210202-1_amd64.deb ...
+Unpacking iputils-ping (3:20210202-1) ...
+Selecting previously unselected package libpam-cap:amd64.
+Preparing to unpack .../libpam-cap_1%3a2.44-1_amd64.deb ...
+Unpacking libpam-cap:amd64 (1:2.44-1) ...
+Setting up libcap2:amd64 (1:2.44-1) ...
+Setting up libcap2-bin (1:2.44-1) ...
+Setting up libpam-cap:amd64 (1:2.44-1) ...
+debconf: unable to initialize frontend: Dialog
+debconf: (No usable dialog-like program is installed, so the dialog based frontend cannot be used. at /usr/share/perl5/Debconf/FrontEnd/Dialog.pm line 78.)
+debconf: falling back to frontend: Readline
+debconf: unable to initialize frontend: Readline
+debconf: (Can't locate Term/ReadLine.pm in @INC (you may need to install the Term::ReadLine module) (@INC contains: /etc/perl /usr/local/lib/x86_64-linux-gnu/perl/5.32.1 /usr/local/share/perl/5.32.1 /usr/lib/x86_64-linux-gnu/perl5/5.32 /usr/share/perl5 /usr/lib/x86_64-linux-gnu/perl-base /usr/lib/x86_64-linux-gnu/perl/5.32 /usr/share/perl/5.32 /usr/local/lib/site_perl) at /usr/share/perl5/Debconf/FrontEnd/Readline.pm line 7.)
+debconf: falling back to frontend: Teletype
+Setting up iputils-ping (3:20210202-1) ...
+Processing triggers for libc-bin (2.31-13+deb11u5) ...
+root@d6634434b183:/#
+root@d6634434b183:/#
+root@d6634434b183:/# ping 172.17.0.3
+PING 172.17.0.3 (172.17.0.3) 56(84) bytes of data.
+64 bytes from 172.17.0.3: icmp_seq=1 ttl=64 time=0.100 ms
+64 bytes from 172.17.0.3: icmp_seq=2 ttl=64 time=0.082 ms
+64 bytes from 172.17.0.3: icmp_seq=3 ttl=64 time=0.084 ms
+^C
+--- 172.17.0.3 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2010ms
+rtt min/avg/max/mdev = 0.082/0.088/0.100/0.008 ms
+root@d6634434b183:/# read escape sequence
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker exec -it centos-con1 bash
+[root@46290c026471 /]# ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=55 time=240 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=55 time=10.2 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=55 time=10.5 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=55 time=10.3 ms
+64 bytes from 8.8.8.8: icmp_seq=5 ttl=55 time=10.2 ms
+^C
+--- 8.8.8.8 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4009ms
+rtt min/avg/max/mdev = 10.167/56.338/240.485/92.073 ms
+[root@46290c026471 /]# read escape sequence
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+b21e68d06ae8   bridge    bridge    local
+32d620752415   host      host      local
+6de702cc493d   none      null      local
+root@vagrant:~#
+root@vagrant:~# docker network inspect bridge | grep -i subnet
+                    "Subnet": "172.17.0.0/16"
+root@vagrant:~# docker network inspect bridge | grep -i name
+        "Name": "bridge",
+                "Name": "centos-con1",
+                "Name": "nginx-con1",
+            "com.docker.network.bridge.name": "docker0",
+root@vagrant:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS     NAMES
+46290c026471   centos    "/bin/bash"              46 minutes ago   Up 46 minutes             centos-con1
+d6634434b183   nginx     "/docker-entrypoint.…"   49 minutes ago   Up 49 minutes   80/tcp    nginx-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker exec -it centos-con1 ifconfig
+OCI runtime exec failed: exec failed: unable to start container process: exec: "ifconfig": executable file not found in $PATH: unknown
+root@vagrant:~# docker exec -it centos-con1 ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+8: eth0@if9: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.17.0.3/16 brd 172.17.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+root@vagrant:~# docker exec -it nginx-con1 ip a
+OCI runtime exec failed: exec failed: unable to start container process: exec: "ip": executable file not found in $PATH: unknown
+root@vagrant:~# docker exec -it nginx-con1 ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.2  netmask 255.255.0.0  broadcast 172.17.255.255
+        ether 02:42:ac:11:00:02  txqueuelen 0  (Ethernet)
+        RX packets 3709  bytes 9201939 (8.7 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 797  bytes 45461 (44.3 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@vagrant:~# docker container inspect nginx-con1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.2",
+                    "IPAddress": "172.17.0.2",
+root@vagrant:~# docker container inspect centos-con1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.3",
+                    "IPAddress": "172.17.0.3",
+root@vagrant:~#
+root@vagrant:~# docker stop nginx-con1
+nginx-con1
+root@vagrant:~# docker stop centos-con1
+centos-con1
+root@vagrant:~# docker run -it centos-con2 centos
+Unable to find image 'centos-con2:latest' locally
+docker: Error response from daemon: pull access denied for centos-con2, repository does not exist or may require 'docker login': denied: requested access to the resource is denied.
+See 'docker run --help'.
+root@vagrant:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+nginx        latest    a99a39d070bf   2 weeks ago     142MB
+centos       latest    5d0da3dc9764   16 months ago   231MB
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker run -it --name=centos-con2 centos
+[root@1f4c76f6faed /]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+10: eth0@if11: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+[root@1f4c76f6faed /]# root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker run --name=nginx-con2 -d nginx
+bb8c233cfd73f2aee229525aa68e0b930ed623ef3dd3885696e047ebe064dfe5
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker container inspect centos-con2 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.2",
+                    "IPAddress": "172.17.0.2",
+root@vagrant:~# docker container inspect nginx-con2 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.3",
+                    "IPAddress": "172.17.0.3",
+root@vagrant:~# docker start nginx-con1
+nginx-con1
+root@vagrant:~# docker start centos-con1
+centos-con1
+root@vagrant:~# docker container inspect nginx-con1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.4",
+                    "IPAddress": "172.17.0.4",
+root@vagrant:~# docker container inspect centos-con1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "172.17.0.5",
+                    "IPAddress": "172.17.0.5",
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS         PORTS     NAMES
+bb8c233cfd73   nginx     "/docker-entrypoint.…"   5 minutes ago    Up 5 minutes   80/tcp    nginx-con2
+1f4c76f6faed   centos    "/bin/bash"              5 minutes ago    Up 5 minutes             centos-con2
+46290c026471   centos    "/bin/bash"              55 minutes ago   Up 4 minutes             centos-con1
+d6634434b183   nginx     "/docker-entrypoint.…"   58 minutes ago   Up 4 minutes   80/tcp    nginx-con1
+root@vagrant:~# docker exec -it centos-con2 bash
+[root@1f4c76f6faed /]# ifconfig
+bash: ifconfig: command not found
+[root@1f4c76f6faed /]# apt update -qq
+bash: apt: command not found
+[root@1f4c76f6faed /]# yum install net-tools -y
+Failed to set locale, defaulting to C.UTF-8
+CentOS Linux 8 - AppStream                                                                                                   67  B/s |  38  B     00:00
+Error: Failed to download metadata for repo 'appstream': Cannot prepare internal mirrorlist: No URLs in mirrorlist
+[root@1f4c76f6faed /]# cd /etc/yum.repos.d/
+[root@1f4c76f6faed yum.repos.d]# ls
+CentOS-Linux-AppStream.repo          CentOS-Linux-Debuginfo.repo  CentOS-Linux-FastTrack.repo         CentOS-Linux-Plus.repo
+CentOS-Linux-BaseOS.repo             CentOS-Linux-Devel.repo      CentOS-Linux-HighAvailability.repo  CentOS-Linux-PowerTools.repo
+CentOS-Linux-ContinuousRelease.repo  CentOS-Linux-Extras.repo     CentOS-Linux-Media.repo             CentOS-Linux-Sources.repo
+[root@1f4c76f6faed yum.repos.d]# sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+[root@1f4c76f6faed yum.repos.d]# sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+[root@1f4c76f6faed yum.repos.d]# cd /
+[root@1f4c76f6faed /]# yum install net-tools -y
+Failed to set locale, defaulting to C.UTF-8
+CentOS Linux 8 - AppStream                                                                                                  3.6 MB/s | 8.4 MB     00:02
+CentOS Linux 8 - BaseOS                                                                                                     3.9 MB/s | 4.6 MB     00:01
+CentOS Linux 8 - Extras                                                                                                      32 kB/s |  10 kB     00:00
+Dependencies resolved.
+============================================================================================================================================================
+ Package                            Architecture                    Version                                           Repository                       Size
+============================================================================================================================================================
+Installing:
+ net-tools                          x86_64                          2.0-0.52.20160912git.el8                          baseos                          322 k
+
+Transaction Summary
+============================================================================================================================================================
+Install  1 Package
+
+Total download size: 322 k
+Installed size: 942 k
+Downloading Packages:
+net-tools-2.0-0.52.20160912git.el8.x86_64.rpm                                                                               1.8 MB/s | 322 kB     00:00
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                       1.6 MB/s | 322 kB     00:00
+warning: /var/cache/dnf/baseos-398269605bdca3dc/packages/net-tools-2.0-0.52.20160912git.el8.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID 8483c65d: NOKEY
+CentOS Linux 8 - BaseOS                                                                                                     323 kB/s | 1.6 kB     00:00
+Importing GPG key 0x8483C65D:
+ Userid     : "CentOS (CentOS Official Signing Key) <security@centos.org>"
+ Fingerprint: 99DB 70FA E1D7 CE22 7FB6 4882 05B5 55B3 8483 C65D
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+Key imported successfully
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                    1/1
+  Installing       : net-tools-2.0-0.52.20160912git.el8.x86_64                                                                                          1/1
+  Running scriptlet: net-tools-2.0-0.52.20160912git.el8.x86_64                                                                                          1/1
+  Verifying        : net-tools-2.0-0.52.20160912git.el8.x86_64                                                                                          1/1
+
+Installed:
+  net-tools-2.0-0.52.20160912git.el8.x86_64
+
+Complete!
+[root@1f4c76f6faed /]# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.2  netmask 255.255.0.0  broadcast 172.17.255.255
+        ether 02:42:ac:11:00:02  txqueuelen 0  (Ethernet)
+        RX packets 6070  bytes 14445253 (13.7 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 2133  bytes 130334 (127.2 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[root@1f4c76f6faed /]# yum install iputils-ping -y
+Failed to set locale, defaulting to C.UTF-8
+Last metadata expiration check: 0:00:38 ago on Thu Jan 26 17:49:16 2023.
+No match for argument: iputils-ping
+Error: Unable to find a match: iputils-ping
+[root@1f4c76f6faed /]# ping 172.17.0.2
+PING 172.17.0.2 (172.17.0.2) 56(84) bytes of data.
+64 bytes from 172.17.0.2: icmp_seq=1 ttl=64 time=0.211 ms
+64 bytes from 172.17.0.2: icmp_seq=2 ttl=64 time=0.044 ms
+64 bytes from 172.17.0.2: icmp_seq=3 ttl=64 time=0.051 ms
+^C
+--- 172.17.0.2 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2025ms
+rtt min/avg/max/mdev = 0.044/0.102/0.211/0.077 ms
+[root@1f4c76f6faed /]# read escape sequence
+root@vagrant:~# docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED             STATUS          PORTS     NAMES
+bb8c233cfd73   nginx     "/docker-entrypoint.…"   15 minutes ago      Up 15 minutes   80/tcp    nginx-con2
+1f4c76f6faed   centos    "/bin/bash"              15 minutes ago      Up 15 minutes             centos-con2
+46290c026471   centos    "/bin/bash"              About an hour ago   Up 14 minutes             centos-con1
+d6634434b183   nginx     "/docker-entrypoint.…"   About an hour ago   Up 14 minutes   80/tcp    nginx-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker exec -it centos-con1 bash
+[root@46290c026471 /]# ifconfig
+bash: ifconfig: command not found
+[root@46290c026471 /]# cat /etc/*release | grep -i url
+HOME_URL="https://centos.org/"
+BUG_REPORT_URL="https://bugs.centos.org/"
+[root@46290c026471 /]# yum update net-tools -y
+Failed to set locale, defaulting to C.UTF-8
+CentOS Linux 8 - AppStream                                                                                                   43  B/s |  38  B     00:00
+Error: Failed to download metadata for repo 'appstream': Cannot prepare internal mirrorlist: No URLs in mirrorlist
+[root@46290c026471 /]# cd /etc/yum.repos.d/
+[root@46290c026471 yum.repos.d]# ls
+CentOS-Linux-AppStream.repo          CentOS-Linux-Debuginfo.repo  CentOS-Linux-FastTrack.repo         CentOS-Linux-Plus.repo
+CentOS-Linux-BaseOS.repo             CentOS-Linux-Devel.repo      CentOS-Linux-HighAvailability.repo  CentOS-Linux-PowerTools.repo
+CentOS-Linux-ContinuousRelease.repo  CentOS-Linux-Extras.repo     CentOS-Linux-Media.repo             CentOS-Linux-Sources.repo
+[root@46290c026471 yum.repos.d]# sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+[root@46290c026471 yum.repos.d]# sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+[root@46290c026471 yum.repos.d]#
+[root@46290c026471 yum.repos.d]# cd /
+[root@46290c026471 /]# yum update net-tools -y
+Failed to set locale, defaulting to C.UTF-8
+CentOS Linux 8 - AppStream                                                                                                  4.6 MB/s | 8.4 MB     00:01
+CentOS Linux 8 - BaseOS                                                                                                     3.8 MB/s | 4.6 MB     00:01
+CentOS Linux 8 - Extras                                                                                                      40 kB/s |  10 kB     00:00
+Package net-tools available, but not installed.
+No match for argument: net-tools
+Error: No packages marked for upgrade.
+[root@46290c026471 /]# ifconfig
+bash: ifconfig: command not found
+[root@46290c026471 /]# yum install net-tools -y
+Failed to set locale, defaulting to C.UTF-8
+Last metadata expiration check: 0:03:28 ago on Thu Jan 26 17:56:45 2023.
+Dependencies resolved.
+============================================================================================================================================================
+ Package                            Architecture                    Version                                           Repository                       Size
+============================================================================================================================================================
+Installing:
+ net-tools                          x86_64                          2.0-0.52.20160912git.el8                          baseos                          322 k
+
+Transaction Summary
+============================================================================================================================================================
+Install  1 Package
+
+Total download size: 322 k
+Installed size: 942 k
+Downloading Packages:
+net-tools-2.0-0.52.20160912git.el8.x86_64.rpm                                                                               682 kB/s | 322 kB     00:00
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                       652 kB/s | 322 kB     00:00
+warning: /var/cache/dnf/baseos-398269605bdca3dc/packages/net-tools-2.0-0.52.20160912git.el8.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID 8483c65d: NOKEY
+CentOS Linux 8 - BaseOS                                                                                                     464 kB/s | 1.6 kB     00:00
+Importing GPG key 0x8483C65D:
+ Userid     : "CentOS (CentOS Official Signing Key) <security@centos.org>"
+ Fingerprint: 99DB 70FA E1D7 CE22 7FB6 4882 05B5 55B3 8483 C65D
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+Key imported successfully
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                    1/1
+  Installing       : net-tools-2.0-0.52.20160912git.el8.x86_64                                                                                          1/1
+  Running scriptlet: net-tools-2.0-0.52.20160912git.el8.x86_64                                                                                          1/1
+  Verifying        : net-tools-2.0-0.52.20160912git.el8.x86_64                                                                                          1/1
+
+Installed:
+  net-tools-2.0-0.52.20160912git.el8.x86_64
+
+Complete!
+[root@46290c026471 /]# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.5  netmask 255.255.0.0  broadcast 172.17.255.255
+        ether 02:42:ac:11:00:05  txqueuelen 0  (Ethernet)
+        RX packets 5795  bytes 14430458 (13.7 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 1964  bytes 121196 (118.3 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[root@46290c026471 /]# ip a show eth0
+16: eth0@if17: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:ac:11:00:05 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 172.17.0.5/16 brd 172.17.255.255 scope global eth0
+       valid_lft forever preferred_lft forever
+[root@46290c026471 /]#
+[root@46290c026471 /]#
+[root@46290c026471 /]# route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         172.17.0.1      0.0.0.0         UG    0      0        0 eth0
+172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 eth0
+[root@46290c026471 /]# ip route show
+default via 172.17.0.1 dev eth0
+172.17.0.0/16 dev eth0 proto kernel scope link src 172.17.0.5
+[root@46290c026471 /]# route
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+default         _gateway        0.0.0.0         UG    0      0        0 eth0
+172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 eth0
+[root@46290c026471 /]# route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         172.17.0.1      0.0.0.0         UG    0      0        0 eth0
+172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 eth0
+[root@46290c026471 /]# man route
+bash: man: command not found
+[root@46290c026471 /]# read escape sequence
+root@vagrant:~# man route
+root@vagrant:~# ping 172.17.0.5
+PING 172.17.0.5 (172.17.0.5) 56(84) bytes of data.
+64 bytes from 172.17.0.5: icmp_seq=1 ttl=64 time=0.331 ms
+64 bytes from 172.17.0.5: icmp_seq=2 ttl=64 time=0.070 ms
+^C
+--- 172.17.0.5 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 0.070/0.200/0.331/0.131 ms
+root@vagrant:~# ifconfig
+docker0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        inet6 fe80::42:82ff:fee1:b09e  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:82:e1:b0:9e  txqueuelen 0  (Ethernet)
+        RX packets 4897  bytes 228529 (228.5 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 15534  bytes 38074726 (38.0 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
+        inet6 fe80::a00:27ff:febb:1475  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:bb:14:75  txqueuelen 1000  (Ethernet)
+        RX packets 222024  bytes 322686325 (322.6 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 29065  bytes 2004864 (2.0 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 196  bytes 20954 (20.9 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 196  bytes 20954 (20.9 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+veth17f4c9b: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::6450:57ff:fee9:51a9  prefixlen 64  scopeid 0x20<link>
+        ether 66:50:57:e9:51:a9  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 19  bytes 1398 (1.3 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+veth3a3081e: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::48eb:bcff:fea3:4e4e  prefixlen 64  scopeid 0x20<link>
+        ether 4a:eb:bc:a3:4e:4e  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 19  bytes 1398 (1.3 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vetha951e6b: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::d0b1:b5ff:feb6:e677  prefixlen 64  scopeid 0x20<link>
+        ether d2:b1:b5:b6:e6:77  txqueuelen 0  (Ethernet)
+        RX packets 1972  bytes 121726 (121.7 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 5805  bytes 14431282 (14.4 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vethd21338f: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::d83c:bfff:fe90:188e  prefixlen 64  scopeid 0x20<link>
+        ether da:3c:bf:90:18:8e  txqueuelen 0  (Ethernet)
+        RX packets 2133  bytes 130334 (130.3 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 6075  bytes 14445603 (14.4 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# ifconfig docker0
+docker0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        inet6 fe80::42:82ff:fee1:b09e  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:82:e1:b0:9e  txqueuelen 0  (Ethernet)
+        RX packets 4897  bytes 228529 (228.5 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 15534  bytes 38074726 (38.0 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@vagrant:~# ifconfig veth*
+veth*: error fetching interface information: Device not found
+root@vagrant:~# ifconfig | grep -i veth
+veth17f4c9b: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+veth3a3081e: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+vetha951e6b: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+vethd21338f: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+root@vagrant:~#
+root@vagrant:~# man veth
+root@vagrant:~# brctl show
+-su: brctl: command not found
+root@vagrant:~# apt update -qq
+270 packages can be upgraded. Run 'apt list --upgradable' to see them.
+root@vagrant:~# apt install bridge-utils -y
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+Suggested packages:
+  ifupdown
+The following NEW packages will be installed:
+  bridge-utils
+0 upgraded, 1 newly installed, 0 to remove and 270 not upgraded.
+Need to get 30.1 kB of archives.
+After this operation, 102 kB of additional disk space will be used.
+Get:1 http://archive.ubuntu.com/ubuntu bionic/main amd64 bridge-utils amd64 1.5-15ubuntu1 [30.1 kB]
+Fetched 30.1 kB in 1s (40.3 kB/s)
+Selecting previously unselected package bridge-utils.
+(Reading database ... 42758 files and directories currently installed.)
+Preparing to unpack .../bridge-utils_1.5-15ubuntu1_amd64.deb ...
+Unpacking bridge-utils (1.5-15ubuntu1) ...
+Setting up bridge-utils (1.5-15ubuntu1) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+root@vagrant:~# brctl show
+bridge name     bridge id               STP enabled     interfaces
+docker0         8000.024282e1b09e       no              veth17f4c9b
+                                                        veth3a3081e
+                                                        vetha951e6b
+                                                        vethd21338f
+root@vagrant:~# tail -n 20 /var/log/syslog
+Jan 26 17:36:46 vagrant kernel: [ 4548.097948] docker0: port 4(vetha951e6b) entered disabled state
+Jan 26 17:36:46 vagrant kernel: [ 4548.100367] device vetha951e6b entered promiscuous mode
+Jan 26 17:36:46 vagrant networkd-dispatcher[617]: WARNING:Unknown index 17 seen, reloading interface list
+Jan 26 17:36:46 vagrant systemd-udevd[22428]: Could not generate persistent MAC address for vetha951e6b: No such file or directory
+Jan 26 17:36:46 vagrant kernel: [ 4548.104227] IPv6: ADDRCONF(NETDEV_UP): vetha951e6b: link is not ready
+Jan 26 17:36:46 vagrant systemd-udevd[22426]: link_config: autonegotiation is unset or enabled, the speed and duplex are not writable.
+Jan 26 17:36:46 vagrant systemd-udevd[22426]: Could not generate persistent MAC address for veth3ce5bed: No such file or directory
+Jan 26 17:36:47 vagrant containerd[18842]: time="2023-01-26T17:36:47.170106151Z" level=info msg="loading plugin \"io.containerd.event.v1.publisher\"..." runtime=io.containerd.runc.v2 type=io.containerd.event.v1
+Jan 26 17:36:47 vagrant containerd[18842]: time="2023-01-26T17:36:47.170903918Z" level=info msg="loading plugin \"io.containerd.internal.v1.shutdown\"..." runtime=io.containerd.runc.v2 type=io.containerd.internal.v1
+Jan 26 17:36:47 vagrant containerd[18842]: time="2023-01-26T17:36:47.171082555Z" level=info msg="loading plugin \"io.containerd.ttrpc.v1.task\"..." runtime=io.containerd.runc.v2 type=io.containerd.ttrpc.v1
+Jan 26 17:36:47 vagrant containerd[18842]: time="2023-01-26T17:36:47.171289422Z" level=info msg="starting signal loop" namespace=moby path=/run/containerd/io.containerd.runtime.v2.task/moby/46290c02647106eacc5372fdda7d871b317c4d6ddef05deb7315b83f45da4779 pid=22443 runtime=io.containerd.runc.v2
+Jan 26 17:36:47 vagrant kernel: [ 4548.533782] eth0: renamed from veth3ce5bed
+Jan 26 17:36:47 vagrant kernel: [ 4548.537586] IPv6: ADDRCONF(NETDEV_CHANGE): vetha951e6b: link becomes ready
+Jan 26 17:36:47 vagrant kernel: [ 4548.537628] docker0: port 4(vetha951e6b) entered blocking state
+Jan 26 17:36:47 vagrant kernel: [ 4548.537631] docker0: port 4(vetha951e6b) entered forwarding state
+Jan 26 17:36:47 vagrant systemd-networkd[429]: vetha951e6b: Gained carrier
+Jan 26 17:36:48 vagrant systemd-networkd[429]: vetha951e6b: Gained IPv6LL
+Jan 26 18:17:01 vagrant CRON[22735]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Jan 26 19:17:01 vagrant CRON[22763]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Jan 26 19:47:19 vagrant systemd-resolved[454]: Server returned error NXDOMAIN, mitigating potential DNS violation DVE-2018-0001, retrying transaction with reduced feature level UDP.
+root@vagrant:~#
+root@vagrant:~# journalctl -xu docker
+-- Logs begin at Thu 2023-01-26 16:19:55 UTC, end at Thu 2023-01-26 19:47:19 UTC. --
+Jan 26 16:26:24 vagrant systemd[1]: Starting Docker Application Container Engine...
+-- Subject: Unit docker.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+--
+-- Unit docker.service has begun starting up.
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.748426334Z" level=info msg="Starting up"
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.765208145Z" level=info msg="detected 127.0.0.53 nameserver, assuming systemd-resolved, so
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.891233955Z" level=info msg="parsed scheme: \"unix\"" module=grpc
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.891466243Z" level=info msg="scheme \"unix\" not registered, fallback to default scheme" mo
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.891593779Z" level=info msg="ccResolverWrapper: sending update to cc: {[{unix:///run/contai
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.891751361Z" level=info msg="ClientConn switching balancer to \"pick_first\"" module=grpc
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.910463503Z" level=info msg="parsed scheme: \"unix\"" module=grpc
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.910523985Z" level=info msg="scheme \"unix\" not registered, fallback to default scheme" mo
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.910552272Z" level=info msg="ccResolverWrapper: sending update to cc: {[{unix:///run/contai
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.910566127Z" level=info msg="ClientConn switching balancer to \"pick_first\"" module=grpc
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.203312616Z" level=warning msg="Your kernel does not support swap memory limit"
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.203886977Z" level=warning msg="Your kernel does not support CPU realtime scheduler"
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.204315056Z" level=info msg="Loading containers: start."
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.616831556Z" level=info msg="Default bridge (docker0) is assigned with an IP address 172.17
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.787078133Z" level=info msg="Loading containers: done."
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.936517268Z" level=info msg="Docker daemon" commit=6051f14 graphdriver(s)=overlay2 version=
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.936980586Z" level=info msg="Daemon has completed initialization"
+Jan 26 16:26:26 vagrant systemd[1]: Started Docker Application Container Engine.
+-- Subject: Unit docker.service has finished start-up
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+--
+-- Unit docker.service has finished starting up.
+--
+-- The start-up result is RESULT.
+Jan 26 16:26:26 vagrant dockerd[20185]: time="2023-01-26T16:26:26.084506406Z" level=info msg="API listen on /var/run/docker.sock"
+Jan 26 16:42:53 vagrant dockerd[20185]: time="2023-01-26T16:42:53.951463073Z" level=info msg="ignoring event" container=d5bbd0ad0ccd01556972db4e8e729ec94912
+Jan 26 17:33:22 vagrant dockerd[20185]: time="2023-01-26T17:33:22.299537428Z" level=error msg="stream copy error: reading from a closed fifo"
+Jan 26 17:33:22 vagrant dockerd[20185]: time="2023-01-26T17:33:22.310644413Z" level=error msg="Error running exec 39cc198a19111efe4761a143a7281020e3845f15e4
+Jan 26 17:33:54 vagrant dockerd[20185]: time="2023-01-26T17:33:54.330073202Z" level=error msg="stream copy error: reading from a closed fifo"
+Jan 26 17:33:54 vagrant dockerd[20185]: time="2023-01-26T17:33:54.345335309Z" level=error msg="Error running exec 860d25d0b295b52680d7269246e495e80859635372
+Jan 26 17:33:58 vagrant dockerd[20185]: time="2023-01-26T17:33:58.098636727Z" level=error msg="Handler for POST /v1.41/exec/eb5217e1eeb47b9c7c3aabed181e2c19
+Jan 26 17:34:38 vagrant dockerd[20185]: time="2023-01-26T17:34:38.325317435Z" level=info msg="ignoring event" container=d6634434b183086e824bccaf3e2da3900a95
+Jan 26 17:34:45 vagrant dockerd[20185]: time="2023-01-26T17:34:45.385086187Z" level=info msg="ignoring event" container=46290c02647106eacc5372fdda7d871b317c
+Jan 26 17:35:12 vagrant dockerd[20185]: time="2023-01-26T17:35:12.214430819Z" level=error msg="Not continuing with pull after error: errors:\ndenied: reques
+Jan 26 17:35:12 vagrant dockerd[20185]: time="2023-01-26T17:35:12.216072666Z" level=info msg="Ignoring extra error returned from registry: unauthorized: aut
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# iptables -L
+Chain INPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain FORWARD (policy DROP)
+target     prot opt source               destination
+DOCKER-USER  all  --  anywhere             anywhere
+DOCKER-ISOLATION-STAGE-1  all  --  anywhere             anywhere
+ACCEPT     all  --  anywhere             anywhere             ctstate RELATED,ESTABLISHED
+DOCKER     all  --  anywhere             anywhere
+ACCEPT     all  --  anywhere             anywhere
+ACCEPT     all  --  anywhere             anywhere
+
+Chain OUTPUT (policy ACCEPT)
+target     prot opt source               destination
+
+Chain DOCKER (1 references)
+target     prot opt source               destination
+
+Chain DOCKER-ISOLATION-STAGE-1 (1 references)
+target     prot opt source               destination
+DOCKER-ISOLATION-STAGE-2  all  --  anywhere             anywhere
+RETURN     all  --  anywhere             anywhere
+
+Chain DOCKER-ISOLATION-STAGE-2 (1 references)
+target     prot opt source               destination
+DROP       all  --  anywhere             anywhere
+RETURN     all  --  anywhere             anywhere
+
+Chain DOCKER-USER (1 references)
+target     prot opt source               destination
+RETURN     all  --  anywhere             anywhere
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED       STATUS       PORTS     NAMES
+bb8c233cfd73   nginx     "/docker-entrypoint.…"   3 hours ago   Up 3 hours   80/tcp    nginx-con2
+1f4c76f6faed   centos    "/bin/bash"              3 hours ago   Up 3 hours             centos-con2
+46290c026471   centos    "/bin/bash"              3 hours ago   Up 3 hours             centos-con1
+d6634434b183   nginx     "/docker-entrypoint.…"   3 hours ago   Up 3 hours   80/tcp    nginx-con1
+root@vagrant:~# docker rm -f $(docker ps -q -a)
+bb8c233cfd73
+1f4c76f6faed
+46290c026471
+d6634434b183
+root@vagrant:~#
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Thu 2023-01-26 16:26:26 UTC; 3h 47min ago
+     Docs: https://docs.docker.com
+ Main PID: 20185 (dockerd)
+    Tasks: 10
+   CGroup: /system.slice/docker.service
+           +-20185 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Jan 26 17:33:54 vagrant dockerd[20185]: time="2023-01-26T17:33:54.345335309Z" level=error msg="Error running exec 860d25d0b295b52680d7269246e495e80859635372
+Jan 26 17:33:58 vagrant dockerd[20185]: time="2023-01-26T17:33:58.098636727Z" level=error msg="Handler for POST /v1.41/exec/eb5217e1eeb47b9c7c3aabed181e2c19
+Jan 26 17:34:38 vagrant dockerd[20185]: time="2023-01-26T17:34:38.325317435Z" level=info msg="ignoring event" container=d6634434b183086e824bccaf3e2da3900a95
+Jan 26 17:34:45 vagrant dockerd[20185]: time="2023-01-26T17:34:45.385086187Z" level=info msg="ignoring event" container=46290c02647106eacc5372fdda7d871b317c
+Jan 26 17:35:12 vagrant dockerd[20185]: time="2023-01-26T17:35:12.214430819Z" level=error msg="Not continuing with pull after error: errors:\ndenied: reques
+Jan 26 17:35:12 vagrant dockerd[20185]: time="2023-01-26T17:35:12.216072666Z" level=info msg="Ignoring extra error returned from registry: unauthorized: aut
+Jan 26 20:13:33 vagrant dockerd[20185]: time="2023-01-26T20:13:33.496212220Z" level=info msg="ignoring event" container=bb8c233cfd73f2aee229525aa68e0b930ed6
+Jan 26 20:13:33 vagrant dockerd[20185]: time="2023-01-26T20:13:33.603081825Z" level=info msg="ignoring event" container=46290c02647106eacc5372fdda7d871b317c
+Jan 26 20:13:33 vagrant dockerd[20185]: time="2023-01-26T20:13:33.638735026Z" level=info msg="ignoring event" container=1f4c76f6faed30ba800f7deb5efb4188fda8
+Jan 26 20:13:33 vagrant dockerd[20185]: time="2023-01-26T20:13:33.638768102Z" level=info msg="ignoring event" container=d6634434b183086e824bccaf3e2da3900a95
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+b21e68d06ae8   bridge    bridge    local
+32d620752415   host      host      local
+6de702cc493d   none      null      local
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network --help
+
+Usage:  docker network COMMAND
+
+Manage networks
+
+Commands:
+  connect     Connect a container to a network
+  create      Create a network
+  disconnect  Disconnect a container from a network
+  inspect     Display detailed information on one or more networks
+  ls          List networks
+  prune       Remove all unused networks
+  rm          Remove one or more networks
+
+Run 'docker network COMMAND --help' for more information on a command.
+root@vagrant:~# docker network create --help
+
+Usage:  docker network create [OPTIONS] NETWORK
+
+Create a network
+
+Options:
+      --attachable           Enable manual container attachment
+      --aux-address map      Auxiliary IPv4 or IPv6 addresses used by Network driver (default map[])
+      --config-from string   The network from which to copy the configuration
+      --config-only          Create a configuration only network
+  -d, --driver string        Driver to manage the Network (default "bridge")
+      --gateway strings      IPv4 or IPv6 Gateway for the master subnet
+      --ingress              Create swarm routing-mesh network
+      --internal             Restrict external access to the network
+      --ip-range strings     Allocate container ip from a sub-range
+      --ipam-driver string   IP Address Management Driver (default "default")
+      --ipam-opt map         Set IPAM driver specific options (default map[])
+      --ipv6                 Enable IPv6 networking
+      --label list           Set metadata on a network
+  -o, --opt map              Set driver specific options (default map[])
+      --scope string         Control the network's scope
+      --subnet strings       Subnet in CIDR format that represents a network segment
+root@vagrant:~# docker network create --subnet 192.168.10.0/24 --driver bridge webfrontend
+c6ef2171a410c20708911cc23ec988af7794e3fe6accf6b5665bf2179d1dced5
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network ls
+NETWORK ID     NAME          DRIVER    SCOPE
+b21e68d06ae8   bridge        bridge    local
+32d620752415   host          host      local
+6de702cc493d   none          null      local
+c6ef2171a410   webfrontend   bridge    local
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# ifconfig
+br-c6ef2171a410: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 192.168.10.1  netmask 255.255.255.0  broadcast 192.168.10.255
+        ether 02:42:a9:b8:46:a4  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        inet6 fe80::42:82ff:fee1:b09e  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:82:e1:b0:9e  txqueuelen 0  (Ethernet)
+        RX packets 4897  bytes 228529 (228.5 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 15534  bytes 38074726 (38.0 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
+        inet6 fe80::a00:27ff:febb:1475  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:bb:14:75  txqueuelen 1000  (Ethernet)
+        RX packets 229179  bytes 331382669 (331.3 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 30811  bytes 2141153 (2.1 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 220  bytes 23758 (23.7 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 220  bytes 23758 (23.7 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@vagrant:~# docker network create --subnet 192.168.11.0/24 --driver bridge backend
+82f47fc06e23a62478dab1a1a9930b238ac21880b67bacd18c0257798f855544
+root@vagrant:~#
+root@vagrant:~# docker network ls
+NETWORK ID     NAME          DRIVER    SCOPE
+82f47fc06e23   backend       bridge    local
+b21e68d06ae8   bridge        bridge    local
+32d620752415   host          host      local
+6de702cc493d   none          null      local
+c6ef2171a410   webfrontend   bridge    local
+root@vagrant:~#
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Thu 2023-01-26 16:26:26 UTC; 3h 52min ago
+     Docs: https://docs.docker.com
+ Main PID: 20185 (dockerd)
+    Tasks: 10
+   CGroup: /system.slice/docker.service
+           +-20185 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Jan 26 17:33:54 vagrant dockerd[20185]: time="2023-01-26T17:33:54.345335309Z" level=error msg="Error running exec 860d25d0b295b52680d7269246e495e80859635372
+Jan 26 17:33:58 vagrant dockerd[20185]: time="2023-01-26T17:33:58.098636727Z" level=error msg="Handler for POST /v1.41/exec/eb5217e1eeb47b9c7c3aabed181e2c19
+Jan 26 17:34:38 vagrant dockerd[20185]: time="2023-01-26T17:34:38.325317435Z" level=info msg="ignoring event" container=d6634434b183086e824bccaf3e2da3900a95
+Jan 26 17:34:45 vagrant dockerd[20185]: time="2023-01-26T17:34:45.385086187Z" level=info msg="ignoring event" container=46290c02647106eacc5372fdda7d871b317c
+Jan 26 17:35:12 vagrant dockerd[20185]: time="2023-01-26T17:35:12.214430819Z" level=error msg="Not continuing with pull after error: errors:\ndenied: reques
+Jan 26 17:35:12 vagrant dockerd[20185]: time="2023-01-26T17:35:12.216072666Z" level=info msg="Ignoring extra error returned from registry: unauthorized: aut
+Jan 26 20:13:33 vagrant dockerd[20185]: time="2023-01-26T20:13:33.496212220Z" level=info msg="ignoring event" container=bb8c233cfd73f2aee229525aa68e0b930ed6
+Jan 26 20:13:33 vagrant dockerd[20185]: time="2023-01-26T20:13:33.603081825Z" level=info msg="ignoring event" container=46290c02647106eacc5372fdda7d871b317c
+Jan 26 20:13:33 vagrant dockerd[20185]: time="2023-01-26T20:13:33.638735026Z" level=info msg="ignoring event" container=1f4c76f6faed30ba800f7deb5efb4188fda8
+Jan 26 20:13:33 vagrant dockerd[20185]: time="2023-01-26T20:13:33.638768102Z" level=info msg="ignoring event" container=d6634434b183086e824bccaf3e2da3900a95
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network inspect frontend | grep -i subnet
+Error: No such network: frontend
+root@vagrant:~# docker network inspect webfrontend | grep -i subnet
+                    "Subnet": "192.168.10.0/24"
+root@vagrant:~# docker network inspect backend | grep -i subnet
+                    "Subnet": "192.168.11.0/24"
+root@vagrant:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+nginx        latest    a99a39d070bf   2 weeks ago     142MB
+centos       latest    5d0da3dc9764   16 months ago   231MB
+root@vagrant:~# docker run -d --name=nginx-webfrontend-con1 --network webfrontend nginx
+7bbd3dc74206606d9415469f5c8169a731e7c941477f857b3baca3a601bd2ddf
+root@vagrant:~# docker run -it --name=centos-backend-con1 --network backend centos
+[root@27cce21836a6 /]#
+[root@27cce21836a6 /]# root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED         STATUS         PORTS     NAMES
+27cce21836a6   centos    "/bin/bash"              8 seconds ago   Up 6 seconds             centos-backend-con1
+7bbd3dc74206   nginx     "/docker-entrypoint.…"   2 minutes ago   Up 2 minutes   80/tcp    nginx-webfrontend-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker container inspect centos-basckend-con1 | grep -i ipaddress
+Error: No such container: centos-basckend-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker container inspect centos-backend-con1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "192.168.11.2",
+root@vagrant:~# docker container inspect nginx-webfrontend-con1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "192.168.10.2",
+root@vagrant:~# docker network ls
+NETWORK ID     NAME          DRIVER    SCOPE
+82f47fc06e23   backend       bridge    local
+b21e68d06ae8   bridge        bridge    local
+32d620752415   host          host      local
+6de702cc493d   none          null      local
+c6ef2171a410   webfrontend   bridge    local
+root@vagrant:~# ifconfig | grep -i veth
+veth6574365: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+veth12da96b: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+root@vagrant:~#
+root@vagrant:~# brctl show
+bridge name     bridge id               STP enabled     interfaces
+br-82f47fc06e23         8000.024244e5ab92       no              veth12da96b
+br-c6ef2171a410         8000.0242a9b846a4       no              veth6574365
+docker0         8000.024282e1b09e       no
+root@vagrant:~# docker exec -ti container1 ping container2
+Error: No such container: container1
+root@vagrant:~#
+root@vagrant:~# docker exec -it centos-backend-con1 bash
+[root@27cce21836a6 /]# cat /etc/*release
+CentOS Linux release 8.4.2105
+NAME="CentOS Linux"
+VERSION="8"
+ID="centos"
+ID_LIKE="rhel fedora"
+VERSION_ID="8"
+PLATFORM_ID="platform:el8"
+PRETTY_NAME="CentOS Linux 8"
+ANSI_COLOR="0;31"
+CPE_NAME="cpe:/o:centos:centos:8"
+HOME_URL="https://centos.org/"
+BUG_REPORT_URL="https://bugs.centos.org/"
+CENTOS_MANTISBT_PROJECT="CentOS-8"
+CENTOS_MANTISBT_PROJECT_VERSION="8"
+CentOS Linux release 8.4.2105
+CentOS Linux release 8.4.2105
+[root@27cce21836a6 /]#
+[root@27cce21836a6 /]# ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=55 time=12.0 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=55 time=10.3 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=55 time=10.3 ms
+64 bytes from 8.8.8.8: icmp_seq=5 ttl=55 time=10.10 ms
+^C
+--- 8.8.8.8 ping statistics ---
+5 packets transmitted, 4 received, 20% packet loss, time 4039ms
+rtt min/avg/max/mdev = 10.266/10.899/12.024/0.714 ms
+[root@27cce21836a6 /]# ping 192.168.10.2
+PING 192.168.10.2 (192.168.10.2) 56(84) bytes of data.
+^C
+--- 192.168.10.2 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 3077ms
+
+[root@27cce21836a6 /]# ping -c 5 192.168.10.2
+PING 192.168.10.2 (192.168.10.2) 56(84) bytes of data.
+
+--- 192.168.10.2 ping statistics ---
+5 packets transmitted, 0 received, 100% packet loss, time 4102ms
+
+[root@27cce21836a6 /]# read escape sequence
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS     NAMES
+27cce21836a6   centos    "/bin/bash"              14 minutes ago   Up 14 minutes             centos-backend-con1
+7bbd3dc74206   nginx     "/docker-entrypoint.…"   16 minutes ago   Up 16 minutes   80/tcp    nginx-webfrontend-con1
+root@vagrant:~#
+root@vagrant:~# docker exec -it centos-backend-con1 bash
+[root@27cce21836a6 /]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+22: eth0@if23: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:c0:a8:0b:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.168.11.2/24 brd 192.168.11.255 scope global eth0
+       valid_lft forever preferred_lft forever
+[root@27cce21836a6 /]# route -n
+bash: route: command not found
+[root@27cce21836a6 /]# route
+bash: route: command not found
+[root@27cce21836a6 /]# ifconfig
+bash: ifconfig: command not found
+[root@27cce21836a6 /]# yum update
+Failed to set locale, defaulting to C.UTF-8
+CentOS Linux 8 - AppStream                                                                                                   59  B/s |  38  B     00:00
+Error: Failed to download metadata for repo 'appstream': Cannot prepare internal mirrorlist: No URLs in mirrorlist
+[root@27cce21836a6 /]# cd /etc/yum.repos.d/
+[root@27cce21836a6 yum.repos.d]# sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+[root@27cce21836a6 yum.repos.d]# sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+[root@27cce21836a6 yum.repos.d]# yum install net-tools -y; yum install iputils-ping -y
+Failed to set locale, defaulting to C.UTF-8
+CentOS Linux 8 - AppStream                                                                                                  3.9 MB/s | 8.4 MB     00:02
+CentOS Linux 8 - BaseOS                                                                                                     4.1 MB/s | 4.6 MB     00:01
+CentOS Linux 8 - Extras                                                                                                      69 kB/s |  10 kB     00:00
+Dependencies resolved.
+============================================================================================================================================================
+ Package                            Architecture                    Version                                           Repository                       Size
+============================================================================================================================================================
+Installing:
+ net-tools                          x86_64                          2.0-0.52.20160912git.el8                          baseos                          322 k
+
+Transaction Summary
+============================================================================================================================================================
+Install  1 Package
+
+Total download size: 322 k
+Installed size: 942 k
+Downloading Packages:
+net-tools-2.0-0.52.20160912git.el8.x86_64.rpm                                                                               2.4 MB/s | 322 kB     00:00
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Total                                                                                                                       2.2 MB/s | 322 kB     00:00
+warning: /var/cache/dnf/baseos-398269605bdca3dc/packages/net-tools-2.0-0.52.20160912git.el8.x86_64.rpm: Header V3 RSA/SHA256 Signature, key ID 8483c65d: NOKEY
+CentOS Linux 8 - BaseOS                                                                                                     463 kB/s | 1.6 kB     00:00
+Importing GPG key 0x8483C65D:
+ Userid     : "CentOS (CentOS Official Signing Key) <security@centos.org>"
+ Fingerprint: 99DB 70FA E1D7 CE22 7FB6 4882 05B5 55B3 8483 C65D
+ From       : /etc/pki/rpm-gpg/RPM-GPG-KEY-centosofficial
+Key imported successfully
+Running transaction check
+Transaction check succeeded.
+Running transaction test
+Transaction test succeeded.
+Running transaction
+  Preparing        :                                                                                                                                    1/1
+  Installing       : net-tools-2.0-0.52.20160912git.el8.x86_64                                                                                          1/1
+  Running scriptlet: net-tools-2.0-0.52.20160912git.el8.x86_64                                                                                          1/1
+  Verifying        : net-tools-2.0-0.52.20160912git.el8.x86_64                                                                                          1/1
+
+Installed:
+  net-tools-2.0-0.52.20160912git.el8.x86_64
+
+Complete!
+Failed to set locale, defaulting to C.UTF-8
+Last metadata expiration check: 0:00:05 ago on Thu Jan 26 21:15:22 2023.
+No match for argument: iputils-ping
+Error: Unable to find a match: iputils-ping
+[root@27cce21836a6 yum.repos.d]# yum install iputils -y
+Failed to set locale, defaulting to C.UTF-8
+Last metadata expiration check: 0:00:45 ago on Thu Jan 26 21:15:22 2023.
+Package iputils-20180629-7.el8.x86_64 is already installed.
+Dependencies resolved.
+Nothing to do.
+Complete!
+[root@27cce21836a6 yum.repos.d]#
+[root@27cce21836a6 yum.repos.d]# cd /
+[root@27cce21836a6 /]# ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.11.2  netmask 255.255.255.0  broadcast 192.168.11.255
+        ether 02:42:c0:a8:0b:02  txqueuelen 0  (Ethernet)
+        RX packets 6263  bytes 14445704 (13.7 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 2188  bytes 132786 (129.6 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 100  bytes 16472 (16.0 KiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 100  bytes 16472 (16.0 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+[root@27cce21836a6 /]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+22: eth0@if23: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:c0:a8:0b:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.168.11.2/24 brd 192.168.11.255 scope global eth0
+       valid_lft forever preferred_lft forever
+[root@27cce21836a6 /]# route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         192.168.11.1    0.0.0.0         UG    0      0        0 eth0
+192.168.11.0    0.0.0.0         255.255.255.0   U     0      0        0 eth0
+[root@27cce21836a6 /]# read escape sequence
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS     NAMES
+27cce21836a6   centos    "/bin/bash"              46 minutes ago   Up 46 minutes             centos-backend-con1
+7bbd3dc74206   nginx     "/docker-entrypoint.…"   48 minutes ago   Up 48 minutes   80/tcp    nginx-webfrontend-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker container inspect centos-backend-con1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "192.168.11.2",
+root@vagrant:~# docker container inspect nginxwebfrontend-con1 | grep -i ipaddress
+Error: No such container: nginxwebfrontend-con1
+root@vagrant:~# docker container inspect nginx-webfrontend-con1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "192.168.10.2",
+root@vagrant:~#
+root@vagrant:~# docker container inspect centos-backend-con1 | grep -i subnet
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network inspect bridge | grep -i subnet
+                    "Subnet": "172.17.0.0/16"
+root@vagrant:~# docker network ls
+NETWORK ID     NAME          DRIVER    SCOPE
+82f47fc06e23   backend       bridge    local
+b21e68d06ae8   bridge        bridge    local
+32d620752415   host          host      local
+6de702cc493d   none          null      local
+c6ef2171a410   webfrontend   bridge    local
+root@vagrant:~# docker network inspect backend | grep -i subnet
+                    "Subnet": "192.168.11.0/24"
+root@vagrant:~# docker network inspect backend | grep -i name
+        "Name": "backend",
+                "Name": "centos-backend-con1",
+root@vagrant:~# docker network inspect webfrontend | grep -i subnet
+                    "Subnet": "192.168.10.0/24"
+root@vagrant:~# docker network inspect webfrontend | grep -i name
+        "Name": "webfrontend",
+                "Name": "nginx-webfrontend-con1",
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker exec -it centos-backend-con1 bash
+[root@27cce21836a6 /]# ip a
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+22: eth0@if23: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:c0:a8:0b:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 192.168.11.2/24 brd 192.168.11.255 scope global eth0
+       valid_lft forever preferred_lft forever
+[root@27cce21836a6 /]# ping -c 5 192.168.10.2
+PING 192.168.10.2 (192.168.10.2) 56(84) bytes of data.
+
+--- 192.168.10.2 ping statistics ---
+5 packets transmitted, 0 received, 100% packet loss, time 4086ms
+
+[root@27cce21836a6 /]# read escape sequence
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS     NAMES
+27cce21836a6   centos    "/bin/bash"              54 minutes ago   Up 54 minutes             centos-backend-con1
+7bbd3dc74206   nginx     "/docker-entrypoint.…"   56 minutes ago   Up 56 minutes   80/tcp    nginx-webfrontend-con1
+root@vagrant:~# docker network connect webfrontend centos-backend-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network inspect webfrontend | grep -i name
+        "Name": "webfrontend",
+                "Name": "centos-backend-con1",
+                "Name": "nginx-webfrontend-con1",
+root@vagrant:~# docker network inspect backend | grep -i name
+        "Name": "backend",
+                "Name": "centos-backend-con1",
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker exec -it centos-backend-con1 bash
+[root@27cce21836a6 /]# ping -c 192.168.10.2
+Usage: ping [-aAbBdDfhLnOqrRUvV64] [-c count] [-i interval] [-I interface]
+            [-m mark] [-M pmtudisc_option] [-l preload] [-p pattern] [-Q tos]
+            [-s packetsize] [-S sndbuf] [-t ttl] [-T timestamp_option]
+            [-w deadline] [-W timeout] [hop1 ...] destination
+Usage: ping -6 [-aAbBdDfhLnOqrRUvV] [-c count] [-i interval] [-I interface]
+             [-l preload] [-m mark] [-M pmtudisc_option]
+             [-N nodeinfo_option] [-p pattern] [-Q tclass] [-s packetsize]
+             [-S sndbuf] [-t ttl] [-T timestamp_option] [-w deadline]
+             [-W timeout] destination
+[root@27cce21836a6 /]# ping -c 5 192.168.10.2
+PING 192.168.10.2 (192.168.10.2) 56(84) bytes of data.
+64 bytes from 192.168.10.2: icmp_seq=1 ttl=64 time=0.476 ms
+64 bytes from 192.168.10.2: icmp_seq=2 ttl=64 time=0.158 ms
+64 bytes from 192.168.10.2: icmp_seq=3 ttl=64 time=0.085 ms
+64 bytes from 192.168.10.2: icmp_seq=4 ttl=64 time=0.115 ms
+64 bytes from 192.168.10.2: icmp_seq=5 ttl=64 time=0.059 ms
+
+--- 192.168.10.2 ping statistics ---
+5 packets transmitted, 5 received, 0% packet loss, time 4074ms
+rtt min/avg/max/mdev = 0.059/0.178/0.476/0.153 ms
+[root@27cce21836a6 /]# read escape sequence
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS     NAMES
+27cce21836a6   centos    "/bin/bash"              55 minutes ago   Up 55 minutes             centos-backend-con1
+7bbd3dc74206   nginx     "/docker-entrypoint.…"   57 minutes ago   Up 57 minutes   80/tcp    nginx-webfrontend-con1
+root@vagrant:~# docker network disconnect webfrontend centos-backend-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network inspect webfrontend | grep -i name
+        "Name": "webfrontend",
+                "Name": "nginx-webfrontend-con1",
+root@vagrant:~# docker network inspect backend | grep -i name
+        "Name": "backend",
+                "Name": "centos-backend-con1",
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+nginx        latest    a99a39d070bf   2 weeks ago     142MB
+centos       latest    5d0da3dc9764   16 months ago   231MB
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED          STATUS          PORTS     NAMES
+27cce21836a6   centos    "/bin/bash"              57 minutes ago   Up 57 minutes             centos-backend-con1
+7bbd3dc74206   nginx     "/docker-entrypoint.…"   59 minutes ago   Up 59 minutes   80/tcp    nginx-webfrontend-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker run -d --name=nginx-none-con1 --network none nginx
+f60754a83baba984dbcf2c574d662658059214fce4db0213f4ccde431ae1540f
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker exec -it nginx-none-con1 bash
+root@f60754a83bab:/# ip a
+bash: ip: command not found
+root@f60754a83bab:/# ifconfig
+bash: ifconfig: command not found
+root@f60754a83bab:/# apt update
+Err:1 http://deb.debian.org/debian bullseye InRelease
+  Temporary failure resolving 'deb.debian.org'
+Err:2 http://deb.debian.org/debian-security bullseye-security InRelease
+  Temporary failure resolving 'deb.debian.org'
+Err:3 http://deb.debian.org/debian bullseye-updates InRelease
+  Temporary failure resolving 'deb.debian.org'
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+All packages are up to date.
+W: Failed to fetch http://deb.debian.org/debian/dists/bullseye/InRelease  Temporary failure resolving 'deb.debian.org'
+W: Failed to fetch http://deb.debian.org/debian-security/dists/bullseye-security/InRelease  Temporary failure resolving 'deb.debian.org'
+W: Failed to fetch http://deb.debian.org/debian/dists/bullseye-updates/InRelease  Temporary failure resolving 'deb.debian.org'
+W: Some index files failed to download. They have been ignored, or old ones used instead.
+root@f60754a83bab:/# ping -c 2 8.8.8.8
+bash: ping: command not found
+root@f60754a83bab:/# curl google.com
+curl: (6) Could not resolve host: google.com
+root@f60754a83bab:/# read escape sequence
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network connect webfrontend nginx-none-con1
+Error response from daemon: container cannot be connected to multiple networks with one of the networks in private (none) mode
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker rm -f nginx-none-con1
+nginx-none-con1
+root@vagrant:~# docker run -d --name=nginx-con2 nginx
+8eb95a44aebd849b8a45ccb30e3d64c0925c7d9dc756e03cb23bd750a0770ad5
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND                  CREATED             STATUS             PORTS     NAMES
+8eb95a44aebd   nginx     "/docker-entrypoint.…"   16 seconds ago      Up 14 seconds      80/tcp    nginx-con2
+27cce21836a6   centos    "/bin/bash"              About an hour ago   Up About an hour             centos-backend-con1
+7bbd3dc74206   nginx     "/docker-entrypoint.…"   About an hour ago   Up About an hour   80/tcp    nginx-webfrontend-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network disconnect bridge nginx-con2
+root@vagrant:~# docker network connect webfrontend nginx-con2
+root@vagrant:~# docker network connect backend nginx-con2
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker exec -it nginx-con2 bash
+root@8eb95a44aebd:/# apt update
+Get:1 http://deb.debian.org/debian bullseye InRelease [116 kB]
+Get:2 http://deb.debian.org/debian-security bullseye-security InRelease [48.4 kB]
+Get:3 http://deb.debian.org/debian bullseye-updates InRelease [44.1 kB]
+Get:4 http://deb.debian.org/debian bullseye/main amd64 Packages [8183 kB]
+Get:5 http://deb.debian.org/debian-security bullseye-security/main amd64 Packages [216 kB]
+Get:6 http://deb.debian.org/debian bullseye-updates/main amd64 Packages [14.6 kB]
+Fetched 8622 kB in 5s (1882 kB/s)
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+All packages are up to date.
+root@8eb95a44aebd:/# apt install net-tools -y
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+The following NEW packages will be installed:
+  net-tools
+0 upgraded, 1 newly installed, 0 to remove and 0 not upgraded.
+Need to get 250 kB of archives.
+After this operation, 1015 kB of additional disk space will be used.
+Get:1 http://deb.debian.org/debian bullseye/main amd64 net-tools amd64 1.60+git20181103.0eebece-1 [250 kB]
+Fetched 250 kB in 0s (2055 kB/s)
+debconf: delaying package configuration, since apt-utils is not installed
+Selecting previously unselected package net-tools.
+(Reading database ... 7823 files and directories currently installed.)
+Preparing to unpack .../net-tools_1.60+git20181103.0eebece-1_amd64.deb ...
+Unpacking net-tools (1.60+git20181103.0eebece-1) ...
+Setting up net-tools (1.60+git20181103.0eebece-1) ...
+root@8eb95a44aebd:/# ifconfig
+eth1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.10.3  netmask 255.255.255.0  broadcast 192.168.10.255
+        ether 02:42:c0:a8:0a:03  txqueuelen 0  (Ethernet)
+        RX packets 9  bytes 726 (726.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth2: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.11.3  netmask 255.255.255.0  broadcast 192.168.11.255
+        ether 02:42:c0:a8:0b:03  txqueuelen 0  (Ethernet)
+        RX packets 3673  bytes 9075322 (8.6 MiB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 836  bytes 46598 (45.5 KiB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 4  bytes 348 (348.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 4  bytes 348 (348.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@8eb95a44aebd:/# route -n
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         192.168.11.1    0.0.0.0         UG    0      0        0 eth2
+192.168.10.0    0.0.0.0         255.255.255.0   U     0      0        0 eth1
+192.168.11.0    0.0.0.0         255.255.255.0   U     0      0        0 eth2
+root@8eb95a44aebd:/# read escape sequence
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker container inspect nginx-con2 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "192.168.11.3",
+                    "IPAddress": "192.168.10.3",
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network ls
+NETWORK ID     NAME          DRIVER    SCOPE
+82f47fc06e23   backend       bridge    local
+b21e68d06ae8   bridge        bridge    local
+32d620752415   host          host      local
+6de702cc493d   none          null      local
+c6ef2171a410   webfrontend   bridge    local
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network rm backend
+Error response from daemon: error while removing network: network backend id 82f47fc06e23a62478dab1a1a9930b238ac21880b67bacd18c0257798f855544 has active endpoints
+root@vagrant:~# docker rm -f $(docker ps -a -q)
+8eb95a44aebd
+27cce21836a6
+7bbd3dc74206
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network rm backend
+backend
+root@vagrant:~# docker network rm webfrontend
+webfrontend
+root@vagrant:~#
+root@vagrant:~# docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+b21e68d06ae8   bridge    bridge    local
+32d620752415   host      host      local
+6de702cc493d   none      null      local
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# ifconfig
+docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        inet6 fe80::42:82ff:fee1:b09e  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:82:e1:b0:9e  txqueuelen 0  (Ethernet)
+        RX packets 4897  bytes 228529 (228.5 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 15536  bytes 38074906 (38.0 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
+        inet6 fe80::a00:27ff:febb:1475  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:bb:14:75  txqueuelen 1000  (Ethernet)
+        RX packets 252160  bytes 355742947 (355.7 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 37516  bytes 2675827 (2.6 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 320  bytes 40230 (40.2 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 320  bytes 40230 (40.2 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@vagrant:~#
