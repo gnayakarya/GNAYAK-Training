@@ -1,0 +1,1458 @@
+root@vagrant:~#
+root@vagrant:~# docker images
+REPOSITORY   TAG       IMAGE ID       CREATED         SIZE
+nginx        latest    a99a39d070bf   2 weeks ago     142MB
+centos       latest    5d0da3dc9764   16 months ago   231MB
+root@vagrant:~# docker container ls
+CONTAINER ID   IMAGE     COMMAND                  CREATED       STATUS       PORTS     NAMES
+2d0712559bfe   nginx     "/docker-entrypoint.…"   4 hours ago   Up 4 hours             nginx-none-network-con3
+5c0ad57e3d44   nginx     "/docker-entrypoint.…"   4 hours ago   Up 4 hours             nginx-host-network-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker rm -f $(docker ps -a -q)
+2d0712559bfe
+1eb96a628137
+5c0ad57e3d44
+root@vagrant:~# docker rmi -f $(docker images)
+Untagged: nginx:latest
+Untagged: nginx@sha256:b8f2383a95879e1ae064940d9a200f67a6c79e710ed82ac42263397367e7cc4e
+Deleted: sha256:a99a39d070bfd1cb60fe65c45dea3a33764dc00a9546bf8dc46cb5a11b1b50e9
+Deleted: sha256:937f740376014d8e951ae4f0ff0b0ca64fd958c176510fc0a86dd1b491226a71
+Deleted: sha256:a73369e624d6b4fbea1e6046a2f3cf3c7a15c6e0e0012659f410380d8dc70594
+Deleted: sha256:bc2dd4cf50f065c3e884872cd30eb888a71f6ab545d8bec196a7662bfbd033a3
+Deleted: sha256:c9372c5c9249380700f7af0441de14f14c361b5561ecc876da46f58a7ad71b7b
+Deleted: sha256:deea3af05bc845b217a415b240422c19933218422b6d60414c2caeff976e5430
+Deleted: sha256:67a4178b7d47beb6a1f697a593bd0c6841c67eb0da00f2badefb05fd30671490
+Untagged: centos:latest
+Untagged: centos@sha256:a27fd8080b517143cbbbab9dfb7c8571c40d67d534bbdee55bd6c473f432b177
+Deleted: sha256:5d0da3dc976460b72c77d94c8a1ad043720b0416bfc16c52c45d4847e53fadb6
+Deleted: sha256:74ddd0ec08fa43d09f32636ba91a0a3053b02cb4627c35051aff89f853606b59
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error: No such image: latest
+Error: No such image: a99a39d070bf
+Error: No such image: 2
+Error: No such image: weeks
+Error: No such image: ago
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error: No such image: latest
+Error: No such image: 5d0da3dc9764
+Error: No such image: 16
+Error: No such image: months
+Error: No such image: ago
+Error response from daemon: invalid reference format: repository name must be lowercase
+root@vagrant:~# docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+root@vagrant:~# docker image prune -a
+WARNING! This will remove all images without at least one container associated to them.
+Are you sure you want to continue? [y/N] y
+Total reclaimed space: 0B
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker pull mysql:5.6
+5.6: Pulling from library/mysql
+35b2232c987e: Pull complete
+fc55c00e48f2: Pull complete
+0030405130e3: Pull complete
+e1fef7f6a8d1: Pull complete
+1c76272398bb: Pull complete
+f57e698171b6: Pull complete
+f5b825b269c0: Pull complete
+dcb0af686073: Pull complete
+27bbfeb886d1: Extracting [==================================================>]  64.27MB/64.27MB
+27bbfeb886d1: Pull complete
+6f70cc868145: Pull complete
+1f6637f4600d: Pull complete
+Digest: sha256:20575ecebe6216036d25dab5903808211f1e9ba63dc7825ac20cb975e34cfcae
+Status: Downloaded newer image for mysql:5.6
+docker.io/library/mysql:5.6
+root@vagrant:~#
+root@vagrant:~# docker volume ls
+DRIVER    VOLUME NAME
+root@vagrant:~# docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+b21e68d06ae8   bridge    bridge    local
+32d620752415   host      host      local
+6de702cc493d   none      null      local
+root@vagrant:~# docker network create --subnet 192.168.10.0/24 --driver bridge labs
+4ec43e65228764f044302ff171774298f49d06c6b7f5e6f4392473ce02e8b2ed
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker network ls
+NETWORK ID     NAME      DRIVER    SCOPE
+b21e68d06ae8   bridge    bridge    local
+32d620752415   host      host      local
+4ec43e652287   labs      bridge    local
+6de702cc493d   none      null      local
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker run -d --name=mysql-db-con1 -v mysqlvol:/var/lib/mysql --network labs -e MY_SQL_ROOT_PASSWORD=gnayakadmin -e MYSQL_USER=sqladmin -e MYSQL_PASSWORD=sqladmin -e MYSQL_DATABASE=sqldatabase mysql:5.6
+db6b90a84290d31684d9ca30f9c804f1dc50c8bc5b2ddc930c9635ce2619aa25
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE       COMMAND                  CREATED         STATUS                     PORTS     NAMES
+db6b90a84290   mysql:5.6   "docker-entrypoint.s…"   4 seconds ago   Exited (1) 2 seconds ago             mysql-db-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker rm mysql-db-con1
+mysql-db-con1
+root@vagrant:~#
+root@vagrant:~# docker run -d --name=mysql-db-con1 -v mysqlvol:/var/lib/mysql --network labs -e MYSQL_ROOT_PASSWORD=gnayakadmin -e MYSQL_USER=sqladmin -e MY
+SQL_PASSWORD=sqladmin -e MYSQL_DATABASE=sqldatabase mysql:5.6
+e3053c656fa5c77c6911ecdd7106291eccec88ffc592e6dc64938e07a33d09a6
+root@vagrant:~# docker ps
+CONTAINER ID   IMAGE       COMMAND                  CREATED         STATUS         PORTS      NAMES
+e3053c656fa5   mysql:5.6   "docker-entrypoint.s…"   4 seconds ago   Up 3 seconds   3306/tcp   mysql-db-con1
+root@vagrant:~#
+root@vagrant:~# docker pull wordpress
+Using default tag: latest
+latest: Pulling from library/wordpress
+8740c948ffd4: Pull complete
+1873be858264: Pull complete
+7ce6a163d8c1: Pull complete
+008a172010ba: Pull complete
+d15353ae3d77: Pull complete
+223eb1888c0f: Pull complete
+83374c2a967a: Pull complete
+8adb6fee4c96: Pull complete
+04e8dd13d367: Pull complete
+08c657b572e7: Pull complete
+4e2a69062e74: Pull complete
+f340310b8889: Pull complete
+c2839f599e98: Pull complete
+07cf3f6c92fa: Pull complete
+a61869359229: Pull complete
+a84ad5ffd8f9: Pull complete
+c7fdd14fc94d: Pull complete
+f7d19cc4ffaa: Pull complete
+1b81deb9db45: Pull complete
+db8f5037e095: Pull complete
+34b5166230af: Pull complete
+Digest: sha256:ab46a62b3d6f3d5b221234c30836d4407b2a4b98bf7031fb9537eac7eadbb188
+Status: Downloaded newer image for wordpress:latest
+docker.io/library/wordpress:latest
+root@vagrant:~#
+root@vagrant:~# docker run -d --name=wordpress-app-con1 -v wpvol:/var/www/html -P -e WORDPRESS_DB_HOST=mysql_db_con1 -e WORDPRESS_DB_USER=sqladmin -e WORDPRESS_DB_PASSWORD=sqladmin --network labs wordpress
+50fe86db9ecb9c3807da403f589e6549dfb5c69e2f49bdbe03c16ac46c6187fd
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE       COMMAND                  CREATED          STATUS          PORTS                                     NAMES
+50fe86db9ecb   wordpress   "docker-entrypoint.s…"   6 seconds ago    Up 4 seconds    0.0.0.0:32770->80/tcp, :::32770->80/tcp   wordpress-app-con1
+e3053c656fa5   mysql:5.6   "docker-entrypoint.s…"   15 minutes ago   Up 15 minutes   3306/tcp                                  mysql-db-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker rm -f wordpress-app-con1
+wordpress-app-con1
+root@vagrant:~#
+root@vagrant:~# docker run -d --name=wordpress-app-con1 -v wpvol:/var/www/html -P -e WORDPRESS_DB_HOST=mysql_db_con1 -e WORDPRESS_DB_USER=sqladmin -e WORDPRESS_DB_PASSWORD=sqladmin -e MYSQL_DATABASE=sqldatabase --network labs wordpress
+03deed3be4ae347f9100901a6eecb44f821e7d6a920502cae75c96580e6d100c
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE       COMMAND                  CREATED          STATUS          PORTS                                     NAMES
+03deed3be4ae   wordpress   "docker-entrypoint.s…"   5 seconds ago    Up 4 seconds    0.0.0.0:32771->80/tcp, :::32771->80/tcp   wordpress-app-con1
+e3053c656fa5   mysql:5.6   "docker-entrypoint.s…"   17 minutes ago   Up 17 minutes   3306/tcp                                  mysql-db-con1
+root@vagrant:~# docker container inspect wordpress-app-con1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "192.168.10.3",
+root@vagrant:~#
+root@vagrant:~# curl 192.168.10.3
+<!DOCTYPE html>
+<html dir='ltr'>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width">
+                        <title>Database Error</title>
+        <style type="text/css">
+                html {
+                        background: #f1f1f1;
+                }
+                body {
+                        background: #fff;
+                        border: 1px solid #ccd0d4;
+                        color: #444;
+                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+                        margin: 2em auto;
+                        padding: 1em 2em;
+                        max-width: 700px;
+                        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+                        box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+                }
+                h1 {
+                        border-bottom: 1px solid #dadada;
+                        clear: both;
+                        color: #666;
+                        font-size: 24px;
+                        margin: 30px 0 0 0;
+                        padding: 0;
+                        padding-bottom: 7px;
+                }
+                #error-page {
+                        margin-top: 50px;
+                }
+                #error-page p,
+                #error-page .wp-die-message {
+                        font-size: 14px;
+                        line-height: 1.5;
+                        margin: 25px 0 20px;
+                }
+                #error-page code {
+                        font-family: Consolas, Monaco, monospace;
+                }
+                ul li {
+                        margin-bottom: 10px;
+                        font-size: 14px ;
+                }
+                a {
+                        color: #0073aa;
+                }
+                a:hover,
+                a:active {
+                        color: #006799;
+                }
+                a:focus {
+                        color: #124964;
+                        -webkit-box-shadow:
+                                0 0 0 1px #5b9dd9,
+                                0 0 2px 1px rgba(30, 140, 190, 0.8);
+                        box-shadow:
+                                0 0 0 1px #5b9dd9,
+                                0 0 2px 1px rgba(30, 140, 190, 0.8);
+                        outline: none;
+                }
+                .button {
+                        background: #f3f5f6;
+                        border: 1px solid #016087;
+                        color: #016087;
+                        display: inline-block;
+                        text-decoration: none;
+                        font-size: 13px;
+                        line-height: 2;
+                        height: 28px;
+                        margin: 0;
+                        padding: 0 10px 1px;
+                        cursor: pointer;
+                        -webkit-border-radius: 3px;
+                        -webkit-appearance: none;
+                        border-radius: 3px;
+                        white-space: nowrap;
+                        -webkit-box-sizing: border-box;
+                        -moz-box-sizing:    border-box;
+                        box-sizing:         border-box;
+
+                        vertical-align: top;
+                }
+
+                .button.button-large {
+                        line-height: 2.30769231;
+                        min-height: 32px;
+                        padding: 0 12px;
+                }
+
+                .button:hover,
+                .button:focus {
+                        background: #f1f1f1;
+                }
+
+                .button:focus {
+                        background: #f3f5f6;
+                        border-color: #007cba;
+                        -webkit-box-shadow: 0 0 0 1px #007cba;
+                        box-shadow: 0 0 0 1px #007cba;
+                        color: #016087;
+                        outline: 2px solid transparent;
+                        outline-offset: 0;
+                }
+
+                .button:active {
+                        background: #f3f5f6;
+                        border-color: #7e8993;
+                        -webkit-box-shadow: none;
+                        box-shadow: none;
+                }
+
+                        </style>
+</head>
+<body id="error-page">
+        <div class="wp-die-message"><h1>Error establishing a database connection</h1></div></body>
+</html>
+        root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE       COMMAND                  CREATED              STATUS              PORTS                                     NAMES
+03deed3be4ae   wordpress   "docker-entrypoint.s…"   About a minute ago   Up About a minute   0.0.0.0:32771->80/tcp, :::32771->80/tcp   wordpress-app-con1
+e3053c656fa5   mysql:5.6   "docker-entrypoint.s…"   18 minutes ago       Up 18 minutes       3306/tcp                                  mysql-db-con1
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# curl 192.168.10.3:32771
+curl: (7) Failed to connect to 192.168.10.3 port 32771: Connection refused
+root@vagrant:~# docker logs wordpress-app-con1
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 192.168.10.3. Set the 'ServerName' directive globally to suppress this message
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 192.168.10.3. Set the 'ServerName' directive globally to suppress this message
+[Fri Jan 27 14:03:11.204393 2023] [mpm_prefork:notice] [pid 1] AH00163: Apache/2.4.54 (Debian) PHP/8.0.27 configured -- resuming normal operations
+[Fri Jan 27 14:03:11.207594 2023] [core:notice] [pid 1] AH00094: Command line: 'apache2 -D FOREGROUND'
+192.168.10.1 - - [27/Jan/2023:14:04:06 +0000] "GET / HTTP/1.1" 500 2834 "-" "curl/7.58.0"
+root@vagrant:~# docker logs mysql-db-con1
+2023-01-27 13:45:55+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 5.6.51-1debian9 started.
+2023-01-27 13:45:55+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2023-01-27 13:45:55+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 5.6.51-1debian9 started.
+2023-01-27 13:45:55+00:00 [Note] [Entrypoint]: Initializing database files
+2023-01-27 13:45:55 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2023-01-27 13:45:55 0 [Note] Ignoring --secure-file-priv value as server is running with --bootstrap.
+2023-01-27 13:45:55 0 [Note] /usr/sbin/mysqld (mysqld 5.6.51) starting as process 44 ...
+2023-01-27 13:45:55 44 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2023-01-27 13:45:55 44 [Note] InnoDB: The InnoDB memory heap is disabled
+2023-01-27 13:45:55 44 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2023-01-27 13:45:55 44 [Note] InnoDB: Memory barrier is not used
+2023-01-27 13:45:55 44 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2023-01-27 13:45:55 44 [Note] InnoDB: Using Linux native AIO
+2023-01-27 13:45:55 44 [Note] InnoDB: Using CPU crc32 instructions
+2023-01-27 13:45:55 44 [Note] InnoDB: Initializing buffer pool, size = 128.0M
+2023-01-27 13:45:55 44 [Note] InnoDB: Completed initialization of buffer pool
+2023-01-27 13:45:55 44 [Note] InnoDB: The first specified data file ./ibdata1 did not exist: a new database to be created!
+2023-01-27 13:45:55 44 [Note] InnoDB: Setting file ./ibdata1 size to 12 MB
+2023-01-27 13:45:55 44 [Note] InnoDB: Database physically writes the file full: wait...
+2023-01-27 13:45:55 44 [Note] InnoDB: Setting log file ./ib_logfile101 size to 48 MB
+2023-01-27 13:45:55 44 [Note] InnoDB: Setting log file ./ib_logfile1 size to 48 MB
+2023-01-27 13:45:56 44 [Note] InnoDB: Renaming log file ./ib_logfile101 to ./ib_logfile0
+2023-01-27 13:45:56 44 [Warning] InnoDB: New log files created, LSN=45781
+2023-01-27 13:45:56 44 [Note] InnoDB: Doublewrite buffer not found: creating new
+2023-01-27 13:45:56 44 [Note] InnoDB: Doublewrite buffer created
+2023-01-27 13:45:56 44 [Note] InnoDB: 128 rollback segment(s) are active.
+2023-01-27 13:45:56 44 [Warning] InnoDB: Creating foreign key constraint system tables.
+2023-01-27 13:45:56 44 [Note] InnoDB: Foreign key constraint system tables created
+2023-01-27 13:45:56 44 [Note] InnoDB: Creating tablespace and datafile system tables.
+2023-01-27 13:45:56 44 [Note] InnoDB: Tablespace and datafile system tables created.
+2023-01-27 13:45:56 44 [Note] InnoDB: Waiting for purge to start
+2023-01-27 13:45:56 44 [Note] InnoDB: 5.6.51 started; log sequence number 0
+2023-01-27 13:45:56 44 [Note] RSA private key file not found: /var/lib/mysql//private_key.pem. Some authentication plugins will not work.
+2023-01-27 13:45:56 44 [Note] RSA public key file not found: /var/lib/mysql//public_key.pem. Some authentication plugins will not work.
+2023-01-27 13:45:58 44 [Note] Binlog end
+2023-01-27 13:45:58 44 [Note] InnoDB: FTS optimize thread exiting.
+2023-01-27 13:45:58 44 [Note] InnoDB: Starting shutdown...
+2023-01-27 13:45:59 44 [Note] InnoDB: Shutdown completed; log sequence number 1625977
+
+
+2023-01-27 13:45:59 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2023-01-27 13:45:59 0 [Note] Ignoring --secure-file-priv value as server is running with --bootstrap.
+2023-01-27 13:45:59 0 [Note] /usr/sbin/mysqld (mysqld 5.6.51) starting as process 67 ...
+2023-01-27 13:45:59 67 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2023-01-27 13:45:59 67 [Note] InnoDB: The InnoDB memory heap is disabled
+2023-01-27 13:45:59 67 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2023-01-27 13:45:59 67 [Note] InnoDB: Memory barrier is not used
+2023-01-27 13:45:59 67 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2023-01-27 13:45:59 67 [Note] InnoDB: Using Linux native AIO
+2023-01-27 13:45:59 67 [Note] InnoDB: Using CPU crc32 instructions
+2023-01-27 13:45:59 67 [Note] InnoDB: Initializing buffer pool, size = 128.0M
+2023-01-27 13:45:59 67 [Note] InnoDB: Completed initialization of buffer pool
+2023-01-27 13:45:59 67 [Note] InnoDB: Highest supported file format is Barracuda.
+2023-01-27 13:45:59 67 [Note] InnoDB: 128 rollback segment(s) are active.
+2023-01-27 13:45:59 67 [Note] InnoDB: Waiting for purge to start
+2023-01-27 13:45:59 67 [Note] InnoDB: 5.6.51 started; log sequence number 1625977
+2023-01-27 13:45:59 67 [Note] RSA private key file not found: /var/lib/mysql//private_key.pem. Some authentication plugins will not work.
+2023-01-27 13:45:59 67 [Note] RSA public key file not found: /var/lib/mysql//public_key.pem. Some authentication plugins will not work.
+2023-01-27 13:45:59 67 [Note] Binlog end
+2023-01-27 13:45:59 67 [Note] InnoDB: FTS optimize thread exiting.
+2023-01-27 13:45:59 67 [Note] InnoDB: Starting shutdown...
+2023-01-27 13:46:01 67 [Note] InnoDB: Shutdown completed; log sequence number 1625987
+
+
+
+
+PLEASE REMEMBER TO SET A PASSWORD FOR THE MySQL root USER !
+To do so, start the server, then issue the following commands:
+
+  /usr/bin/mysqladmin -u root password 'new-password'
+  /usr/bin/mysqladmin -u root -h e3053c656fa5 password 'new-password'
+
+Alternatively you can run:
+
+  /usr/bin/mysql_secure_installation
+
+which will also give you the option of removing the test
+databases and anonymous user created by default.  This is
+strongly recommended for production servers.
+
+See the manual for more instructions.
+
+Please report any problems at http://bugs.mysql.com/
+
+The latest information about MySQL is available on the web at
+
+  http://www.mysql.com
+
+Support MySQL by buying support/licenses at http://shop.mysql.com
+
+Note: new default config file not created.
+Please make sure your config file is current
+
+WARNING: Default config file /etc/mysql/my.cnf exists on the system
+This file will be read by default by the MySQL server
+If you do not want to use this, either remove it, or use the
+--defaults-file argument to mysqld_safe when starting the server
+
+2023-01-27 13:46:01+00:00 [Note] [Entrypoint]: Database files initialized
+2023-01-27 13:46:01+00:00 [Note] [Entrypoint]: Starting temporary server
+2023-01-27 13:46:01+00:00 [Note] [Entrypoint]: Waiting for server startup
+2023-01-27 13:46:02 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2023-01-27 13:46:02 0 [Note] mysqld (mysqld 5.6.51) starting as process 92 ...
+2023-01-27 13:46:02 92 [Note] Plugin 'FEDERATED' is disabled.
+2023-01-27 13:46:02 92 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2023-01-27 13:46:02 92 [Note] InnoDB: The InnoDB memory heap is disabled
+2023-01-27 13:46:02 92 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2023-01-27 13:46:02 92 [Note] InnoDB: Memory barrier is not used
+2023-01-27 13:46:02 92 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2023-01-27 13:46:02 92 [Note] InnoDB: Using Linux native AIO
+2023-01-27 13:46:02 92 [Note] InnoDB: Using CPU crc32 instructions
+2023-01-27 13:46:02 92 [Note] InnoDB: Initializing buffer pool, size = 128.0M
+2023-01-27 13:46:02 92 [Note] InnoDB: Completed initialization of buffer pool
+2023-01-27 13:46:02 92 [Note] InnoDB: Highest supported file format is Barracuda.
+2023-01-27 13:46:02 92 [Note] InnoDB: 128 rollback segment(s) are active.
+2023-01-27 13:46:02 92 [Note] InnoDB: Waiting for purge to start
+2023-01-27 13:46:02 92 [Note] InnoDB: 5.6.51 started; log sequence number 1625987
+2023-01-27 13:46:02 92 [Warning] No existing UUID has been found, so we assume that this is the first time that this server has been started. Generating a new UUID: f07c91bd-9e48-11ed-8057-0242c0a80a02.
+2023-01-27 13:46:02 92 [Note] RSA private key file not found: /var/lib/mysql//private_key.pem. Some authentication plugins will not work.
+2023-01-27 13:46:02 92 [Note] RSA public key file not found: /var/lib/mysql//public_key.pem. Some authentication plugins will not work.
+2023-01-27 13:46:02 92 [Warning] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2023-01-27 13:46:02 92 [Warning] 'user' entry 'root@e3053c656fa5' ignored in --skip-name-resolve mode.
+2023-01-27 13:46:02 92 [Warning] 'user' entry '@e3053c656fa5' ignored in --skip-name-resolve mode.
+2023-01-27 13:46:02 92 [Warning] 'proxies_priv' entry '@ root@e3053c656fa5' ignored in --skip-name-resolve mode.
+2023-01-27 13:46:02 92 [Note] Event Scheduler: Loaded 0 events
+2023-01-27 13:46:02 92 [Note] mysqld: ready for connections.
+Version: '5.6.51'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server (GPL)
+2023-01-27 13:46:03+00:00 [Note] [Entrypoint]: Temporary server started.
+Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
+Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
+2023-01-27 13:46:05 92 [Warning] 'proxies_priv' entry '@ root@e3053c656fa5' ignored in --skip-name-resolve mode.
+2023-01-27 13:46:05+00:00 [Note] [Entrypoint]: Creating database sqldatabase
+2023-01-27 13:46:05+00:00 [Note] [Entrypoint]: Creating user sqladmin
+2023-01-27 13:46:05+00:00 [Note] [Entrypoint]: Giving user sqladmin access to schema sqldatabase
+
+2023-01-27 13:46:05+00:00 [Note] [Entrypoint]: Stopping temporary server
+2023-01-27 13:46:05 92 [Note] mysqld: Normal shutdown
+
+2023-01-27 13:46:05 92 [Note] Giving 0 client threads a chance to die gracefully
+2023-01-27 13:46:05 92 [Note] Event Scheduler: Purging the queue. 0 events
+2023-01-27 13:46:05 92 [Note] Shutting down slave threads
+2023-01-27 13:46:05 92 [Note] Forcefully disconnecting 0 remaining clients
+2023-01-27 13:46:05 92 [Note] Binlog end
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'partition'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'PERFORMANCE_SCHEMA'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_SYS_DATAFILES'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_SYS_TABLESPACES'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN_COLS'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_SYS_FOREIGN'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_SYS_FIELDS'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_SYS_COLUMNS'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_SYS_INDEXES'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_SYS_TABLESTATS'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_SYS_TABLES'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_FT_INDEX_TABLE'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_FT_INDEX_CACHE'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_FT_CONFIG'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_FT_BEING_DELETED'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_FT_DELETED'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_FT_DEFAULT_STOPWORD'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_METRICS'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_BUFFER_POOL_STATS'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE_LRU'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_BUFFER_PAGE'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX_RESET'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_CMP_PER_INDEX'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_CMPMEM_RESET'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_CMPMEM'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_CMP_RESET'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_CMP'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_LOCK_WAITS'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_LOCKS'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'INNODB_TRX'
+2023-01-27 13:46:05 92 [Note] Shutting down plugin 'InnoDB'
+2023-01-27 13:46:05 92 [Note] InnoDB: FTS optimize thread exiting.
+2023-01-27 13:46:05 92 [Note] InnoDB: Starting shutdown...
+2023-01-27 13:46:06 92 [Note] InnoDB: Shutdown completed; log sequence number 1625997
+2023-01-27 13:46:06 92 [Note] Shutting down plugin 'BLACKHOLE'
+2023-01-27 13:46:06 92 [Note] Shutting down plugin 'ARCHIVE'
+2023-01-27 13:46:06 92 [Note] Shutting down plugin 'MRG_MYISAM'
+2023-01-27 13:46:06 92 [Note] Shutting down plugin 'MyISAM'
+2023-01-27 13:46:06 92 [Note] Shutting down plugin 'MEMORY'
+2023-01-27 13:46:06 92 [Note] Shutting down plugin 'CSV'
+2023-01-27 13:46:06 92 [Note] Shutting down plugin 'sha256_password'
+2023-01-27 13:46:06 92 [Note] Shutting down plugin 'mysql_old_password'
+2023-01-27 13:46:06 92 [Note] Shutting down plugin 'mysql_native_password'
+2023-01-27 13:46:06 92 [Note] Shutting down plugin 'binlog'
+2023-01-27 13:46:06 92 [Note] mysqld: Shutdown complete
+
+2023-01-27 13:46:07+00:00 [Note] [Entrypoint]: Temporary server stopped
+
+2023-01-27 13:46:07+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
+
+2023-01-27 13:46:07 0 [Warning] TIMESTAMP with implicit DEFAULT value is deprecated. Please use --explicit_defaults_for_timestamp server option (see documentation for more details).
+2023-01-27 13:46:07 0 [Note] mysqld (mysqld 5.6.51) starting as process 1 ...
+2023-01-27 13:46:07 1 [Note] Plugin 'FEDERATED' is disabled.
+2023-01-27 13:46:07 1 [Note] InnoDB: Using atomics to ref count buffer pool pages
+2023-01-27 13:46:07 1 [Note] InnoDB: The InnoDB memory heap is disabled
+2023-01-27 13:46:07 1 [Note] InnoDB: Mutexes and rw_locks use GCC atomic builtins
+2023-01-27 13:46:07 1 [Note] InnoDB: Memory barrier is not used
+2023-01-27 13:46:07 1 [Note] InnoDB: Compressed tables use zlib 1.2.11
+2023-01-27 13:46:07 1 [Note] InnoDB: Using Linux native AIO
+2023-01-27 13:46:07 1 [Note] InnoDB: Using CPU crc32 instructions
+2023-01-27 13:46:07 1 [Note] InnoDB: Initializing buffer pool, size = 128.0M
+2023-01-27 13:46:07 1 [Note] InnoDB: Completed initialization of buffer pool
+2023-01-27 13:46:07 1 [Note] InnoDB: Highest supported file format is Barracuda.
+2023-01-27 13:46:08 1 [Note] InnoDB: 128 rollback segment(s) are active.
+2023-01-27 13:46:08 1 [Note] InnoDB: Waiting for purge to start
+2023-01-27 13:46:08 1 [Note] InnoDB: 5.6.51 started; log sequence number 1625997
+2023-01-27 13:46:08 1 [Note] RSA private key file not found: /var/lib/mysql//private_key.pem. Some authentication plugins will not work.
+2023-01-27 13:46:08 1 [Note] RSA public key file not found: /var/lib/mysql//public_key.pem. Some authentication plugins will not work.
+2023-01-27 13:46:08 1 [Note] Server hostname (bind-address): '*'; port: 3306
+2023-01-27 13:46:08 1 [Note] IPv6 is available.
+2023-01-27 13:46:08 1 [Note]   - '::' resolves to '::';
+2023-01-27 13:46:08 1 [Note] Server socket created on IP: '::'.
+2023-01-27 13:46:08 1 [Warning] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2023-01-27 13:46:08 1 [Warning] 'proxies_priv' entry '@ root@e3053c656fa5' ignored in --skip-name-resolve mode.
+2023-01-27 13:46:08 1 [Note] Event Scheduler: Loaded 0 events
+2023-01-27 13:46:08 1 [Note] mysqld: ready for connections.
+Version: '5.6.51'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server (GPL)
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE       COMMAND                  CREATED          STATUS          PORTS                                     NAMES
+03deed3be4ae   wordpress   "docker-entrypoint.s…"   10 minutes ago   Up 10 minutes   0.0.0.0:32771->80/tcp, :::32771->80/tcp   wordpress-app-con1
+e3053c656fa5   mysql:5.6   "docker-entrypoint.s…"   28 minutes ago   Up 28 minutes   3306/tcp                                  mysql-db-con1
+root@vagrant:~# docker container inspect wordpress-app-con1 | grep -i ipaddress
+            "SecondaryIPAddresses": null,
+            "IPAddress": "",
+                    "IPAddress": "192.168.10.3",
+root@vagrant:~# ifconfig
+br-4ec43e652287: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 192.168.10.1  netmask 255.255.255.0  broadcast 192.168.10.255
+        inet6 fe80::42:ff:feac:3cba  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:00:ac:3c:ba  txqueuelen 0  (Ethernet)
+        RX packets 9  bytes 3202 (3.2 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 16  bytes 1168 (1.1 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        inet6 fe80::42:82ff:fee1:b09e  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:82:e1:b0:9e  txqueuelen 0  (Ethernet)
+        RX packets 4918  bytes 232060 (232.0 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 15577  bytes 38078062 (38.0 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
+        inet6 fe80::a00:27ff:febb:1475  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:bb:14:75  txqueuelen 1000  (Ethernet)
+        RX packets 488541  bytes 689966899 (689.9 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 67213  bytes 4867728 (4.8 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 664  bytes 77782 (77.7 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 664  bytes 77782 (77.7 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+veth7bd89bd: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::a0ca:e9ff:feb1:2469  prefixlen 64  scopeid 0x20<link>
+        ether a2:ca:e9:b1:24:69  txqueuelen 0  (Ethernet)
+        RX packets 9  bytes 3328 (3.3 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 24  bytes 1728 (1.7 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vetheb09398: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::e024:abff:fe62:6616  prefixlen 64  scopeid 0x20<link>
+        ether e2:24:ab:62:66:16  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 17  bytes 1298 (1.2 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@vagrant:~# curl 10.0.2.15:32771
+<!DOCTYPE html>
+<html dir='ltr'>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width">
+                        <title>Database Error</title>
+        <style type="text/css">
+                html {
+                        background: #f1f1f1;
+                }
+                body {
+                        background: #fff;
+                        border: 1px solid #ccd0d4;
+                        color: #444;
+                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+                        margin: 2em auto;
+                        padding: 1em 2em;
+                        max-width: 700px;
+                        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+                        box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+                }
+                h1 {
+                        border-bottom: 1px solid #dadada;
+                        clear: both;
+                        color: #666;
+                        font-size: 24px;
+                        margin: 30px 0 0 0;
+                        padding: 0;
+                        padding-bottom: 7px;
+                }
+                #error-page {
+                        margin-top: 50px;
+                }
+                #error-page p,
+                #error-page .wp-die-message {
+                        font-size: 14px;
+                        line-height: 1.5;
+                        margin: 25px 0 20px;
+                }
+                #error-page code {
+                        font-family: Consolas, Monaco, monospace;
+                }
+                ul li {
+                        margin-bottom: 10px;
+                        font-size: 14px ;
+                }
+                a {
+                        color: #0073aa;
+                }
+                a:hover,
+                a:active {
+                        color: #006799;
+                }
+                a:focus {
+                        color: #124964;
+                        -webkit-box-shadow:
+                                0 0 0 1px #5b9dd9,
+                                0 0 2px 1px rgba(30, 140, 190, 0.8);
+                        box-shadow:
+                                0 0 0 1px #5b9dd9,
+                                0 0 2px 1px rgba(30, 140, 190, 0.8);
+                        outline: none;
+                }
+                .button {
+                        background: #f3f5f6;
+                        border: 1px solid #016087;
+                        color: #016087;
+                        display: inline-block;
+                        text-decoration: none;
+                        font-size: 13px;
+                        line-height: 2;
+                        height: 28px;
+                        margin: 0;
+                        padding: 0 10px 1px;
+                        cursor: pointer;
+                        -webkit-border-radius: 3px;
+                        -webkit-appearance: none;
+                        border-radius: 3px;
+                        white-space: nowrap;
+                        -webkit-box-sizing: border-box;
+                        -moz-box-sizing:    border-box;
+                        box-sizing:         border-box;
+
+                        vertical-align: top;
+                }
+
+                .button.button-large {
+                        line-height: 2.30769231;
+                        min-height: 32px;
+                        padding: 0 12px;
+                }
+
+                .button:hover,
+                .button:focus {
+                        background: #f1f1f1;
+                }
+
+                .button:focus {
+                        background: #f3f5f6;
+                        border-color: #007cba;
+                        -webkit-box-shadow: 0 0 0 1px #007cba;
+                        box-shadow: 0 0 0 1px #007cba;
+                        color: #016087;
+                        outline: 2px solid transparent;
+                        outline-offset: 0;
+                }
+
+                .button:active {
+                        background: #f3f5f6;
+                        border-color: #7e8993;
+                        -webkit-box-shadow: none;
+                        box-shadow: none;
+                }
+
+                        </style>
+</head>
+<body id="error-page">
+        <div class="wp-die-message"><h1>Error establishing a database connection</h1></div></body>
+</html>
+        root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE       COMMAND                  CREATED          STATUS          PORTS                                     NAMES
+03deed3be4ae   wordpress   "docker-entrypoint.s…"   15 minutes ago   Up 15 minutes   0.0.0.0:32771->80/tcp, :::32771->80/tcp   wordpress-app-con1
+e3053c656fa5   mysql:5.6   "docker-entrypoint.s…"   32 minutes ago   Up 32 minutes   3306/tcp                                  mysql-db-con1
+root@vagrant:~# docker exec -it wordpress-app-con1 bash
+root@03deed3be4ae:/var/www/html# ls
+index.php    wp-activate.php     wp-comments-post.php  wp-config.php  wp-includes        wp-login.php     wp-signup.php
+license.txt  wp-admin            wp-config-docker.php  wp-content     wp-links-opml.php  wp-mail.php      wp-trackback.php
+readme.html  wp-blog-header.php  wp-config-sample.php  wp-cron.php    wp-load.php        wp-settings.php  xmlrpc.php
+root@03deed3be4ae:/var/www/html# curl 127.0.0.1:80
+<!DOCTYPE html>
+<html dir='ltr'>
+<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width">
+                        <title>Database Error</title>
+        <style type="text/css">
+                html {
+                        background: #f1f1f1;
+                }
+                body {
+                        background: #fff;
+                        border: 1px solid #ccd0d4;
+                        color: #444;
+                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+                        margin: 2em auto;
+                        padding: 1em 2em;
+                        max-width: 700px;
+                        -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+                        box-shadow: 0 1px 1px rgba(0, 0, 0, .04);
+                }
+                h1 {
+                        border-bottom: 1px solid #dadada;
+                        clear: both;
+                        color: #666;
+                        font-size: 24px;
+                        margin: 30px 0 0 0;
+                        padding: 0;
+                        padding-bottom: 7px;
+                }
+                #error-page {
+                        margin-top: 50px;
+                }
+                #error-page p,
+                #error-page .wp-die-message {
+                        font-size: 14px;
+                        line-height: 1.5;
+                        margin: 25px 0 20px;
+                }
+                #error-page code {
+                        font-family: Consolas, Monaco, monospace;
+                }
+                ul li {
+                        margin-bottom: 10px;
+                        font-size: 14px ;
+                }
+                a {
+                        color: #0073aa;
+                }
+                a:hover,
+                a:active {
+                        color: #006799;
+                }
+                a:focus {
+                        color: #124964;
+                        -webkit-box-shadow:
+                                0 0 0 1px #5b9dd9,
+                                0 0 2px 1px rgba(30, 140, 190, 0.8);
+                        box-shadow:
+                                0 0 0 1px #5b9dd9,
+                                0 0 2px 1px rgba(30, 140, 190, 0.8);
+                        outline: none;
+                }
+                .button {
+                        background: #f3f5f6;
+                        border: 1px solid #016087;
+                        color: #016087;
+                        display: inline-block;
+                        text-decoration: none;
+                        font-size: 13px;
+                        line-height: 2;
+                        height: 28px;
+                        margin: 0;
+                        padding: 0 10px 1px;
+                        cursor: pointer;
+                        -webkit-border-radius: 3px;
+                        -webkit-appearance: none;
+                        border-radius: 3px;
+                        white-space: nowrap;
+                        -webkit-box-sizing: border-box;
+                        -moz-box-sizing:    border-box;
+                        box-sizing:         border-box;
+
+                        vertical-align: top;
+                }
+
+                .button.button-large {
+                        line-height: 2.30769231;
+                        min-height: 32px;
+                        padding: 0 12px;
+                }
+
+                .button:hover,
+                .button:focus {
+                        background: #f1f1f1;
+                }
+
+                .button:focus {
+                        background: #f3f5f6;
+                        border-color: #007cba;
+                        -webkit-box-shadow: 0 0 0 1px #007cba;
+                        box-shadow: 0 0 0 1px #007cba;
+                        color: #016087;
+                        outline: 2px solid transparent;
+                        outline-offset: 0;
+                }
+
+                .button:active {
+                        background: #f3f5f6;
+                        border-color: #7e8993;
+                        -webkit-box-shadow: none;
+                        box-shadow: none;
+                }
+
+                        </style>
+</head>
+<body id="error-page">
+        <div class="wp-die-message"><h1>Error establishing a database connection</h1></div></body>
+</html>
+        root@03deed3be4ae:/var/www/html# read escape sequence
+root@vagrant:~#
+root@vagrant:~# history
+    1  curl -fsSL https://get.docker.com -o get-docker.sh
+    2  sh get-docker.sh
+    3  lsblk
+    4  df -hT
+    5  docker pull nginx
+    6  docker run --name=nginx-con1 nginx -d
+    7  docker run --name=nginx-con1 -d nginx
+    8  docker rm nginx-con1
+    9  docker run --name=nginx-con1 -d nginx
+   10  docker container ls
+   11  docker container inspect nginx-con1 | grep -i ipaddress
+   12  docker run -it --name=centos-con1 centos
+   13  docker ps
+   14  docker exec -it nginx-con1 bash
+   15  docker exec -it centos-con1 bash
+   16  docker network ls
+   17  docker network inspect bridge | grep -i subnet
+   18  docker network inspect bridge | grep -i name
+   19  docker ps
+   20  docker exec -it centos-con1 ifconfig
+   21  docker exec -it centos-con1 ip a
+   22  docker exec -it nginx-con1 ip a
+   23  docker exec -it nginx-con1 ifconfig
+   24  docker container inspect nginx-con1 | grep -i ipaddress
+   25  docker container inspect centos-con1 | grep -i ipaddress
+   26  docker stop nginx-con1
+   27  docker stop centos-con1
+   28* docker run -d --name=nginx centos
+   29  docker images
+   30  docker run -it --name=centos-con2 centos
+   31  docker run --name=nginx-con2 -d nginx
+   32  docker container inspect centos-con2 | grep -i ipaddress
+   33  docker container inspect nginx-con2 | grep -i ipaddress
+   34  docker start nginx-con1
+   35  docker start centos-con1
+   36  docker container inspect nginx-con1 | grep -i ipaddress
+   37  docker container inspect centos-con1 | grep -i ipaddress
+   38  docker ps -a
+   39  docker exec -it centos-con2 bash
+   40  docker container ls
+   41  docker exec -it centos-con1 bash
+   42  man route
+   43  ping 172.17.0.5
+   44  ifconfig
+   45  ifconfig docker0
+   46  ifconfig veth*
+   47  ifconfig | grep -i veth
+   48  man veth
+   49  brctl show
+   50  apt update -qq
+   51  apt install bridge-utils -y
+   52  brctl show
+   53  tail -n 20 /var/log/syslog
+   54  journalctl -xu docker
+   55  iptables -L
+   56  docker ps -a
+   57  docker rm -f $(docker ps -q -a)
+   58  systemctl status docker
+   59  docker network ls
+   60  docker network --help
+   61  docker network create --help
+   62  docker network create --subnet 192.168.10.0/24 --driver bridge webfrontend
+   63  docker network ls
+   64  ifconfig
+   65  docker network create --subnet 192.168.11.0/24 --driver bridge backend
+   66  docker network ls
+   67  systemctl status docker
+   68  docker network inspect frontend | grep -i subnet
+   69  docker network inspect webfrontend | grep -i subnet
+   70  docker network inspect backend | grep -i subnet
+   71  docker images
+   72  docker run -d --name=nginx-webfrontend-con1 --network webfrontend nginx
+   73  docker run -it --name=centos-backend-con1 --network backend centos
+   74  docker ps -a
+   75  docker container inspect centos-basckend-con1 | grep -i ipaddress
+   76  docker container inspect centos-backend-con1 | grep -i ipaddress
+   77  docker container inspect nginx-webfrontend-con1 | grep -i ipaddress
+   78  docker network ls
+   79  ifconfig | grep -i veth
+   80  brctl show
+   81  docker exec -ti container1 ping container2
+   82  docker exec -it centos-backend-con1 bash
+   83  docker container ls
+   84  docker exec -it centos-backend-con1 bash
+   85  docker ps -a
+   86  docker container inspect centos-backend-con1 | grep -i ipaddress
+   87  docker container inspect nginxwebfrontend-con1 | grep -i ipaddress
+   88  docker container inspect nginx-webfrontend-con1 | grep -i ipaddress
+   89  docker container inspect centos-backend-con1 | grep -i subnet
+   90  docker network inspect bridge | grep -i subnet
+   91  docker network ls
+   92  docker network inspect backend | grep -i subnet
+   93  docker network inspect backend | grep -i name
+   94  docker network inspect webfrontend | grep -i subnet
+   95  docker network inspect webfrontend | grep -i name
+   96  docker exec -it centos-backend-con1 bash
+   97  docker ps
+   98  docker network connect webfrontend centos-backend-con1
+   99  docker network inspect webfrontend | grep -i name
+  100  docker network inspect backend | grep -i name
+  101  docker exec -it centos-backend-con1 bash
+  102  docker ps -a
+  103  docker network disconnect webfrontend centos-backend-con1
+  104  docker network inspect webfrontend | grep -i name
+  105  docker network inspect backend | grep -i name
+  106  docker images
+  107  docker ps -a
+  108  docker run -d --name=nginx-none-con1 --network none nginx
+  109  docker exec -it nginx-none-con1 bash
+  110  docker network connect webfrontend nginx-none-con1
+  111  docker rm -f nginx-none-con1
+  112  docker run -d --name=nginx-con2 nginx
+  113  docker ps -a
+  114  docker network disconnect bridge nginx-con2
+  115  docker network connect webfrontend nginx-con2
+  116  docker network connect backend nginx-con2
+  117  docker exec -it nginx-con2 bash
+  118  docker container inspect nginx-con2 | grep -i ipaddress
+  119  docker network ls
+  120  docker network rm backend
+  121  docker rm -f $(docker ps -a -q)
+  122  docker network rm backend
+  123  docker network rm webfrontend
+  124  docker network ls
+  125  ifconfig
+  126  clear
+  127  netstat -tunlp
+  128  netstat -tunlp | grep -w 8080
+  129* netstat -tunlp | grep -w
+  130  docker images
+  131  docker run -d --name=nginx-con1 -p 8080:80 nginx
+  132  docker ps -a
+  133  netstat -tunlp | grep -w 8080
+  134  ip a
+  135  curl 10.0.2.15:8080
+  136  curl 127.0.0.1:8080
+  137  iptables -L
+  138  docker ps -a
+  139  docker rm 875
+  140  docker rm 875 -f
+  141  docker ps
+  142  docker ps -a
+  143  ifconfig eth0
+  144  docker run -d --name=nginx-con1 -p 10.0.2.15:8080:80 nginx
+  145  docker ps -a
+  146  curl 127.0.0.1:80
+  147  curl 10.0.2.15:80
+  148  curl 127.0.0.1:8080
+  149  curl 10.0.2.15:8080
+  150  docker ps
+  151  iptables -L -n -t nat -v
+  152  iptables -t nat -nvL
+  153  docker ps
+  154  docker stop 961
+  155  netstat -tunlp | grep -w 8080
+  156  docker start 961
+  157  docker ps
+  158  netstat -tunlp | grep -w 8080
+  159  docker ps
+  160  docker stop 961
+  161  docker ps -a
+  162  docker run -d --name=nginx-con2 -p 10.0.2.15:8080:80 nginx
+  163  docker ps -a
+  164  docker start 961
+  165  docker logs --help
+  166  docker logs nginx-con2
+  167  docker ps -a
+  168  docker logs nginx-con1
+  169  docker rm -f $(docker ps -a -q)
+  170  docker run -d -P --name=nginx-con2 nginx
+  171  docker ps -a
+  172  docker stop 663
+  173  docker ps -a
+  174  docker start 663
+  175  docker ps -a
+  176  vim /etc/services
+  177  docker ps -a
+  178  ifconfig eth0
+  179  iptables -I INPUT -p tcp --dport 8080 -s 10.0.2.15 -j ACCEPT
+  180  iptables -t nat -nvL
+  181  iptables -L
+  182  iptables -D INPUT -p tcp --dport 8080 -s 10.0.2.15 -j ACCEPT
+  183  iptables -t nat -nvL
+  184  iptables -L -n
+  185  iptables -I INPUT -i eth0 -p tcp --dport 8080 -m comment --comment "# gnayak-firewall-rule-for-dynamicport #" -j ACCEPT
+  186  iptables -L -n
+  187  iptables -D INPUT -i eth0 -p tcp --dport 8080 -m comment --comment "# gnayak-firewall-rule-for-dynamicport #" -j ACCEPT
+  188  iptables -L -n
+  189  clear
+  190  docker images
+  191  docker run -it --name=centos-con1 centos
+  192  docker rm centos-con1
+  193  docker rm centos-con1 -f
+  194  docker network create --subnet 192.168.1.0/24 --driver bridge web-frontend
+  195  docker network ls
+  196  docker run -d --name=centos --network web-frontend centos
+  197* docker run -it --name=centos2 --network web-frontend centos
+  198  docker exec -it centos bash
+  199  docker ps -a
+  200  docker rm -f $(docker ps -a -q)
+  201  docker run -it --name=centos --network web-frontend centos
+  202  docker run -it --name=centos2 --network web-frontend centos
+  203  docker container ls
+  204  docker attach centos
+  205  cat /etc/resolv.conf
+  206  docker attach centos2
+  207  docker ps -a
+  208  docker network ls
+  209  docker run -it --name=centos3-bridge-con centos
+  210  docker container inspect centos | grep -i ipaddress
+  211  docker container inspect centos2 | grep -i ipaddress
+  212  docker container inspect centos3-bridge-con | grep -i ipaddress
+  213  docker rm -f $(docker ps -a -q)
+  214  docker network ls
+  215  docker network rm web-frontend
+  216  systemctl is-active docker
+  217  docker network ls
+  218  docker run -d --name=nginx-host-network-con1 --network host nginx
+  219  netstat -tunlp | grep -w 80
+  220  docker run -d --name=nginx-host-network-con2 --network host nginx
+  221  docker ps -a
+  222  docker logs nginx-host-network-con2
+  223  docker container inspect nginx-host-network-con1 | grep -i ipaddress
+  224  docker container inspect nginx-host-network-con2 | grep -i ipaddress
+  225  docker ps -a
+  226  docker run -d --name=nginx-none-network-con3 --network none nginx
+  227  docker ps -a
+  228  docker exec -it nginx-none-network-con3 bash
+  229  docker container inspect nginx-none-network-con3 | grep -i ipaddress
+  230  clear
+  231  docker images
+  232  docker container ls
+  233  docker rm -f $(docker ps -a -q)
+  234  docker rmi -f $(docker images)
+  235  docker images
+  236  docker image prune -a
+  237  docker pull mysql:5.6
+  238  docker volume ls
+  239  docker network ls
+  240  docker network create --subnet 192.168.10.0/24 --driver bridge labs
+  241  docker network ls
+  242  docker run -d --name=mysql-db-con1 -v mysqlvol:/var/lib/mysql --network labs -e MY_SQL_ROOT_PASSWORD=gnayakadmin -e MYSQL_USER=sqladmin -e MYSQL_PASSWORD=sqladmin -e MYSQL_DATABASE=sqldatabase mysql:5.6
+  243  docker ps -a
+  244  docker rm mysql-db-con1
+  245  docker run -d --name=mysql-db-con1 -v mysqlvol:/var/lib/mysql --network labs -e MYSQL_ROOT_PASSWORD=gnayakadmin -e MYSQL_USER=sqladmin -e MYSQL_PASSWORD=sqladmin -e MYSQL_DATABASE=sqldatabase mysql:5.6
+  246  docker ps
+  247  docker pull wordpress
+  248  docker run -d --name=wordpress-app-con1 -v wpvol:/var/www/html -P -e WORDPRESS_DB_HOST=mysql_db_con1 -e WORDPRESS_DB_USER=sqladmin -e WORDPRESS_DB_PASSWORD=sqladmin --network labs wordpress
+  249  docker ps -a
+  250  docker rm -f wordpress-app-con1
+  251  docker run -d --name=wordpress-app-con1 -v wpvol:/var/www/html -P -e WORDPRESS_DB_HOST=mysql_db_con1 -e WORDPRESS_DB_USER=sqladmin -e WORDPRESS_DB_PASSWORD=sqladmin -e MYSQL_DATABASE=sqldatabase --network labs wordpress
+  252  docker ps -a
+  253  docker container inspect wordpress-app-con1 | grep -i ipaddress
+  254  curl 192.168.10.3
+  255  docker ps -a
+  256  curl 192.168.10.3:32771
+  257  docker logs wordpress-app-con1
+  258  docker logs mysql-db-con1
+  259  docker ps -a
+  260  docker container inspect wordpress-app-con1 | grep -i ipaddress
+  261  ifconfig
+  262  curl 10.0.2.15:32771
+  263  docker ps -a
+  264  docker exec -it wordpress-app-con1 bash
+  265  history
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker rm -f $(docker ps -a -q)
+03deed3be4ae
+e3053c656fa5
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker rmi -f $(docker images)
+Untagged: wordpress:latest
+Untagged: wordpress@sha256:ab46a62b3d6f3d5b221234c30836d4407b2a4b98bf7031fb9537eac7eadbb188
+Deleted: sha256:fcd4967b972890296ef65e2f857ac9c571b9f2fd5c6d56403b7fee5114550a27
+Deleted: sha256:507a87b2794d08d45fe901bc711a5c1a5cb3224b04d6fbe2bcf42c1687c96bf0
+Deleted: sha256:734b717914bfcc19c5bb8dfe88e388d4db3d460616d5829ecd651f2a67c96e5a
+Deleted: sha256:8ca1fd1124f968bf7faabc2cf37fc4aaf3d07c377b06ebf40bbcdfa67ba89227
+Deleted: sha256:60c673fe5298ded79047aebff9f494c09b104cd1b433cec1b954d91db012952f
+Deleted: sha256:854428e85f491f40a44060652d78df6de48f37ebecb28c61e5b493b3084521f2
+Deleted: sha256:4cb01f8862364260dda846fe0c9ec6c56ea6566910fac2fa2262098cace43c02
+Deleted: sha256:a5420b7c93a7a8126adb9212e197688fb3d7501b537942c18dbd4b475af82ce3
+Deleted: sha256:8485ddae71efd9c319556840cbe7b34bafdc2e56562e64fbd79a8a3fdd5adedf
+Deleted: sha256:54f08dd15caf2536fbba2c8770de4f8bfe07da6740f6f86085e9f57ebf077c47
+Deleted: sha256:2db5647a84f11e08c2f3417375bb3204dd3064f3eab642fa19a8cff560ff8c55
+Deleted: sha256:4a79ca06a507cd10cacf42cfb08586803c7ef5655a095aaab338094310c6f1dc
+Deleted: sha256:9a31176b76cc866d65af4c30a0b823a6ce532df81fe4a7aaa51a54f5ff08b33f
+Deleted: sha256:e9224c3434eacf0a1b2937a8780b366dd75201bd2967f8d10ec93bdd9c1e1fdb
+Deleted: sha256:1c08637ddbe5edbac824a06eba49213a8a418e9bafdc21b7d9d0b6d3b70604eb
+Deleted: sha256:d0a70d595e86d6a9cdd9fd685ee2e54ccb557640f1ef69e70879c78fac5ff8f3
+Deleted: sha256:c97fdcb4354d7ba113eab679c7533929bb5eae80156f572290a473bce0162850
+Deleted: sha256:5f20948ffd7b4f623fada6810b21c65d1153f0e78d303fbb9004505a7e3b5139
+Deleted: sha256:a0a48536e6436c6d2850626ee8ab1244a8862e7db3fcce095770ffe7f7de38c3
+Deleted: sha256:89010d1fae8941321268316d5436dde1e93144ceebcf4104a5ea57eb20d651d0
+Deleted: sha256:18361d576d16bc57283ecda9d78e9a66a560f110387f970307f034fc94a8a957
+Deleted: sha256:67a4178b7d47beb6a1f697a593bd0c6841c67eb0da00f2badefb05fd30671490
+Untagged: mysql:5.6
+Untagged: mysql@sha256:20575ecebe6216036d25dab5903808211f1e9ba63dc7825ac20cb975e34cfcae
+Deleted: sha256:dd3b2a5dcb48ff61113592ed5ddd762581be4387c7bc552375a2159422aa6bf5
+Deleted: sha256:8c5e3b50c7085016b7c692611fdedacba442aa0f4ccf8739f4ecf4d5e49b7d91
+Deleted: sha256:2ff31bb829f16adc374868d9ef59254f394816aadfeb6b45da5bec5dcde45540
+Deleted: sha256:91bcc75c6967ec46f3f19fa96f248ab3a23589788f9e2c4a1a2e032112def863
+Deleted: sha256:127296d2ee30c8716069dc23d015d9ecaa1544d0a2c44712db128ae6a9cb1431
+Deleted: sha256:fe36f45d1760f56c23a9957254682d74aa6e7fba931dc8f11addf75684b1aa69
+Deleted: sha256:8d6550c8cb1e10f9d0cf1ee3061ecef9e2cb333cdfbf58a02ee27cf2dd5fc35a
+Deleted: sha256:64e278d98d2502416e0c55646e919f0080a50f9a342b0e28aa9c43655518d3aa
+Deleted: sha256:013f70419be70a06c8e4ce898f2dac82be8749cb9979d9e5b1c98dd82519f627
+Deleted: sha256:c49bbc9eeced1247fcd625da3e2c2886e89b15a6264899a9ce32cd21d927912e
+Deleted: sha256:031797b961ee18c70bff1f3b53cea52f643dbaef6a5ecb0e98fc2696e8b039a5
+Deleted: sha256:2b83e5699838047f936a3875bcce7fe1b169983bf86785ae7519c5bc488558ae
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error: No such image: latest
+Error: No such image: fcd4967b9728
+Error: No such image: 2
+Error: No such image: weeks
+Error: No such image: ago
+Error response from daemon: invalid reference format: repository name must be lowercase
+Error: No such image: mysql
+Error: No such image: 5.6
+Error: No such image: 13
+Error: No such image: months
+Error: No such image: ago
+Error response from daemon: invalid reference format: repository name must be lowercase
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker ps -a
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:bb:14:75 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 49746sec preferred_lft 49746sec
+    inet6 fe80::a00:27ff:febb:1475/64 scope link
+       valid_lft forever preferred_lft forever
+3: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default
+    link/ether 02:42:82:e1:b0:9e brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:82ff:fee1:b09e/64 scope link
+       valid_lft forever preferred_lft forever
+59: br-4ec43e652287: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default
+    link/ether 02:42:00:ac:3c:ba brd ff:ff:ff:ff:ff:ff
+    inet 192.168.10.1/24 brd 192.168.10.255 scope global br-4ec43e652287
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:ff:feac:3cba/64 scope link
+       valid_lft forever preferred_lft forever
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# docker images
+REPOSITORY   TAG       IMAGE ID   CREATED   SIZE
+root@vagrant:~# docker pull mysql:5.7
+b7677d20b791: Pull complete
+b4bcfc1167c2: Pull complete
+03f1c0b71b70: Pull complete
+61aa2e026ac3: Pull complete
+3b784fa66c50: Pull complete
+Digest: sha256:f04fc2e2f01e65d6e2828b4cce2c4761d9258aee71d989e273b2ae309f44a945 4.456MB/25.53MB
+Status: Downloaded newer image for mysql:5.7                                 ]  2.621MB/25.53MB
+docker.io/library/mysql:5.7lete
+root@vagrant:~# wnload complete
+root@vagrant:~# wnload complete
+root@vagrant:~# wnload complete
+root@vagrant:~# wnload complete
+root@vagrant:~#
+root@vagrant:~# systemctl status docker
+? docker.service - Docker Application Container Engine
+   Loaded: loaded (/lib/systemd/system/docker.service; enabled; vendor preset: enabled)
+   Active: active (running) since Thu 2023-01-26 16:26:26 UTC; 22h ago
+     Docs: https://docs.docker.com
+ Main PID: 20185 (dockerd)
+    Tasks: 11
+   CGroup: /system.slice/docker.service
+           +-20185 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+
+Jan 27 13:44:53 vagrant dockerd[20185]: time="2023-01-27T13:44:53.388853216Z" level=info msg="ignoring event" container=db6b90a84290d31684d9ca30f9c804f1dc50
+Jan 27 13:45:54 vagrant dockerd[20185]: time="2023-01-27T13:45:54.490219179Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Usin
+Jan 27 13:45:54 vagrant dockerd[20185]: time="2023-01-27T13:45:54.490740328Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserve
+Jan 27 14:01:10 vagrant dockerd[20185]: time="2023-01-27T14:01:10.698792120Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Usin
+Jan 27 14:01:10 vagrant dockerd[20185]: time="2023-01-27T14:01:10.698830153Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserve
+Jan 27 14:02:42 vagrant dockerd[20185]: time="2023-01-27T14:02:42.169888633Z" level=info msg="ignoring event" container=50fe86db9ecb9c3807da403f589e6549dfb5
+Jan 27 14:03:09 vagrant dockerd[20185]: time="2023-01-27T14:03:09.339862922Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Usin
+Jan 27 14:03:09 vagrant dockerd[20185]: time="2023-01-27T14:03:09.340729560Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserve
+Jan 27 14:30:26 vagrant dockerd[20185]: time="2023-01-27T14:30:26.244925259Z" level=info msg="ignoring event" container=e3053c656fa5c77c6911ecdd7106291eccec
+Jan 27 14:30:26 vagrant dockerd[20185]: time="2023-01-27T14:30:26.256395384Z" level=info msg="ignoring event" container=03deed3be4ae347f9100901a6eecb44f821e
+root@vagrant:~#
+root@vagrant:~# journalctl -xu docker
+-- Logs begin at Thu 2023-01-26 16:19:55 UTC, end at Fri 2023-01-27 14:30:27 UTC. --
+Jan 26 16:26:24 vagrant systemd[1]: Starting Docker Application Container Engine...
+-- Subject: Unit docker.service has begun start-up
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+--
+-- Unit docker.service has begun starting up.
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.748426334Z" level=info msg="Starting up"
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.765208145Z" level=info msg="detected 127.0.0.53 nameserver, assuming systemd-resolved, so
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.891233955Z" level=info msg="parsed scheme: \"unix\"" module=grpc
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.891466243Z" level=info msg="scheme \"unix\" not registered, fallback to default scheme" mo
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.891593779Z" level=info msg="ccResolverWrapper: sending update to cc: {[{unix:///run/contai
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.891751361Z" level=info msg="ClientConn switching balancer to \"pick_first\"" module=grpc
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.910463503Z" level=info msg="parsed scheme: \"unix\"" module=grpc
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.910523985Z" level=info msg="scheme \"unix\" not registered, fallback to default scheme" mo
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.910552272Z" level=info msg="ccResolverWrapper: sending update to cc: {[{unix:///run/contai
+Jan 26 16:26:24 vagrant dockerd[20185]: time="2023-01-26T16:26:24.910566127Z" level=info msg="ClientConn switching balancer to \"pick_first\"" module=grpc
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.203312616Z" level=warning msg="Your kernel does not support swap memory limit"
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.203886977Z" level=warning msg="Your kernel does not support CPU realtime scheduler"
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.204315056Z" level=info msg="Loading containers: start."
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.616831556Z" level=info msg="Default bridge (docker0) is assigned with an IP address 172.17
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.787078133Z" level=info msg="Loading containers: done."
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.936517268Z" level=info msg="Docker daemon" commit=6051f14 graphdriver(s)=overlay2 version=
+Jan 26 16:26:25 vagrant dockerd[20185]: time="2023-01-26T16:26:25.936980586Z" level=info msg="Daemon has completed initialization"
+Jan 26 16:26:26 vagrant systemd[1]: Started Docker Application Container Engine.
+-- Subject: Unit docker.service has finished start-up
+-- Defined-By: systemd
+-- Support: http://www.ubuntu.com/support
+--
+-- Unit docker.service has finished starting up.
+--
+-- The start-up result is RESULT.
+Jan 26 16:26:26 vagrant dockerd[20185]: time="2023-01-26T16:26:26.084506406Z" level=info msg="API listen on /var/run/docker.sock"
+Jan 26 16:42:53 vagrant dockerd[20185]: time="2023-01-26T16:42:53.951463073Z" level=info msg="ignoring event" container=d5bbd0ad0ccd01556972db4e8e729ec94912
+Jan 26 17:33:22 vagrant dockerd[20185]: time="2023-01-26T17:33:22.299537428Z" level=error msg="stream copy error: reading from a closed fifo"
+Jan 26 17:33:22 vagrant dockerd[20185]: time="2023-01-26T17:33:22.310644413Z" level=error msg="Error running exec 39cc198a19111efe4761a143a7281020e3845f15e4
+Jan 26 17:33:54 vagrant dockerd[20185]: time="2023-01-26T17:33:54.330073202Z" level=error msg="stream copy error: reading from a closed fifo"
+Jan 26 17:33:54 vagrant dockerd[20185]: time="2023-01-26T17:33:54.345335309Z" level=error msg="Error running exec 860d25d0b295b52680d7269246e495e80859635372
+Jan 26 17:33:58 vagrant dockerd[20185]: time="2023-01-26T17:33:58.098636727Z" level=error msg="Handler for POST /v1.41/exec/eb5217e1eeb47b9c7c3aabed181e2c19
+Jan 26 17:34:38 vagrant dockerd[20185]: time="2023-01-26T17:34:38.325317435Z" level=info msg="ignoring event" container=d6634434b183086e824bccaf3e2da3900a95
+Jan 26 17:34:45 vagrant dockerd[20185]: time="2023-01-26T17:34:45.385086187Z" level=info msg="ignoring event" container=46290c02647106eacc5372fdda7d871b317c
+Jan 26 17:35:12 vagrant dockerd[20185]: time="2023-01-26T17:35:12.214430819Z" level=error msg="Not continuing with pull after error: errors:\ndenied: reques
+Jan 26 17:35:12 vagrant dockerd[20185]: time="2023-01-26T17:35:12.216072666Z" level=info msg="Ignoring extra error returned from registry: unauthorized: aut
+Jan 26 20:13:33 vagrant dockerd[20185]: time="2023-01-26T20:13:33.496212220Z" level=info msg="ignoring event" container=bb8c233cfd73f2aee229525aa68e0b930ed6
+Jan 26 20:13:33 vagrant dockerd[20185]: time="2023-01-26T20:13:33.603081825Z" level=info msg="ignoring event" container=46290c02647106eacc5372fdda7d871b317c
+Jan 26 20:13:33 vagrant dockerd[20185]: time="2023-01-26T20:13:33.638735026Z" level=info msg="ignoring event" container=1f4c76f6faed30ba800f7deb5efb4188fda8
+Jan 26 20:13:33 vagrant dockerd[20185]: time="2023-01-26T20:13:33.638768102Z" level=info msg="ignoring event" container=d6634434b183086e824bccaf3e2da3900a95
+Jan 26 20:28:16 vagrant dockerd[20185]: time="2023-01-26T20:28:16.936487225Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Usin
+Jan 26 20:28:16 vagrant dockerd[20185]: time="2023-01-26T20:28:16.938872665Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserve
+Jan 26 20:30:11 vagrant dockerd[20185]: time="2023-01-26T20:30:11.906671731Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Usin
+Jan 26 20:30:11 vagrant dockerd[20185]: time="2023-01-26T20:30:11.907428103Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserve
+Jan 26 21:34:01 vagrant dockerd[20185]: time="2023-01-26T21:34:01.598655806Z" level=info msg="ignoring event" container=f60754a83baba984dbcf2c574d6626580592
+Jan 26 21:44:50 vagrant dockerd[20185]: time="2023-01-26T21:44:50.481149045Z" level=info msg="ignoring event" container=27cce21836a6b524fb8c53b5457756ff53f2
+Jan 26 21:44:50 vagrant dockerd[20185]: time="2023-01-26T21:44:50.496002569Z" level=info msg="ignoring event" container=7bbd3dc74206606d9415469f5c8169a731e7
+Jan 26 21:44:50 vagrant dockerd[20185]: time="2023-01-26T21:44:50.514507298Z" level=info msg="ignoring event" container=8eb95a44aebd849b8a45ccb30e3d64c0925c
+Jan 26 23:01:53 vagrant dockerd[20185]: time="2023-01-26T23:01:53.650198059Z" level=info msg="ignoring event" container=87598bb57e62df7ee84597ca71cdfd8cd388
+Jan 26 23:42:44 vagrant dockerd[20185]: time="2023-01-26T23:42:44.422377467Z" level=info msg="ignoring event" container=9615a554b3ae3ede28f0b14a462e56cd9da6
+Jan 26 23:44:04 vagrant dockerd[20185]: time="2023-01-26T23:44:04.257959956Z" level=info msg="ignoring event" container=9615a554b3ae3ede28f0b14a462e56cd9da6
+Jan 26 23:44:42 vagrant dockerd[20185]: time="2023-01-26T23:44:42.737554416Z" level=warning msg="Failed to allocate and map port 8080-8080: Bind for 10.0.2.
+Jan 26 23:44:42 vagrant dockerd[20185]: time="2023-01-26T23:44:42.936462848Z" level=error msg="9615a554b3ae3ede28f0b14a462e56cd9da6dbd3f43b2a77068adaa9de414
+Jan 26 23:44:42 vagrant dockerd[20185]: time="2023-01-26T23:44:42.940643151Z" level=error msg="Handler for POST /v1.41/containers/961/start returned error:
+Jan 26 23:48:17 vagrant dockerd[20185]: time="2023-01-26T23:48:17.425660419Z" level=info msg="ignoring event" container=a512a88faa20affabbf43bcf5a181ac86e2c
+Jan 26 23:49:49 vagrant dockerd[20185]: time="2023-01-26T23:49:49.858826800Z" level=info msg="ignoring event" container=66388ef407530daab9db64965214a0d77c81
+Jan 27 01:15:06 vagrant dockerd[20185]: time="2023-01-27T01:15:06.337433856Z" level=info msg="ignoring event" container=524f9f5889171b34e939d22b92057a9f8ebb
+Jan 27 01:33:18 vagrant dockerd[20185]: time="2023-01-27T01:33:18.301903121Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Usin
+Jan 27 01:33:18 vagrant dockerd[20185]: time="2023-01-27T01:33:18.301927932Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserve
+Jan 27 01:33:18 vagrant dockerd[20185]: time="2023-01-27T01:33:18.988429561Z" level=info msg="ignoring event" container=835ebaaa0e92c8e169859f9c01a50c8308ce
+Jan 27 01:33:49 vagrant dockerd[20185]: time="2023-01-27T01:33:49.167299764Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Usin
+Jan 27 01:33:49 vagrant dockerd[20185]: time="2023-01-27T01:33:49.167696582Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserve
+Jan 27 01:33:49 vagrant dockerd[20185]: time="2023-01-27T01:33:49.722922028Z" level=info msg="ignoring event" container=51d5e32c17496888997c41d7471dae22699c
+Jan 27 01:33:58 vagrant dockerd[20185]: time="2023-01-27T01:33:58.903603540Z" level=error msg="Error setting up exec command in container centos: Container
+Jan 27 01:34:40 vagrant dockerd[20185]: time="2023-01-27T01:34:40.622434814Z" level=info msg="ignoring event" container=66388ef407530daab9db64965214a0d77c81
+Jan 27 01:34:57 vagrant dockerd[20185]: time="2023-01-27T01:34:57.414118196Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Usin
+Jan 27 01:34:57 vagrant dockerd[20185]: time="2023-01-27T01:34:57.414651790Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserve
+Jan 27 01:35:07 vagrant dockerd[20185]: time="2023-01-27T01:35:07.125896951Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Usin
+Jan 27 01:35:07 vagrant dockerd[20185]: time="2023-01-27T01:35:07.126580823Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserve
+Jan 27 08:57:30 vagrant dockerd[20185]: time="2023-01-27T08:57:30.558166647Z" level=info msg="ignoring event" container=fc0c5ad845057b864cd12cd8148a415101c4
+Jan 27 08:57:30 vagrant dockerd[20185]: time="2023-01-27T08:57:30.610997542Z" level=info msg="ignoring event" container=d4ce84aa542134f883a49180416a6f26517e
+Jan 27 08:57:30 vagrant dockerd[20185]: time="2023-01-27T08:57:30.648057363Z" level=info msg="ignoring event" container=6bfedab5681d44c2f057ffd03f5190aacaaa
+Jan 27 09:07:55 vagrant dockerd[20185]: time="2023-01-27T09:07:55.535558177Z" level=info msg="ignoring event" container=1eb96a6281376857bfa5d16246a29425dfce
+Jan 27 13:08:34 vagrant dockerd[20185]: time="2023-01-27T13:08:34.517567258Z" level=info msg="ignoring event" container=5c0ad57e3d44117266af7aa262ef028bd3bf
+Jan 27 13:08:34 vagrant dockerd[20185]: time="2023-01-27T13:08:34.585703895Z" level=info msg="ignoring event" container=2d0712559bfe461bd86b4dbc495d26d9b832
+Jan 27 13:44:52 vagrant dockerd[20185]: time="2023-01-27T13:44:52.113291192Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Usin
+Jan 27 13:44:52 vagrant dockerd[20185]: time="2023-01-27T13:44:52.113342120Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserve
+Jan 27 13:44:53 vagrant dockerd[20185]: time="2023-01-27T13:44:53.388853216Z" level=info msg="ignoring event" container=db6b90a84290d31684d9ca30f9c804f1dc50
+Jan 27 13:45:54 vagrant dockerd[20185]: time="2023-01-27T13:45:54.490219179Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Usin
+Jan 27 13:45:54 vagrant dockerd[20185]: time="2023-01-27T13:45:54.490740328Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserve
+Jan 27 14:01:10 vagrant dockerd[20185]: time="2023-01-27T14:01:10.698792120Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Usin
+Jan 27 14:01:10 vagrant dockerd[20185]: time="2023-01-27T14:01:10.698830153Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserve
+Jan 27 14:02:42 vagrant dockerd[20185]: time="2023-01-27T14:02:42.169888633Z" level=info msg="ignoring event" container=50fe86db9ecb9c3807da403f589e6549dfb5
+Jan 27 14:03:09 vagrant dockerd[20185]: time="2023-01-27T14:03:09.339862922Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Usin
+Jan 27 14:03:09 vagrant dockerd[20185]: time="2023-01-27T14:03:09.340729560Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserve
+Jan 27 14:30:26 vagrant dockerd[20185]: time="2023-01-27T14:30:26.244925259Z" level=info msg="ignoring event" container=e3053c656fa5c77c6911ecdd7106291eccec
+Jan 27 14:30:26 vagrant dockerd[20185]: time="2023-01-27T14:30:26.256395384Z" level=info msg="ignoring event" container=03deed3be4ae347f9100901a6eecb44f821e
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~# ip addr
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:bb:14:75 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic eth0
+       valid_lft 49551sec preferred_lft 49551sec
+    inet6 fe80::a00:27ff:febb:1475/64 scope link
+       valid_lft forever preferred_lft forever
+3: docker0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default
+    link/ether 02:42:82:e1:b0:9e brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:82ff:fee1:b09e/64 scope link
+       valid_lft forever preferred_lft forever
+59: br-4ec43e652287: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN group default
+    link/ether 02:42:00:ac:3c:ba brd ff:ff:ff:ff:ff:ff
+    inet 192.168.10.1/24 brd 192.168.10.255 scope global br-4ec43e652287
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:ff:feac:3cba/64 scope link
+       valid_lft forever preferred_lft forever
+root@vagrant:~# ifconfig
+br-4ec43e652287: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 192.168.10.1  netmask 255.255.255.0  broadcast 192.168.10.255
+        inet6 fe80::42:ff:feac:3cba  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:00:ac:3c:ba  txqueuelen 0  (Ethernet)
+        RX packets 15  bytes 6308 (6.3 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 24  bytes 1735 (1.7 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        inet6 fe80::42:82ff:fee1:b09e  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:82:e1:b0:9e  txqueuelen 0  (Ethernet)
+        RX packets 4918  bytes 232060 (232.0 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 15577  bytes 38078062 (38.0 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
+        inet6 fe80::a00:27ff:febb:1475  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:bb:14:75  txqueuelen 1000  (Ethernet)
+        RX packets 580355  bytes 824630081 (824.6 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 78704  bytes 5659898 (5.6 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 796  bytes 91798 (91.7 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 796  bytes 91798 (91.7 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+root@vagrant:~# tail -n 50 /var/log/syslog
+Jan 27 14:02:42 vagrant networkd-dispatcher[617]: ERROR:Unknown interface index 64 seen even after reload
+Jan 27 14:03:09 vagrant kernel: [78130.292516] br-4ec43e652287: port 2(veth7bd89bd) entered blocking state
+Jan 27 14:03:09 vagrant kernel: [78130.292519] br-4ec43e652287: port 2(veth7bd89bd) entered disabled state
+Jan 27 14:03:09 vagrant kernel: [78130.295052] device veth7bd89bd entered promiscuous mode
+Jan 27 14:03:09 vagrant networkd-dispatcher[617]: WARNING:Unknown index 67 seen, reloading interface list
+Jan 27 14:03:09 vagrant kernel: [78130.304264] IPv6: ADDRCONF(NETDEV_UP): veth7bd89bd: link is not ready
+Jan 27 14:03:09 vagrant systemd-udevd[29447]: link_config: autonegotiation is unset or enabled, the speed and duplex are not writable.
+Jan 27 14:03:09 vagrant systemd-udevd[29447]: Could not generate persistent MAC address for veth7bd89bd: No such file or directory
+Jan 27 14:03:09 vagrant systemd-udevd[29445]: link_config: autonegotiation is unset or enabled, the speed and duplex are not writable.
+Jan 27 14:03:09 vagrant systemd-udevd[29445]: Could not generate persistent MAC address for vetha04b57f: No such file or directory
+Jan 27 14:03:09 vagrant dockerd[20185]: time="2023-01-27T14:03:09.339862922Z" level=info msg="No non-localhost DNS nameservers are left in resolv.conf. Using default external servers: [nameserver 8.8.8.8 nameserver 8.8.4.4]"
+Jan 27 14:03:09 vagrant dockerd[20185]: time="2023-01-27T14:03:09.340729560Z" level=info msg="IPv6 enabled; Adding default IPv6 external servers: [nameserver 2001:4860:4860::8888 nameserver 2001:4860:4860::8844]"
+Jan 27 14:03:09 vagrant containerd[18842]: time="2023-01-27T14:03:09.520283736Z" level=info msg="loading plugin \"io.containerd.event.v1.publisher\"..." runtime=io.containerd.runc.v2 type=io.containerd.event.v1
+Jan 27 14:03:09 vagrant containerd[18842]: time="2023-01-27T14:03:09.521321970Z" level=info msg="loading plugin \"io.containerd.internal.v1.shutdown\"..." runtime=io.containerd.runc.v2 type=io.containerd.internal.v1
+Jan 27 14:03:09 vagrant containerd[18842]: time="2023-01-27T14:03:09.521636215Z" level=info msg="loading plugin \"io.containerd.ttrpc.v1.task\"..." runtime=io.containerd.runc.v2 type=io.containerd.ttrpc.v1
+Jan 27 14:03:09 vagrant containerd[18842]: time="2023-01-27T14:03:09.522083171Z" level=info msg="starting signal loop" namespace=moby path=/run/containerd/io.containerd.runtime.v2.task/moby/03deed3be4ae347f9100901a6eecb44f821e7d6a920502cae75c96580e6d100c pid=29488 runtime=io.containerd.runc.v2
+Jan 27 14:03:10 vagrant systemd-networkd[429]: veth7bd89bd: Gained carrier
+Jan 27 14:03:10 vagrant kernel: [78131.076349] eth0: renamed from vetha04b57f
+Jan 27 14:03:10 vagrant kernel: [78131.077190] IPv6: ADDRCONF(NETDEV_CHANGE): veth7bd89bd: link becomes ready
+Jan 27 14:03:10 vagrant kernel: [78131.077252] br-4ec43e652287: port 2(veth7bd89bd) entered blocking state
+Jan 27 14:03:10 vagrant kernel: [78131.077286] br-4ec43e652287: port 2(veth7bd89bd) entered forwarding state
+Jan 27 14:03:11 vagrant systemd-networkd[429]: veth7bd89bd: Gained IPv6LL
+Jan 27 14:17:01 vagrant CRON[29635]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+Jan 27 14:30:26 vagrant dockerd[20185]: time="2023-01-27T14:30:26.244925259Z" level=info msg="ignoring event" container=e3053c656fa5c77c6911ecdd7106291eccec88ffc592e6dc64938e07a33d09a6 module=libcontainerd namespace=moby topic=/tasks/delete type="*events.TaskDelete"
+Jan 27 14:30:26 vagrant containerd[18842]: time="2023-01-27T14:30:26.249939305Z" level=info msg="shim disconnected" id=e3053c656fa5c77c6911ecdd7106291eccec88ffc592e6dc64938e07a33d09a6
+Jan 27 14:30:26 vagrant containerd[18842]: time="2023-01-27T14:30:26.249987678Z" level=warning msg="cleaning up after shim disconnected" id=e3053c656fa5c77c6911ecdd7106291eccec88ffc592e6dc64938e07a33d09a6 namespace=moby
+Jan 27 14:30:26 vagrant containerd[18842]: time="2023-01-27T14:30:26.250000245Z" level=info msg="cleaning up dead shim"
+Jan 27 14:30:26 vagrant dockerd[20185]: time="2023-01-27T14:30:26.256395384Z" level=info msg="ignoring event" container=03deed3be4ae347f9100901a6eecb44f821e7d6a920502cae75c96580e6d100c module=libcontainerd namespace=moby topic=/tasks/delete type="*events.TaskDelete"
+Jan 27 14:30:26 vagrant containerd[18842]: time="2023-01-27T14:30:26.256567804Z" level=info msg="shim disconnected" id=03deed3be4ae347f9100901a6eecb44f821e7d6a920502cae75c96580e6d100c
+Jan 27 14:30:26 vagrant containerd[18842]: time="2023-01-27T14:30:26.256665728Z" level=warning msg="cleaning up after shim disconnected" id=03deed3be4ae347f9100901a6eecb44f821e7d6a920502cae75c96580e6d100c namespace=moby
+Jan 27 14:30:26 vagrant containerd[18842]: time="2023-01-27T14:30:26.256791077Z" level=info msg="cleaning up dead shim"
+Jan 27 14:30:26 vagrant containerd[18842]: time="2023-01-27T14:30:26.344467109Z" level=warning msg="cleanup warnings time=\"2023-01-27T14:30:26Z\" level=info msg=\"starting signal loop\" namespace=moby pid=29702 runtime=io.containerd.runc.v2\n"
+Jan 27 14:30:26 vagrant containerd[18842]: time="2023-01-27T14:30:26.350749943Z" level=warning msg="cleanup warnings time=\"2023-01-27T14:30:26Z\" level=info msg=\"starting signal loop\" namespace=moby pid=29703 runtime=io.containerd.runc.v2\n"
+Jan 27 14:30:26 vagrant systemd-networkd[429]: vetheb09398: Lost carrier
+Jan 27 14:30:26 vagrant kernel: [79767.426461] br-4ec43e652287: port 1(vetheb09398) entered disabled state
+Jan 27 14:30:26 vagrant kernel: [79767.429611] vethfa01f91: renamed from eth0
+Jan 27 14:30:26 vagrant systemd-udevd[29739]: link_config: autonegotiation is unset or enabled, the speed and duplex are not writable.
+Jan 27 14:30:26 vagrant networkd-dispatcher[617]: WARNING:Unknown index 62 seen, reloading interface list
+Jan 27 14:30:26 vagrant kernel: [79767.491497] br-4ec43e652287: port 1(vetheb09398) entered disabled state
+Jan 27 14:30:26 vagrant kernel: [79767.498128] device vetheb09398 left promiscuous mode
+Jan 27 14:30:26 vagrant kernel: [79767.498132] br-4ec43e652287: port 1(vetheb09398) entered disabled state
+Jan 27 14:30:26 vagrant systemd-networkd[429]: veth7bd89bd: Lost carrier
+Jan 27 14:30:26 vagrant kernel: [79767.544978] br-4ec43e652287: port 2(veth7bd89bd) entered disabled state
+Jan 27 14:30:26 vagrant kernel: [79767.547277] vetha04b57f: renamed from eth0
+Jan 27 14:30:26 vagrant systemd-udevd[29758]: link_config: autonegotiation is unset or enabled, the speed and duplex are not writable.
+Jan 27 14:30:26 vagrant networkd-dispatcher[617]: WARNING:Unknown index 66 seen, reloading interface list
+Jan 27 14:30:26 vagrant kernel: [79767.646547] br-4ec43e652287: port 2(veth7bd89bd) entered disabled state
+Jan 27 14:30:26 vagrant kernel: [79767.660584] device veth7bd89bd left promiscuous mode
+Jan 27 14:30:26 vagrant kernel: [79767.660590] br-4ec43e652287: port 2(veth7bd89bd) entered disabled state
+Jan 27 14:30:27 vagrant systemd-networkd[429]: br-4ec43e652287: Lost carrier
+root@vagrant:~# hostname
+vagrant
+root@vagrant:~#
+root@vagrant:~#
+root@vagrant:~#
