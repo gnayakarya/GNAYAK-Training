@@ -1,0 +1,15 @@
+#Open a command prompt in admin mode
+#then run these commands in that command prompt
+#bash
+#cd ~
+@powershell -NoProfile -ExecutionPolicy Bypass -Command "iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))" && SET "PATH=%PATH%;%ALLUSERSPROFILE%\chocolatey\bin"
+choco install -y wget nano notepad2
+choco install -y consolez cmder conemu 
+choco install -y virtualbox
+choco install -y vagrant
+choco install -y vscode
+choco install -y git --params "/GitAndUnixToolsOnPath /WindowsTerminal"
+refreshenv
+bash
+cd ~
+echo "Software Installations for Devops Lab Setup Complete"
