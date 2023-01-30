@@ -1,0 +1,69 @@
+#Install terraform
+Microsoft Windows [Version 10.0.19045.2486]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\WINDOWS\system32>choco install terraform
+Chocolatey v1.2.0
+Installing the following packages:
+terraform
+By installing, you accept licenses for the packages.
+Progress: Downloading terraform 1.3.7... 100%
+
+terraform v1.3.7 [Approved]
+terraform package files install completed. Performing other installation steps.
+The package terraform wants to run 'chocolateyInstall.ps1'.
+Note: If you don't run this script, the installation will fail.
+Note: To confirm automatically next time, use '-y' or consider:
+choco feature enable -n allowGlobalConfirmation
+Do you want to run the script?([Y]es/[A]ll - yes to all/[N]o/[P]rint): A
+
+Removing old terraform plugins
+Downloading terraform 64 bit
+  from 'https://releases.hashicorp.com/terraform/1.3.7/terraform_1.3.7_windows_amd64.zip'
+Progress: 100% - Completed download of C:\Users\Gaurav\AppData\Local\Temp\chocolatey\terraform\1.3.7\terraform_1.3.7_windows_amd64.zip (18.75 MB).
+Download of terraform_1.3.7_windows_amd64.zip (18.75 MB) completed.
+Hashes match.
+Extracting C:\Users\Gaurav\AppData\Local\Temp\chocolatey\terraform\1.3.7\terraform_1.3.7_windows_amd64.zip to C:\ProgramData\chocolatey\lib\terraform\tools...
+C:\ProgramData\chocolatey\lib\terraform\tools
+ ShimGen has successfully created a shim for terraform.exe
+ The install of terraform was successful.
+  Software installed to 'C:\ProgramData\chocolatey\lib\terraform\tools'
+
+Chocolatey installed 1/1 packages.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+
+C:\WINDOWS\system32>terraform --version
+Terraform v1.3.7
+on windows_amd64
+
+C:\WINDOWS\system32>
+
+# Configure multiple providers and run terraform init
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "~> 3.0.2"
+    }
+        aws = {
+      source = "hashicorp/aws"
+      version = "4.52.0"
+    }
+        digitalocean = {
+      source = "digitalocean/digitalocean"
+      version = "2.25.2"
+    }
+  }
+}
+
+provider "azurerm" {
+  features {}
+}
+
+provider "aws" {
+  # Configuration options
+}
+
+provider "digitalocean" {
+  # Configuration options
+}
