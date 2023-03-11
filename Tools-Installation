@@ -1,0 +1,272 @@
+Microsoft Windows [Version 10.0.19045.2604]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\WINDOWS\system32>choco install python -y
+Chocolatey v1.2.0
+Installing the following packages:
+python
+By installing, you accept licenses for the packages.
+Progress: Downloading python3 3.11.0... 100%
+Progress: Downloading vcredist2015 14.0.24215.20170201... 100%
+Progress: Downloading vcredist140 14.34.31938... 100%
+Progress: Downloading KB3033929 1.0.5... 100%
+Progress: Downloading chocolatey-windowsupdate.extension 1.0.5... 100%
+Progress: Downloading KB3035131 1.0.3... 100%
+Progress: Downloading KB2919355 1.0.20160915... 100%
+Progress: Downloading KB2919442 1.0.20160915... 100%
+Progress: Downloading KB2999226 1.0.20181019... 100%
+Progress: Downloading python 3.11.0... 100%
+
+chocolatey-windowsupdate.extension v1.0.5 [Approved]
+chocolatey-windowsupdate.extension package files install completed. Performing other installation steps.
+ Installed/updated chocolatey-windowsupdate extensions.
+ The install of chocolatey-windowsupdate.extension was successful.
+  Software installed to 'C:\ProgramData\chocolatey\extensions\chocolatey-windowsupdate'
+
+KB3035131 v1.0.3 [Approved]
+kb3035131 package files install completed. Performing other installation steps.
+Skipping installation because update KB3035131 does not apply to this operating system (Microsoft Windows 10 Home Single Language).
+ The install of kb3035131 was successful.
+  Software install location not explicitly set, it could be in package or
+  default install location of installer.
+
+KB3033929 v1.0.5 [Approved]
+kb3033929 package files install completed. Performing other installation steps.
+Skipping installation because update KB3033929 does not apply to this operating system (Microsoft Windows 10 Home Single Language).
+ The install of kb3033929 was successful.
+  Software install location not explicitly set, it could be in package or
+  default install location of installer.
+
+KB2919442 v1.0.20160915 [Approved]
+kb2919442 package files install completed. Performing other installation steps.
+Skipping installation because this hotfix only applies to Windows 8.1 and Windows Server 2012 R2.
+ The install of kb2919442 was successful.
+  Software install location not explicitly set, it could be in package or
+  default install location of installer.
+
+KB2919355 v1.0.20160915 [Approved]
+kb2919355 package files install completed. Performing other installation steps.
+Skipping installation because this hotfix only applies to Windows 8.1 and Windows Server 2012 R2.
+ The install of kb2919355 was successful.
+  Software install location not explicitly set, it could be in package or
+  default install location of installer.
+
+KB2999226 v1.0.20181019 [Approved] - Possibly broken
+kb2999226 package files install completed. Performing other installation steps.
+Skipping installation because update KB2999226 does not apply to this operating system (Microsoft Windows 10 Home Single Language).
+ The install of kb2999226 was successful.
+  Software install location not explicitly set, it could be in package or
+  default install location of installer.
+
+vcredist140 v14.34.31938 [Approved]
+vcredist140 package files install completed. Performing other installation steps.
+Downloading vcredist140-x86
+  from 'https://download.visualstudio.microsoft.com/download/pr/77091a7f-1547-40bd-96a6-575b3e7fb174/8AE59D82845159DB3A70763F5CB1571E45EBF6A1ADFECC47574BA17B019483A0/VC_redist.x86.exe'
+Progress: 100% - Completed download of C:\Users\Gaurav\AppData\Local\Temp\chocolatey\vcredist140\14.34.31938\VC_redist.x86.exe (13.2 MB).
+Download of VC_redist.x86.exe (13.2 MB) completed.
+Hashes match.
+Installing vcredist140-x86...
+vcredist140-x86 has been installed.
+Downloading vcredist140-x64 64 bit
+  from 'https://download.visualstudio.microsoft.com/download/pr/8b92f460-7e03-4c75-a139-e264a770758d/26C2C72FBA6438F5E29AF8EBC4826A1E424581B3C446F8C735361F1DB7BEFF72/VC_redist.x64.exe'
+Progress: 100% - Completed download of C:\Users\Gaurav\AppData\Local\Temp\chocolatey\vcredist140\14.34.31938\VC_redist.x64.exe (24.31 MB).
+Download of VC_redist.x64.exe (24.31 MB) completed.
+Hashes match.
+Installing vcredist140-x64...
+vcredist140-x64 has been installed.
+  vcredist140 may be able to be automatically uninstalled.
+ The install of vcredist140 was successful.
+  Software installed as 'exe', install location is likely default.
+
+vcredist2015 v14.0.24215.20170201 [Approved]
+vcredist2015 package files install completed. Performing other installation steps.
+ The install of vcredist2015 was successful.
+  Software installed to 'C:\ProgramData\chocolatey\lib\vcredist2015'
+
+python3 v3.11.0 [Approved]
+python3 package files install completed. Performing other installation steps.
+Installing 64-bit python3...
+python3 has been installed.
+WARNING: Provided python InstallDir was ignored by the python installer
+WARNING: Its probable that you had pre-existing python installation
+WARNING: Python installed to: 'C:\Program Files\Python311'
+WARNING: Installation folder is not the default. Not changing permissions. Please ensure your installation is secure.
+ The install of python3 was successful.
+  Software installed as 'exe', install location is likely default.
+
+python v3.11.0 [Approved]
+python package files install completed. Performing other installation steps.
+ The install of python was successful.
+  Software installed to 'C:\ProgramData\chocolatey\lib\python'
+
+Chocolatey installed 10/10 packages.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+
+Installed:
+ - kb2919355 v1.0.20160915
+ - python v3.11.0
+ - kb3033929 v1.0.5
+ - kb2999226 v1.0.20181019
+ - python3 v3.11.0
+ - vcredist2015 v14.0.24215.20170201
+ - kb2919442 v1.0.20160915
+ - vcredist140 v14.34.31938
+ - kb3035131 v1.0.3
+ - chocolatey-windowsupdate.extension v1.0.5
+
+Packages requiring reboot:
+ - vcredist140 (exit code 3010)
+
+The recent package changes indicate a reboot is necessary.
+ Please reboot at your earliest convenience.
+
+C:\WINDOWS\system32>
+C:\WINDOWS\system32>
+C:\WINDOWS\system32>python --V
+unknown option --V
+usage: python [option] ... [-c cmd | -m mod | file | -] [arg] ...
+Try `python -h' for more information.
+
+C:\WINDOWS\system32>python --version
+Python 3.11.0
+
+C:\WINDOWS\system32>terraform --v
+Usage: terraform [global options] <subcommand> [args]
+
+The available commands for execution are listed below.
+The primary workflow commands are given first, followed by
+less common or more advanced commands.
+
+Main commands:
+  init          Prepare your working directory for other commands
+  validate      Check whether the configuration is valid
+  plan          Show changes required by the current configuration
+  apply         Create or update infrastructure
+  destroy       Destroy previously-created infrastructure
+
+All other commands:
+  console       Try Terraform expressions at an interactive command prompt
+  fmt           Reformat your configuration in the standard style
+  force-unlock  Release a stuck lock on the current workspace
+  get           Install or upgrade remote Terraform modules
+  graph         Generate a Graphviz graph of the steps in an operation
+  import        Associate existing infrastructure with a Terraform resource
+  login         Obtain and save credentials for a remote host
+  logout        Remove locally-stored credentials for a remote host
+  output        Show output values from your root module
+  providers     Show the providers required for this configuration
+  refresh       Update the state to match remote systems
+  show          Show the current state or a saved plan
+  state         Advanced state management
+  taint         Mark a resource instance as not fully functional
+  test          Experimental support for module integration testing
+  untaint       Remove the 'tainted' state from a resource instance
+  version       Show the current Terraform version
+  workspace     Workspace management
+
+Global options (use these before the subcommand, if any):
+  -chdir=DIR    Switch to a different working directory before executing the
+                given subcommand.
+  -help         Show this help output, or the help for a specified subcommand.
+  -version      An alias for the "version" subcommand.
+
+C:\WINDOWS\system32>terraform /?
+Terraform has no command named "/?".
+
+To see all of Terraform's top-level commands, run:
+  terraform -help
+
+
+C:\WINDOWS\system32>terraform -version
+Terraform v1.3.7
+on windows_amd64
+
+Your version of Terraform is out of date! The latest version
+is 1.4.0. You can update by downloading from https://www.terraform.io/downloads.html
+
+C:\WINDOWS\system32>git --v
+unknown option: --v
+usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]
+           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]
+           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--bare]
+           [--git-dir=<path>] [--work-tree=<path>] [--namespace=<name>]
+           [--super-prefix=<path>] [--config-env=<name>=<envvar>]
+           <command> [<args>]
+
+C:\WINDOWS\system32>git -v
+git version 2.38.1.windows.1
+
+
+C:\WINDOWS\system32>java -version
+java version "1.8.0_331"
+Java(TM) SE Runtime Environment (build 1.8.0_331-b09)
+Java HotSpot(TM) 64-Bit Server VM (build 25.331-b09, mixed mode)
+
+C:\WINDOWS\system32>choco install docker -y
+Chocolatey v1.2.0
+Installing the following packages:
+docker
+By installing, you accept licenses for the packages.
+Progress: Downloading docker-cli 23.0.1... 100%
+Progress: Downloading docker 99.0.0... 100%
+
+docker-cli v23.0.1 [Approved]
+docker-cli package files install completed. Performing other installation steps.
+ ShimGen has successfully created a shim for docker.exe
+ The install of docker-cli was successful.
+  Software installed to 'C:\ProgramData\chocolatey\lib\docker-cli'
+
+docker v99.0.0 [Approved]
+docker package files install completed. Performing other installation steps.
+WARNING: This package is superseeded by docker-cli, you should install that package from now on.
+ The install of docker was successful.
+  Software install location not explicitly set, it could be in package or
+  default install location of installer.
+
+Chocolatey installed 2/2 packages.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+
+C:\WINDOWS\system32>docker --version
+Docker version 23.0.1, build a5ee5b1
+
+C:\WINDOWS\system32>choco install maven -y
+Chocolatey v1.2.0
+Installing the following packages:
+maven
+By installing, you accept licenses for the packages.
+Progress: Downloading maven 3.9.0... 100%
+
+maven v3.9.0 [Approved]
+maven package files install completed. Performing other installation steps.
+C:\Users\Gaurav\.m2
+PATH environment variable does not have C:\ProgramData\chocolatey\lib\maven\apache-maven-3.9.0\bin in it. Adding...
+**********************************************************************************
+*                       !! No Java JDK detected on path !!                       *
+*               Maven requires that a JDK be installed to function               *
+*                                                                                *
+*      However, this package does not take a dependency on any one specific      *
+*          JDK package so as to not lock you into any specific JDK build         *
+*                    Please separately install your JDK of choice                *
+*                                                                                *
+*See this issue on progress for the 'provides' nuspec element that will fix this:*
+*                 https://github.com/chocolatey/choco/issues/858                 *
+**********************************************************************************
+Environment Vars (like PATH) have changed. Close/reopen your shell to
+ see the changes (or in powershell/cmd.exe just type `refreshenv`).
+ The install of maven was successful.
+  Software installed to 'C:\ProgramData\chocolatey\lib\maven\apache-maven-3.9.0'
+
+Chocolatey installed 1/1 packages.
+ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
+ 
+ C:\Windows\System32>refreshenv
+Refreshing environment variables from registry for cmd.exe. Please wait...Finished..
+ 
+ C:\Windows\System32>mvn -v
+Apache Maven 3.9.0 (9b58d2bad23a66be161c4664ef21ce219c2c8584)
+Maven home: C:\ProgramData\chocolatey\lib\maven\apache-maven-3.9.0
+Java version: 1.8.0_331, vendor: Oracle Corporation, runtime: C:\Program Files\Java\jre1.8.0_331
+Default locale: en_IN, platform encoding: Cp1252
+OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
+
+C:\Windows\System32>
