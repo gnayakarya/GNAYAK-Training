@@ -1,0 +1,146 @@
+az group create --name CreateVNetQS-rg --location eastus
+az network vnet create --name myVNet --resource-group CreateVNetQS-rg --subnet-name default
+az vm create --resource-group CreateVNetQS-rg --name myVM1 --image UbuntuLTS --generate-ssh-keys --public-ip-address myPublicIP-myVM1 --no-wait
+az vm create --resource-group CreateVNetQS-rg --name myVM2 --image UbuntuLTS --public-ip-address myPublicIP-myVM2 --public-ip-sku Standard --generate-ssh-keys
+az network public-ip show --resource-group CreateVNetQS-rg --name myPublicIP-myVM2 --query ipAddress --output tsv
+az group delete --name CreateVNetQS-rg --yes
+
+PS /home/gaurav> az group create --name CreateVNetQS-rg --location eastus                                                                                                   {                          
+  "id": "/subscriptions/e3744096-8c91-4d8b-983d-8dadbe721994/resourceGroups/CreateVNetQS-rg",
+  "location": "eastus",
+  "managedBy": null,
+  "name": "CreateVNetQS-rg",
+  "properties": {
+    "provisioningState": "Succeeded"
+  },
+  "tags": null,
+  "type": "Microsoft.Resources/resourceGroups"
+}
+PS /home/gaurav> az network vnet create --name myVNet --resource-group CreateVNetQS-rg --subnet-name default                                                                
+{
+  "newVNet": {
+    "addressSpace": {
+      "addressPrefixes": [
+        "10.0.0.0/16"
+      ]
+    },
+    "enableDdosProtection": false,
+    "etag": "W/\"bb68a78e-0219-4e4c-9274-c76f6ce83dbd\"",
+    "id": "/subscriptions/e3744096-8c91-4d8b-983d-8dadbe721994/resourceGroups/CreateVNetQS-rg/providers/Microsoft.Network/virtualNetworks/myVNet",
+    "location": "eastus",
+    "name": "myVNet",
+    "provisioningState": "Succeeded",
+    "resourceGroup": "CreateVNetQS-rg",
+    "resourceGuid": "3fedba0c-4439-479c-9035-ceeebb7154f4",
+    "subnets": [
+      {
+        "addressPrefix": "10.0.0.0/24",
+        "delegations": [],
+        "etag": "W/\"bb68a78e-0219-4e4c-9274-c76f6ce83dbd\"",
+        "id": "/subscriptions/e3744096-8c91-4d8b-983d-8dadbe721994/resourceGroups/CreateVNetQS-rg/providers/Microsoft.Network/virtualNetworks/myVNet/subnets/default",
+        "name": "default",
+         "privateEndpointNetworkPolicies": "Disabled",
+        "privateLinkServiceNetworkPolicies": "Enabled",
+        "provisioningState": "Succeeded",
+        "resourceGroup": "CreateVNetQS-rg",
+        "type": "Microsoft.Network/virtualNetworks/subnets"
+      }
+    ],
+    "type": "Microsoft.Network/virtualNetworks",
+    "virtualNetworkPeerings": []
+  }
+}
+PS /home/gaurav> az vm create --resource-group CreateVNetQS-rg --name myVM1 --image UbuntuLTS --generate-ssh-keys --public-ip-address myPublicIP-myVM1 --no-wait
+SSH key files '/home/gaurav/.ssh/id_rsa' and '/home/gaurav/.ssh/id_rsa.pub' have been generated under ~/.ssh to allow SSH access to the VM. If using machines without permanent storage, back up your keys to a safe location.
+Starting Build 2023 event, "az vm/vmss create" command will deploy Trusted Launch VM by default. To know more about Trusted Launch, please visit https://docs.microsoft.com/en-us/azure/virtual-machines/trusted-launch
+It is recommended to use parameter "--public-ip-sku Standard" to create new VM with Standard public IP. Please note that the default public IP used for VM creation will be changed from Basic to Standard in the future.
+PS /home/gaurav> az vm create --resource-group CreateVNetQS-rg --name myVM2 --image UbuntuLTS --public-ip-address myPublicIP-myVM2 --public-ip-sku Standard --generate-ssh-keys                        
+Starting Build 2023 event, "az vm/vmss create" command will deploy Trusted Launch VM by default. To know more about Trusted Launch, please visit https://docs.microsoft.com/en-us/azure/virtual-machines/trusted-launch
+{
+  "fqdns": "",
+  "id": "/subscriptions/e3744096-8c91-4d8b-983d-8dadbe721994/resourceGroups/CreateVNetQS-rg/providers/Microsoft.Compute/virtualMachines/myVM2",
+  "location": "eastus",
+  "macAddress": "60-45-BD-DB-01-56",
+  "powerState": "VM running",
+  "privateIpAddress": "10.0.0.5",
+  "publicIpAddress": "172.173.172.252",
+  "resourceGroup": "CreateVNetQS-rg",
+  "zones": ""
+}
+PS /home/gaurav> az network public-ip show --resource-group CreateVNetQS-rg --name myPublicIP-myVM2 --query ipAddress --output tsv                                          172.173.172.252            
+PS /home/gaurav> ssh 172.173.172.252
+The authenticity of host '172.173.172.252 (172.173.172.252)' can't be established.
+ED25519 key fingerprint is SHA256:h7zP6cCzPVLX7pWHZzmKoQ6YPEyNKpQ+zuxt4RgOfjE.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added '172.173.172.252' (ED25519) to the list of known hosts.
+Welcome to Ubuntu 18.04.6 LTS (GNU/Linux 5.4.0-1104-azure x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun Mar 12 06:29:49 UTC 2023
+
+  System load:  0.25              Processes:           111
+  Usage of /:   4.5% of 28.89GB   Users logged in:     0
+  Memory usage: 5%                IP address for eth0: 10.0.0.5
+  Swap usage:   0%
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+gaurav@myVM2:~$ sudo su -
+root@myVM2:~# cat /etc/*release
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=18.04
+DISTRIB_CODENAME=bionic
+DISTRIB_DESCRIPTION="Ubuntu 18.04.6 LTS"
+NAME="Ubuntu"
+VERSION="18.04.6 LTS (Bionic Beaver)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 18.04.6 LTS"
+VERSION_ID="18.04"
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+VERSION_CODENAME=bionic
+UBUNTU_CODENAME=bionic
+gaurav@myVM2:~$ sudo su -
+root@myVM2:~# ping myVM1 -c 4
+PING myVM1.bs3o0pzzisoepebvz1xlw2ku4e.bx.internal.cloudapp.net (10.0.0.4) 56(84) bytes of data.
+64 bytes from myvm1.internal.cloudapp.net (10.0.0.4): icmp_seq=1 ttl=64 time=1.91 ms
+64 bytes from myvm1.internal.cloudapp.net (10.0.0.4): icmp_seq=2 ttl=64 time=1.23 ms
+64 bytes from myvm1.internal.cloudapp.net (10.0.0.4): icmp_seq=3 ttl=64 time=0.963 ms
+64 bytes from myvm1.internal.cloudapp.net (10.0.0.4): icmp_seq=4 ttl=64 time=1.00 ms
+
+--- myVM1.bs3o0pzzisoepebvz1xlw2ku4e.bx.internal.cloudapp.net ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 0.963/1.279/1.916/0.382 ms
+root@myVM2:~# 
+root@myVM2:~# exit
+logout
+gaurav@myVM2:~$ exit
+logout
+Connection to 172.173.172.252 closed.
+PS /home/gaurav>
+PS /home/gaurav> az group delete --name CreateVNetQS-rg --yes                                                                                                               
+PS /home/gaurav>                                      
